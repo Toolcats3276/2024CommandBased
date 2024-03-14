@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.59,
+      "y": 7.78
+    },
+    "rotation": 90.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AMP Score"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "InfeedCommand"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "AMP + Delays",
+  "choreoAuto": false
+}
