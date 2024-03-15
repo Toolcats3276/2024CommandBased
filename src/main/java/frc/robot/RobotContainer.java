@@ -9,23 +9,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.InfeedConstants;
-import frc.robot.commands.*;
-import frc.robot.commands.AutoCommands.ShootCommand.AutoStartShotCoCommand;
-import frc.robot.commands.AutoCommands.ShootCommand.AutoStartShotCoCommand2;
-import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.CloseMidNoteShootCoCommand;
-import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.LeftNoteShootCoCommand;
-import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.MidNoteShootCoCommand;
-import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.RightNoteShootCoCommand;
-import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoFarShotCoCommand;
-import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoFarShotCoCommand2;
 import frc.robot.commands.TeleopCommands.InfeedCommand;
 import frc.robot.commands.TeleopCommands.TeleopSwerve;
-import frc.robot.commands.TeleopCommands.CompoundCommand.CancelCoCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.*;
 import frc.robot.commands.TeleopCommands.CompoundCommand.CompCoCommands.CompCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.CompCoCommands.ToggleCompCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedSensorCoCommand;
@@ -51,6 +41,14 @@ import frc.robot.commands.AutoCommands.AutoInfeedCoCommand;
 import frc.robot.commands.AutoCommands.AmpCommands.AutoAmpCoCommand;
 import frc.robot.commands.AutoCommands.AmpCommands.AutoInverseAmpCoCommand;
 import frc.robot.commands.AutoCommands.OptimizedCommands.OpAutoInfeedCoCommand;
+import frc.robot.commands.AutoCommands.ShootCommand.AutoStartShotCoCommand;
+import frc.robot.commands.AutoCommands.ShootCommand.AutoStartShotCoCommand2;
+import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.CloseMidNoteShootCoCommand;
+import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.LeftNoteShootCoCommand;
+import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.MidNoteShootCoCommand;
+import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.RightNoteShootCoCommand;
+import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoFarShotCoCommand;
+import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoFarShotCoCommand2;
 import frc.robot.subsystems.*;
 
 /**
@@ -297,14 +295,11 @@ public class RobotContainer {
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
      * @return the command to run in autonomous
+     * 
      */
 
      // have it return the autochooser selection
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        // return new PathPlannerAuto("Source-Far");
-        // return new PathPlannerAuto("MidFourNote");
-        // return new PathPlannerAuto("Amp-Far");
         return autoChooser.getSelected();
     }
 }

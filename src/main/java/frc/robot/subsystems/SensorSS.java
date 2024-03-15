@@ -29,7 +29,7 @@ public class SensorSS extends SubsystemBase{
     RLimitSwitch = new DigitalInput(9);
     
     m_debouncer1 = new Debouncer(0.1, DebounceType.kBoth);
-    m_debouncer2 = new Debouncer(0.65, DebounceType.kBoth); //2 seconds
+    m_debouncer2 = new Debouncer(0.65, DebounceType.kBoth);
 
    }
 
