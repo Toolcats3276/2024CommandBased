@@ -73,8 +73,8 @@ package frc.robot.commands.AutoCommands.ShootCommand;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.InfeedConstants;
-import frc.robot.commands.InfeedCommand;
-import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.TeleopCommands.InfeedCommand;
+import frc.robot.commands.TeleopCommands.ShooterCommand;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.WristSS;
 import frc.robot.subsystems.InfeedSS;

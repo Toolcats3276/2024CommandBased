@@ -1,25 +1,24 @@
-package frc.robot.commands.AutoCommands;
+package frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.WristConstants;
 import frc.robot.commands.TeleopCommands.InfeedCommand;
 import frc.robot.commands.TeleopCommands.ShooterCommand;
-import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedCoCommand;
-import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.SuckBackCommand;
 import frc.robot.commands.TeleopCommands.z_ArmCommands.ArmPIDCommand;
 import frc.robot.commands.TeleopCommands.z_WristCommands.WristPIDCommand;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.InfeedSS;
+import frc.robot.subsystems.LEDSS;
 import frc.robot.subsystems.SensorSS;
 import frc.robot.subsystems.ShooterSS;
 import frc.robot.subsystems.WristSS;
 
 
-public class AutoInfeedCoCommand extends SequentialCommandGroup{
+public class InfeedSensorCoCommand2 extends SequentialCommandGroup{
 
     
-    public AutoInfeedCoCommand(WristSS s_Wrist, ArmSS s_Arm, InfeedSS s_Infeed, SensorSS s_Sensor, ShooterSS s_Shooter) {
+    public InfeedSensorCoCommand2(WristSS s_Wrist, ArmSS s_Arm, InfeedSS s_Infeed, SensorSS s_Sensor, ShooterSS s_Shooter, LEDSS s_LED) {
 
         addCommands(
                     new RepeatCommand(
@@ -27,9 +26,11 @@ public class AutoInfeedCoCommand extends SequentialCommandGroup{
                             // while true
                                 new SequentialCommandGroup(
                                     new ParallelCommandGroup(
+                                        new InstantCommand(() -> s_LED.Blink()),
                                         new WristPIDCommand(s_Wrist, WristConstants.DRIVE_POS, WristConstants.MAX_PID_OUTPUT),
                                         new ArmPIDCommand(s_Arm, ArmConstants.DRIVE_POS, ArmConstants.MAX_PID_OUTPUT)),
                                     new WaitCommand(0.25),
+                                    new InstantCommand(() -> s_LED.Off()),
                                     new InfeedCommand(s_Infeed, 0.0),
                                     new SuckBackCommand(s_Infeed, s_Shooter),
                                     new WaitCommand(5)
