@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.WristConstants;
-import frc.robot.commands.AutoCommands.ShootCommand.PassOffCoCommand;
 import frc.robot.commands.TeleopCommands.ShooterCommand;
 import frc.robot.commands.TeleopCommands.z_ArmCommands.ArmPIDCommand;
 import frc.robot.commands.TeleopCommands.z_WristCommands.WristPIDCommand;

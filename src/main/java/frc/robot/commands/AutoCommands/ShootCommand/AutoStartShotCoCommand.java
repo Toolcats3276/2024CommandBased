@@ -33,9 +33,7 @@ public class AutoStartShotCoCommand extends SequentialCommandGroup{
                             new InfeedCommand(s_Infeed, InfeedConstants.PASS_OFF),
                             new WaitCommand(0.15),
                             new ShooterCommand(s_Shooter, 0.0),
-                            new InstantCommand(() -> System.out.println("speaker end")),
-                            new WaitCommand(5)
-
+                            new InstantCommand(() -> System.out.println("speaker end"))
                         )
 
 

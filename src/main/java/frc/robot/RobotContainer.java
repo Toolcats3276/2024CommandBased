@@ -17,7 +17,6 @@ import frc.robot.Constants.InfeedConstants;
 import frc.robot.commands.*;
 import frc.robot.commands.AutoCommands.ShootCommand.AutoStartShotCoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.AutoStartShotCoCommand2;
-import frc.robot.commands.AutoCommands.ShootCommand.PassOffCoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.CloseMidNoteShootCoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.LeftNoteShootCoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.MidNoteShootCoCommand;
@@ -33,6 +32,7 @@ import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.Infeed
 import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedSensorCoCommand2;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.AutoTrapCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.InverseScoreCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.PassOffCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ScoringCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ShuttleCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.SpeakerShotCoCommand;
@@ -50,6 +50,7 @@ import frc.robot.commands.TeleopCommands.z_ClimberCommands.RightManualCommands.R
 import frc.robot.commands.AutoCommands.AutoInfeedCoCommand;
 import frc.robot.commands.AutoCommands.AmpCommands.AutoAmpCoCommand;
 import frc.robot.commands.AutoCommands.AmpCommands.AutoInverseAmpCoCommand;
+import frc.robot.commands.AutoCommands.OptimizedCommands.OpAutoInfeedCoCommand;
 import frc.robot.subsystems.*;
 
 /**
@@ -166,16 +167,14 @@ public class RobotContainer {
         NamedCommands.registerCommand("ZeroGyro", new InstantCommand(() -> s_Swerve.zeroHeading()));
 
         NamedCommands.registerCommand("InfeedCommand", new AutoInfeedCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter)
-            .until(() -> s_Sensor.isDebounced()));
-        NamedCommands.registerCommand("TeleOpInfeedCommand", new InfeedSensorCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
-            .until(() -> s_Sensor.autoInfeedDelay()));
+            .until(() -> s_Sensor.infeedDelay()));
+        NamedCommands.registerCommand("OpInfeedCommand", new OpAutoInfeedCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter)
+            .until(() -> s_Sensor.infeedDelay()));
 
         NamedCommands.registerCommand("CompCommand", new CompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter));
 
-        NamedCommands.registerCommand("StartShot", new AutoStartShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist)
-            .until(() -> !s_Sensor.shootDelay()));
-        NamedCommands.registerCommand("StartShot2", new AutoStartShotCoCommand2(s_Infeed, s_Shooter, s_Arm, s_Wrist)
-            .until(() -> !s_Sensor.shootDelay()));
+        NamedCommands.registerCommand("StartShot", new AutoStartShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        NamedCommands.registerCommand("StartShot2", new AutoStartShotCoCommand2(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
         NamedCommands.registerCommand("SpeakerShot", new SpeakerShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
@@ -227,20 +226,18 @@ public class RobotContainer {
         Drive.onTrue(new ToggleCompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter));
 
         Infeed.onTrue(new InfeedSensorCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
-            .until(() -> s_Sensor.isDebounced()));
+            .until(() -> s_Sensor.infeedDelay()));
         Infeed2.onTrue(new InfeedSensorCoCommand2(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
-            .until(() -> s_Sensor.isDebounced()));
+            .until(() -> s_Sensor.infeedDelay()));
 
         // Infeed.onTrue(new InfeedCoCommand(s_Wrist, s_Arm, s_Infeed));
         Amp.onTrue(new ToggleAmpCoCommand(s_Wrist, s_Arm, s_Infeed));
         // AmpTwo.onTrue(new AmpTwoCoCommand(s_Wrist, s_Arm, s_Infeed));
         
-        Shoot.onTrue(new ScoringCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist)
-            .until(() -> !s_Sensor.shootDelay()));
+        Shoot.onTrue(new ScoringCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         // FarShot.onTrue(new FarShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
-        InverseShot.onTrue(new InverseScoreCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist)
-            .until(() -> !s_Sensor.shootDelay()));
+        InverseShot.onTrue(new InverseScoreCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
 
         Shuttle.onTrue(new ShuttleCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED));

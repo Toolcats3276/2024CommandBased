@@ -69,7 +69,7 @@
 
 
 
-package frc.robot.commands.AutoCommands.ShootCommand;
+package frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.InfeedConstants;
