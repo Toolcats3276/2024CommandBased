@@ -1,22 +1,23 @@
-package frc.robot.commands.ClimberCommands.BothManualCommands;
+package frc.robot.commands.z_ClimberCommands.RightManualCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ClimberSS;
 
-public class ClimberDownCommand extends Command {
+public class RightClimberStopCommand extends Command {
     
     private ClimberSS s_Climber;
 
 
 
-    public ClimberDownCommand(ClimberSS s_Climber) {
+    public RightClimberStopCommand(ClimberSS s_Climber) {
         this.s_Climber = s_Climber;
         addRequirements(s_Climber);
     }
 
     @Override
     public void initialize() {
-      s_Climber.ManualDown();
+        
+      s_Climber.RightStop();
 
     }
 

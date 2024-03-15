@@ -1,4 +1,4 @@
-package frc.robot.commands.ClimberCommands.LeftManualCommands;
+package frc.robot.commands.z_ClimberCommands.LeftManualCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ClimberSS;

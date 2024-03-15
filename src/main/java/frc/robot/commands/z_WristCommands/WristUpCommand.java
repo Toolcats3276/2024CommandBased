@@ -1,22 +1,22 @@
-package frc.robot.commands.ArmCommands;
+package frc.robot.commands.z_WristCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ArmSS;
+import frc.robot.subsystems.WristSS;
 
-public class ArmDownCommand extends Command {
+public class WristUpCommand extends Command {
     
-    private ArmSS s_Arm;
+    private WristSS s_Wrist;
 
 
 
-    public ArmDownCommand(ArmSS s_Arm) {
-        this.s_Arm = s_Arm;
-        addRequirements(s_Arm);
+    public WristUpCommand(WristSS s_Wrist) {
+        this.s_Wrist = s_Wrist;
+        addRequirements(s_Wrist);
     }
 
     @Override
     public void initialize() {
-      s_Arm.ManualDown();
+      s_Wrist.ManualUp();
 
     }
 

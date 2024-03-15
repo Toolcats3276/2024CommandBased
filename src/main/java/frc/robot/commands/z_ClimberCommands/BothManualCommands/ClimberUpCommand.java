@@ -1,17 +1,17 @@
-package frc.robot.commands.ClimberCommands.RightManualCommands;
+package frc.robot.commands.z_ClimberCommands.BothManualCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ClimberSS;
 import frc.robot.subsystems.SensorSS;
 
-public class RightClimberUpCommand extends Command {
+public class ClimberUpCommand extends Command {
     
     private ClimberSS s_Climber;
     private SensorSS s_Sensor;
 
 
 
-    public RightClimberUpCommand(ClimberSS s_Climber, SensorSS s_Sensor) {
+    public ClimberUpCommand(ClimberSS s_Climber, SensorSS s_Sensor) {
         this.s_Climber = s_Climber;
         this.s_Sensor = s_Sensor;
         addRequirements(s_Climber);
@@ -24,11 +24,11 @@ public class RightClimberUpCommand extends Command {
 
     @Override
     public void execute() {
-        if(s_Sensor.returnRightLimit()){
-            s_Climber.RightStop();
+        if(s_Sensor.returnLeftLimit() || s_Sensor.returnRightLimit()){
+            s_Climber.ManualStop();
         }
         else{
-            s_Climber.RightUp();
+            s_Climber.ManualUp();
         }
 
         
@@ -36,12 +36,12 @@ public class RightClimberUpCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-      
+        s_Climber.ManualStop();
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return s_Sensor.returnLeftLimit() || s_Sensor.returnRightLimit();
     }
     
 }

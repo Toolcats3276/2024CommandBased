@@ -1,33 +1,37 @@
-package frc.robot.commands.ArmCommands;
+package frc.robot.commands.z_ArmCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ArmSS;
 
-public class ArmUpCommand extends Command {
+public class ArmPIDCommand extends Command {
     
     private ArmSS s_Arm;
+    private double setPoint;
+    private double maxSpeed;
 
 
-
-    public ArmUpCommand(ArmSS s_Arm) {
+    public ArmPIDCommand(ArmSS s_Arm, double setPoint, double maxSpeed) {
         this.s_Arm = s_Arm;
+        this.setPoint = setPoint;
+        this.maxSpeed = maxSpeed;
         addRequirements(s_Arm);
     }
 
     @Override
     public void initialize() {
-      s_Arm.ManualUp();
+
 
     }
 
     @Override
     public void execute() {
+      s_Arm.PID(setPoint, maxSpeed);
         
     }
 
     @Override
     public void end(boolean interrupted) {
-      
+
     }
 
     @Override

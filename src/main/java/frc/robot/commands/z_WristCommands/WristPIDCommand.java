@@ -1,20 +1,20 @@
-package frc.robot.commands.ArmCommands;
+package frc.robot.commands.z_WristCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ArmSS;
+import frc.robot.subsystems.WristSS;
 
-public class ArmPIDCommand extends Command {
+public class WristPIDCommand extends Command {
     
-    private ArmSS s_Arm;
+    private WristSS s_Wrist;
     private double setPoint;
     private double maxSpeed;
 
 
-    public ArmPIDCommand(ArmSS s_Arm, double setPoint, double maxSpeed) {
-        this.s_Arm = s_Arm;
+    public WristPIDCommand(WristSS s_Wrist, double setPoint, double maxSpeed) {
+        this.s_Wrist = s_Wrist;
         this.setPoint = setPoint;
         this.maxSpeed = maxSpeed;
-        addRequirements(s_Arm);
+        addRequirements(s_Wrist);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class ArmPIDCommand extends Command {
 
     @Override
     public void execute() {
-      s_Arm.PID(setPoint, maxSpeed);
+      s_Wrist.PID(setPoint, maxSpeed);
         
     }
 

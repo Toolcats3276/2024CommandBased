@@ -2,16 +2,14 @@ package frc.robot.commands.CompoundCommand.ScoringCoCommands;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.InfeedConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.WristConstants;
-import frc.robot.commands.InfeedCommand;
 import frc.robot.commands.ShooterCommand;
-import frc.robot.commands.ArmCommands.ArmPIDCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.PassOffCoCommand;
 import frc.robot.commands.CompoundCommand.InfeedCoCommands.InfeedCoCommand;
 import frc.robot.commands.CompoundCommand.InfeedCoCommands.SuckBackCommand;
-import frc.robot.commands.WristCommands.WristPIDCommand;
+import frc.robot.commands.z_ArmCommands.ArmPIDCommand;
+import frc.robot.commands.z_WristCommands.WristPIDCommand;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.InfeedSS;
 import frc.robot.subsystems.LEDSS;

@@ -3,11 +3,10 @@ package frc.robot.commands.CompoundCommand.ScoringCoCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj2.command.*;
-import frc.robot.commands.ClimberCommands.BothManualCommands.ClimberStopCommand;
-import frc.robot.commands.ClimberCommands.BothManualCommands.ClimberUpCommand2;
+import frc.robot.commands.z_ClimberCommands.BothManualCommands.ClimberStopCommand;
+import frc.robot.commands.z_ClimberCommands.BothManualCommands.ClimberUpCommand2;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.ClimberSS;
-import frc.robot.subsystems.SensorSS;
 import frc.robot.subsystems.WristSS;
 
 public class AutoTrapCoCommand extends SequentialCommandGroup{

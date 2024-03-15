@@ -27,15 +27,6 @@ import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoFarShotCoCommand
 import frc.robot.commands.AutoCommands.AutoSuckBackCommand;
 import frc.robot.commands.AutoCommands.AmpCommands.AutoAmpCoCommand;
 import frc.robot.commands.AutoCommands.AmpCommands.AutoInverseAmpCoCommand;
-import frc.robot.commands.ClimberCommands.BothManualCommands.ClimberDownCommand;
-import frc.robot.commands.ClimberCommands.BothManualCommands.ClimberStopCommand;
-import frc.robot.commands.ClimberCommands.BothManualCommands.ClimberUpCommand;
-import frc.robot.commands.ClimberCommands.LeftManualCommands.LeftClimberDownCommand;
-import frc.robot.commands.ClimberCommands.LeftManualCommands.LeftClimberStopCommand;
-import frc.robot.commands.ClimberCommands.LeftManualCommands.LeftClimberUpCommand;
-import frc.robot.commands.ClimberCommands.RightManualCommands.RightClimberUpCommand;
-import frc.robot.commands.ClimberCommands.RightManualCommands.RightClimberDownCommand;
-import frc.robot.commands.ClimberCommands.RightManualCommands.RightClimberStopCommand;
 import frc.robot.commands.CompoundCommand.CancelCoCommand;
 import frc.robot.commands.CompoundCommand.CompCoCommands.CompCoCommand;
 import frc.robot.commands.CompoundCommand.CompCoCommands.ToggleCompCoCommand;
@@ -47,8 +38,16 @@ import frc.robot.commands.CompoundCommand.ScoringCoCommands.ScoringCoCommand;
 import frc.robot.commands.CompoundCommand.ScoringCoCommands.ShuttleCoCommand;
 import frc.robot.commands.CompoundCommand.ScoringCoCommands.SpeakerShotCoCommand;
 import frc.robot.commands.CompoundCommand.ScoringCoCommands.TrapCoCommand;
-import frc.robot.commands.CompoundCommand.ScoringCoCommands.AmpCommands.AmpCoCommand;
 import frc.robot.commands.CompoundCommand.ScoringCoCommands.AmpCommands.ToggleAmpCoCommand;
+import frc.robot.commands.z_ClimberCommands.BothManualCommands.ClimberDownCommand;
+import frc.robot.commands.z_ClimberCommands.BothManualCommands.ClimberStopCommand;
+import frc.robot.commands.z_ClimberCommands.BothManualCommands.ClimberUpCommand;
+import frc.robot.commands.z_ClimberCommands.LeftManualCommands.LeftClimberDownCommand;
+import frc.robot.commands.z_ClimberCommands.LeftManualCommands.LeftClimberStopCommand;
+import frc.robot.commands.z_ClimberCommands.LeftManualCommands.LeftClimberUpCommand;
+import frc.robot.commands.z_ClimberCommands.RightManualCommands.RightClimberDownCommand;
+import frc.robot.commands.z_ClimberCommands.RightManualCommands.RightClimberStopCommand;
+import frc.robot.commands.z_ClimberCommands.RightManualCommands.RightClimberUpCommand;
 import frc.robot.subsystems.*;
 
 /**

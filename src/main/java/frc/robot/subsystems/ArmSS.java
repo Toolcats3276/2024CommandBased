@@ -123,6 +123,10 @@ public class ArmSS extends SubsystemBase{
                 break;
             }
 
+            case AutoAim:{
+                break;
+            }
+
         }
 
         SmartDashboard.putNumber("Arm Output", output);

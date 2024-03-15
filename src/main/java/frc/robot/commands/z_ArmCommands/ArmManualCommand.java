@@ -1,4 +1,4 @@
-package frc.robot.commands.ArmCommands;
+package frc.robot.commands.z_ArmCommands;
 
 import java.util.function.DoubleSupplier;
 

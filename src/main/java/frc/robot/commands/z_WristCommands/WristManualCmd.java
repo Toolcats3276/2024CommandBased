@@ -1,4 +1,4 @@
-package frc.robot.commands.WristCommands;
+package frc.robot.commands.z_WristCommands;
 
 import java.util.function.DoubleSupplier;
 
