@@ -12,25 +12,25 @@ public class SensorSS extends SubsystemBase{
 
     /* CREATS DEBOUNCER OBJECTS FOR SENSOR INPUT
      */
+
+    private final DigitalInput sensor;
+
     private final DigitalInput LLimitSwitch;
     private final DigitalInput RLimitSwitch;
-    private final DigitalInput sensor;
-    private final Debouncer m_debouncer;
+    
+    private final Debouncer m_debouncer1;
     private final Debouncer m_debouncer2;
-    private final Debouncer m_debouncer3;
-    private final Debouncer m_debouncer4;
 
    public SensorSS() {
+
+    sensor = new DigitalInput(0);
+
     LLimitSwitch = new DigitalInput(1);
     RLimitSwitch = new DigitalInput(9);
     
+    m_debouncer1 = new Debouncer(0.1, DebounceType.kBoth);
+    m_debouncer2 = new Debouncer(0.65, DebounceType.kBoth);
 
-    sensor = new DigitalInput(0);
-    
-    m_debouncer = new Debouncer(0.4, DebounceType.kBoth);
-    m_debouncer2 = new Debouncer(0.65, DebounceType.kBoth); //2 seconds
-    m_debouncer3 = new Debouncer(0.1, DebounceType.kBoth);
-    m_debouncer4 = new Debouncer(3, DebounceType.kBoth);
    }
 
 
@@ -41,27 +41,24 @@ public class SensorSS extends SubsystemBase{
 
     }
     
+    public boolean isSensed(){
+        return sensor.get();
+    }
+    
+    /* returns weather or not sensor sees something with a small debounce
+     * should be used for conditions on conditional commands
+     */
     public boolean isTriggered(){
-        return m_debouncer3.calculate(sensor.get());
+        return m_debouncer1.calculate(sensor.get());
     }
 
-    public boolean shootDelay(){
-        if (!m_debouncer.calculate(sensor.get())){
-            System.out.println("sensor shoot end");
-        }
-        return m_debouncer.calculate(sensor.get());
-    }
-    public boolean autoInfeedDelay(){
-
-        return m_debouncer4.calculate(sensor.get()) && !sensor.get();
-    }
-
-    public boolean isDebounced(){
-        if (m_debouncer2.calculate(sensor.get())){
-            System.out.println("sensor debounced");
-        }
+    /* returns weather or not sensor sees something with a larger debounce
+     * should be used for ending infeed repeat commands
+    */
+    public boolean infeedDelay(){
         return m_debouncer2.calculate(sensor.get());
     }
+
 
     public boolean returnLeftLimit(){
         return !LLimitSwitch.get();
@@ -71,9 +68,6 @@ public class SensorSS extends SubsystemBase{
         return !RLimitSwitch.get();
     }
 
-    public boolean isSensed(){
-        return sensor.get();
-    }
 
     
 

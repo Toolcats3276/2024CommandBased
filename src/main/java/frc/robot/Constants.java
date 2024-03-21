@@ -96,12 +96,12 @@ public final class Constants {
         public static final double SPEAKER_POS = 0.46;// .47 changed 3/4 test w/ harrier
         public static final double FARSHOT_POS = 0.52;//0.52
         public static final double INVERSE_POS = 0.17;//wrist variable
-        public static final double AUTO_FARSHOT_POS = 0.552;//0.562 changed 3/5 -isaac
+        public static final double AUTO_FARSHOT_POS = 0.55;//0.562 changed 3/5 -isaac
         public static final double AUTO_FARSHOT_POS_2 = 0.558;//0.585
         public static final double SHUTTLE_POS = 0.51;
 
-        public static final double MID_NOTE_POS = 0.545; //0.54
-        public static final double CLOSE_MID_NOTE_POS = 0.52; //0.54
+        public static final double MID_NOTE_POS = 0.542; //0.545
+        public static final double CLOSE_MID_NOTE_POS = 0.516; //0.52
         public static final double LEFT_NOTE_POS = 0.535; //0.548
         public static final double RIGHT_NOTE_POS = 0.538; //0.55
 

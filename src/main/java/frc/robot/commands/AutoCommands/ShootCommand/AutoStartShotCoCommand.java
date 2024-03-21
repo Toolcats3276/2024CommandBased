@@ -5,10 +5,10 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.InfeedConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.WristConstants;
-import frc.robot.commands.InfeedCommand;
-import frc.robot.commands.ShooterCommand;
-import frc.robot.commands.z_ArmCommands.ArmPIDCommand;
-import frc.robot.commands.z_WristCommands.WristPIDCommand;
+import frc.robot.commands.TeleopCommands.InfeedCommand;
+import frc.robot.commands.TeleopCommands.ShooterCommand;
+import frc.robot.commands.TeleopCommands.z_ArmCommands.ArmPIDCommand;
+import frc.robot.commands.TeleopCommands.z_WristCommands.WristPIDCommand;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.WristSS;
 import frc.robot.subsystems.InfeedSS;
@@ -33,9 +33,7 @@ public class AutoStartShotCoCommand extends SequentialCommandGroup{
                             new InfeedCommand(s_Infeed, InfeedConstants.PASS_OFF),
                             new WaitCommand(0.15),
                             new ShooterCommand(s_Shooter, 0.0),
-                            new InstantCommand(() -> System.out.println("speaker end")),
-                            new WaitCommand(5)
-
+                            new InstantCommand(() -> System.out.println("speaker end"))
                         )
 
 

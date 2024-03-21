@@ -43,6 +43,8 @@ public class Swerve extends SubsystemBase {
     public Pose2d PoseA;
     public Pose2d PoseB;
 
+    public Rotation2d storedHeading = new Rotation2d();
+
     public 
 
     StructPublisher<Pose2d> publisher;
@@ -174,11 +176,11 @@ public class Swerve extends SubsystemBase {
         return swervePoseEstimator.getEstimatedPosition();
     }
 
-    public void setPose(Pose2d pose) {
+    public void setPose(Pose2d pose){
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);
     }
 
-    public void setLLPose(Pose2d pose) {
+    public void setLLPose(Pose2d pose){
         swervePoseEstimator.resetPosition(getGyroYaw(), getModulePositions(), pose);
     }
 
@@ -189,12 +191,28 @@ public class Swerve extends SubsystemBase {
     public void setHeading(Rotation2d heading){
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
     }
+ 
+    public void storeHeading(){
+        storedHeading = getPose().getRotation();
+    }
+
+    public void setTrapHeading(){
+    //     if(115.0 < storedHeading.getDegrees() || storedHeading.getDegrees() < 125.0){
+    //         setHeading(new Rotation2d(240));
+    //     }
+    //     // else if(-5.0 < storedHeading.getDegrees() || storedHeading.getDegrees() < 5.0){
+    //     //     setHeading(new Rotation2d(120));
+    //     // }
+    //     else if(-115.0 < storedHeading.getDegrees() || storedHeading.getDegrees() < -125.0){
+    //         setHeading(new Rotation2d(0));
+    //     }
+    }
 
     public void zeroHeading(){
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
     }
 
-    public Rotation2d getGyroYaw() {
+    public Rotation2d getGyroYaw(){
         return Rotation2d.fromDegrees(gyro.getYaw().getValue());
     }
 
@@ -227,7 +245,9 @@ public class Swerve extends SubsystemBase {
 
         // publisher.set(PoseA);
         // arrayPublisher.set(new Pose2d[] {PoseA, PoseB});
-            SmartDashboard.putNumber("Heading", getGyroYaw().getDegrees());
+            SmartDashboard.putNumber("Heading", getHeading().getDegrees());
+            SmartDashboard.putNumber("Yaw", getGyroYaw().getDegrees());
+            SmartDashboard.putNumber("StoredHeading", storedHeading.getDegrees());
 
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());

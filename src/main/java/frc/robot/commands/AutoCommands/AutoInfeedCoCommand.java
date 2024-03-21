@@ -2,13 +2,13 @@ package frc.robot.commands.AutoCommands;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.InfeedConstants;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.WristConstants;
-import frc.robot.commands.InfeedCommand;
-import frc.robot.commands.ShooterCommand;
-import frc.robot.commands.z_ArmCommands.ArmPIDCommand;
-import frc.robot.commands.z_WristCommands.WristPIDCommand;
+import frc.robot.commands.TeleopCommands.InfeedCommand;
+import frc.robot.commands.TeleopCommands.ShooterCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedCoCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.SuckBackCommand;
+import frc.robot.commands.TeleopCommands.z_ArmCommands.ArmPIDCommand;
+import frc.robot.commands.TeleopCommands.z_WristCommands.WristPIDCommand;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.InfeedSS;
 import frc.robot.subsystems.SensorSS;
@@ -22,28 +22,37 @@ public class AutoInfeedCoCommand extends SequentialCommandGroup{
     public AutoInfeedCoCommand(WristSS s_Wrist, ArmSS s_Arm, InfeedSS s_Infeed, SensorSS s_Sensor, ShooterSS s_Shooter) {
 
         addCommands(
-            new RepeatCommand(
-                new ConditionalCommand(
-                    new SequentialCommandGroup(
-                        new InfeedCommand(s_Infeed, 0.0),
-                        new WaitCommand(5)
-                    ),
-                    
-                    new ParallelCommandGroup(
-                        new InfeedCommand(s_Infeed, InfeedConstants.INFEED_SPEED),
-                        new ShooterCommand(s_Shooter, ShooterConstants.SPEAKER),
-                        new WristPIDCommand(s_Wrist, WristConstants.INFEED_POS, WristConstants.MAX_PID_OUTPUT),
-                        new ArmPIDCommand(s_Arm, ArmConstants.INFEED_POS, WristConstants.MAX_PID_OUTPUT)
-                    ),
+                    new RepeatCommand(
+                        new ConditionalCommand(
+                            // while true
+                                new SequentialCommandGroup(
+                                    new ParallelCommandGroup(
+                                        new WristPIDCommand(s_Wrist, WristConstants.DRIVE_POS, WristConstants.MAX_PID_OUTPUT),
+                                        new ArmPIDCommand(s_Arm, ArmConstants.DRIVE_POS, ArmConstants.MAX_PID_OUTPUT)),
+                                    new WaitCommand(0.25),
+                                    new InfeedCommand(s_Infeed, 0.0),
+                                    new SuckBackCommand(s_Infeed, s_Shooter),
+                                    new WaitCommand(5)
+                                ),
 
-                    () -> s_Sensor.isSensed()
-                )
-            )
+                            // while false 
+                                new ParallelCommandGroup(
+                                    new InfeedCoCommand(s_Wrist, s_Arm, s_Infeed),
+                                    new ShooterCommand(s_Shooter, 0.0)
+                                    
+                                )
+                                .until(() -> s_Sensor.isTriggered()),
+
+                            // condition
+                            () -> s_Sensor.isTriggered()
+                        )
+                    )
         );
+        
         
                
             
-        addRequirements(s_Wrist, s_Arm, s_Infeed, s_Shooter);
+        addRequirements(s_Wrist, s_Arm, s_Infeed);
     }
     
     
