@@ -26,7 +26,6 @@ import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.PassO
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ScoringCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.SpeakerShotCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.AmpCommands.ToggleAmpCoCommand;
-import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ShuttleCommands.ShuttleCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ShuttleCommands.StageShuttleCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TrapCommands.AutoTrapCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TrapCommands.TrapCoCommand;
@@ -151,23 +150,6 @@ public class RobotContainer {
             )
             
         );
-
-        // s_Arm.setDefaultCommand(
-        //     new ArmManualCommand(
-        //         s_Arm, 
-        //         () -> -m_CoXboxController.getRawAxis(ArmAxis))
-        // );        
-
-        // s_Wrist.setDefaultCommand(
-        //     new WristManualCmd(
-        //         s_Wrist,
-        //         () -> -m_CoXboxController.getRawAxis(WristAxis))
-        // );
-
-        // s_Climber.setDefaultCommand(
-        //     new ClimberStopCommand(s_Climber)
-        // );
-
 
         // registering commands into path planner
         NamedCommands.registerCommand("ZeroGyro", new InstantCommand(() -> s_Swerve.zeroHeading()));

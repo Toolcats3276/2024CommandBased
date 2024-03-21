@@ -52,9 +52,6 @@ public class WristSS extends SubsystemBase{
 
     private double wristVal;
 
-    private boolean ShootPos;
-
-
     // CONFIGURING ALL MOTORS, ENCODERS, AND PID CONTOLLERS
     public WristSS() {
         m_WristMotor = new TalonFX(WristConstants.WRIST_MOTOR_ID);
@@ -229,10 +226,6 @@ public class WristSS extends SubsystemBase{
         WristPIDController1.reset();
         WristPIDController2.reset();
         WristMode = Mode.AutoAim;
-    }
-
-    public void setShootPos(boolean ShootPos){
-        this.ShootPos = ShootPos;
     }
 
     public boolean returnTarget(){

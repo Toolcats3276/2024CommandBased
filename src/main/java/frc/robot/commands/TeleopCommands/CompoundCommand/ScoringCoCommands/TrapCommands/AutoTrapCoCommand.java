@@ -42,10 +42,7 @@ package frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.Trap
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.*;
-import frc.robot.commands.TeleopCommands.z_ClimberCommands.BothManualCommands.ClimberStopCommand;
-import frc.robot.commands.TeleopCommands.z_ClimberCommands.BothManualCommands.ClimberUpCommand2;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.ClimberSS;
 import frc.robot.subsystems.Swerve;
