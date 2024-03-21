@@ -94,7 +94,9 @@ public class RobotContainer {
 
     private final JoystickButton Shuttle = new JoystickButton(m_DriveController, 3);
 
-    private final JoystickButton Trap = new JoystickButton(m_DriveController, 9);
+    private final JoystickButton Trap = new JoystickButton(m_DriveController, 16);
+    private final JoystickButton CoTrap = new JoystickButton(m_CoXboxController, XboxController.Button.kBack.value);
+    private final JoystickButton AutoTrap = new JoystickButton(m_DriveController, 9);
 
     private final JoystickButton ManualOutfeed = new JoystickButton(m_DriveController, 8);
 
@@ -252,8 +254,8 @@ public class RobotContainer {
             // .until(() -> s_Sensor.isDebounced()));
         // HighShot.onTrue(new HighScoreCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         
-        // Trap.onTrue(new TrapCoCommand(s_Wrist, s_Arm));
-        Trap.onTrue(new AutoTrapCoCommand(s_Wrist, s_Arm, s_Climber, s_Swerve));
+        Trap.onTrue(new TrapCoCommand(s_Wrist, s_Arm));
+        AutoTrap.onTrue(new AutoTrapCoCommand(s_Wrist, s_Arm, s_Climber, s_Swerve));
         ManualOutfeed.onTrue(new InfeedCommand(s_Infeed, InfeedConstants.OUTFEED));
 
         DefenceShot.onTrue(new PathPlannerAuto("DefenceShot"));
@@ -272,6 +274,8 @@ public class RobotContainer {
         CoCancel.onTrue(new CancelCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Climber, s_Sensor,
             () -> -m_CoXboxController.getRawAxis(WristAxis), 
             () -> -m_CoXboxController.getRawAxis(ArmAxis)));
+
+        CoTrap.onTrue(new TrapCoCommand(s_Wrist, s_Arm));
 
         BothClimberUp.whileTrue(new ClimberUpCommand(s_Climber, s_Sensor))
             .onFalse(new ClimberStopCommand(s_Climber));
