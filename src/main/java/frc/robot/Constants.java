@@ -102,7 +102,7 @@ public final class Constants {
         public static final double STAGE_SHUTTLE_POS = 0.5;
 
         public static final double MID_NOTE_POS = 0.542; //0.545
-        public static final double CLOSE_MID_NOTE_POS = 0.516; //0.52
+        public static final double CLOSE_MID_NOTE_POS = 0.512; //0.52
         public static final double LEFT_NOTE_POS = 0.535; //0.548
         public static final double RIGHT_NOTE_POS = 0.538; //0.55
 
