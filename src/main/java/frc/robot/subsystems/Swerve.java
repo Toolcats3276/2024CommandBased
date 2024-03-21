@@ -196,16 +196,20 @@ public class Swerve extends SubsystemBase {
         storedHeading = getPose().getRotation();
     }
 
+    public Rotation2d getStoredHeading(){
+        return storedHeading;
+    }
+
     public void setTrapHeading(){
-    //     if(115.0 < storedHeading.getDegrees() || storedHeading.getDegrees() < 125.0){
-    //         setHeading(new Rotation2d(240));
-    //     }
-    //     // else if(-5.0 < storedHeading.getDegrees() || storedHeading.getDegrees() < 5.0){
-    //     //     setHeading(new Rotation2d(120));
-    //     // }
-    //     else if(-115.0 < storedHeading.getDegrees() || storedHeading.getDegrees() < -125.0){
-    //         setHeading(new Rotation2d(0));
-    //     }
+        if(115.0 < storedHeading.getDegrees() || storedHeading.getDegrees() < 125.0){
+            setHeading(new Rotation2d(240));
+        }
+        // else if(-5.0 < storedHeading.getDegrees() || storedHeading.getDegrees() < 5.0){
+        //     setHeading(new Rotation2d(120));
+        // }
+        else if(-115.0 < storedHeading.getDegrees() || storedHeading.getDegrees() < -125.0){
+            setHeading(new Rotation2d(0));
+        }
     }
 
     public void zeroHeading(){

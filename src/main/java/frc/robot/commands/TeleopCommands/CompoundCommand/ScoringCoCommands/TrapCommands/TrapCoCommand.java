@@ -1,4 +1,4 @@
-package frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands;
+package frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TrapCommands;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.ArmConstants;

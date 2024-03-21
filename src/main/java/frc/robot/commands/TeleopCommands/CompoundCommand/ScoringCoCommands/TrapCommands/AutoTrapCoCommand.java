@@ -38,7 +38,7 @@
    
 // }
 
-package frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands;
+package frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TrapCommands;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
 

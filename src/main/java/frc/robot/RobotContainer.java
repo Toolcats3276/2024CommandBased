@@ -21,14 +21,15 @@ import frc.robot.commands.TeleopCommands.CompoundCommand.CompCoCommands.CompCoCo
 import frc.robot.commands.TeleopCommands.CompoundCommand.CompCoCommands.ToggleCompCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedSensorCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedSensorCoCommand2;
-import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.AutoTrapCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.InverseScoreCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.PassOffCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ScoringCoCommand;
-import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ShuttleCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.SpeakerShotCoCommand;
-import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TrapCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.AmpCommands.ToggleAmpCoCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ShuttleCommands.ShuttleCoCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ShuttleCommands.StageShuttleCoCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TrapCommands.AutoTrapCoCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TrapCommands.TrapCoCommand;
 import frc.robot.commands.TeleopCommands.z_ClimberCommands.BothManualCommands.ClimberDownCommand;
 import frc.robot.commands.TeleopCommands.z_ClimberCommands.BothManualCommands.ClimberStopCommand;
 import frc.robot.commands.TeleopCommands.z_ClimberCommands.BothManualCommands.ClimberUpCommand;
@@ -250,8 +251,8 @@ public class RobotContainer {
         InverseShot.onTrue(new InverseScoreCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
 
-        Shuttle.onTrue(new ShuttleCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED));
-            // .until(() -> s_Sensor.isDebounced()));
+        Shuttle.onTrue(new StageShuttleCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        // Shuttle.onTrue(new ShuttleCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED));
         // HighShot.onTrue(new HighScoreCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         
         Trap.onTrue(new TrapCoCommand(s_Wrist, s_Arm));

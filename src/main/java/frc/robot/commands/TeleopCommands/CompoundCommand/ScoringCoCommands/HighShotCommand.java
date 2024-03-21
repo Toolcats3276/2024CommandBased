@@ -14,11 +14,11 @@ import frc.robot.subsystems.WristSS;
 import frc.robot.subsystems.InfeedSS;
 import frc.robot.subsystems.ShooterSS;
 
-public class HighScoreCommand extends SequentialCommandGroup{
+public class HighShotCommand extends SequentialCommandGroup{
 
 
 
-    public HighScoreCommand(InfeedSS s_Infeed, ShooterSS s_Shooter, ArmSS s_Arm, WristSS s_Wrist) {
+    public HighShotCommand(InfeedSS s_Infeed, ShooterSS s_Shooter, ArmSS s_Arm, WristSS s_Wrist) {
 
         addCommands(
                 // new SequentialCommandGroup(
