@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 2.0,
-      "y": 5.55
+      "x": 3.8243667936267003,
+      "y": 4.085148692862707
     },
     "rotation": 0
   },
@@ -18,32 +18,45 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "DefenceShot"
+                  "pathName": "Trap"
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "FarShot"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.55
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "TrapCommand"
+                      }
+                    }
+                  ]
                 }
               }
             ]
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "wait",
                 "data": {
-                  "name": "PassOff"
+                  "waitTime": 1.0
                 }
               },
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "ZeroGyro"
+                  "pathName": "Trap2"
                 }
               }
             ]

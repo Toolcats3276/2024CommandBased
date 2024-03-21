@@ -6,11 +6,13 @@
     "4Note",
     "Basic Paths",
     "Left-Far",
-    "Right-Far"
+    "Right-Far",
+    "Teleop Paths"
   ],
   "autoFolders": [
-    "Basic Autos",
     "AMP + Delays",
+    "Basic Autos",
+    "Teleop Autos",
     "WIP"
   ],
   "defaultMaxVel": 4.7,
