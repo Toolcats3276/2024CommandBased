@@ -43,27 +43,34 @@ package frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.Trap
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj2.command.*;
+import frc.robot.Constants.InfeedConstants;
+import frc.robot.commands.TeleopCommands.InfeedCommand;
+import frc.robot.commands.TeleopCommands.z_ClimberCommands.BothManualCommands.ClimberStopCommand;
+import frc.robot.commands.TeleopCommands.z_ClimberCommands.BothManualCommands.ClimberUpCommand;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.ClimberSS;
+import frc.robot.subsystems.InfeedSS;
+import frc.robot.subsystems.SensorSS;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.WristSS;
 
 public class AutoTrapCoCommand extends SequentialCommandGroup{
 
     
-    public AutoTrapCoCommand(WristSS s_Wrist, ArmSS s_Arm, ClimberSS s_Climber, Swerve s_Swerve) {
+    public AutoTrapCoCommand(WristSS s_Wrist, ArmSS s_Arm, ClimberSS s_Climber, Swerve s_Swerve, SensorSS s_Sensor, InfeedSS s_Infeed) {
 
         addCommands(
             new SequentialCommandGroup(
                 new InstantCommand(() -> s_Swerve.storeHeading()),
-                new PathPlannerAuto("AutoTrap")
-                // new WaitCommand(1),
-                // new ClimberUpCommand2(s_Climber),
-                // new WaitCommand(2),
-                // new ClimberStopCommand(s_Climber),
-                // new InstantCommand(() -> s_Swerve.setTrapHeading())
-                // ).handleInterrupt(() -> s_Swerve.setTrapHeading())
-            )
+                new PathPlannerAuto("AutoTrap"),
+                new WaitCommand(1.15),
+                new ClimberUpCommand(s_Climber, s_Sensor),
+                new InfeedCommand(s_Infeed, InfeedConstants.OUTFEED),
+                new WaitCommand(0.75),
+                new InfeedCommand(s_Infeed, 0.0),
+                new InstantCommand(() -> s_Swerve.setTrapHeading())
+                ).handleInterrupt(() -> s_Swerve.setTrapHeading())
+            
         );
         addRequirements(s_Wrist, s_Arm);
     }

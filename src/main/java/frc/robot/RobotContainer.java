@@ -236,7 +236,7 @@ public class RobotContainer {
         // HighShot.onTrue(new HighScoreCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         
         Trap.onTrue(new TrapCoCommand(s_Wrist, s_Arm));
-        AutoTrap.onTrue(new AutoTrapCoCommand(s_Wrist, s_Arm, s_Climber, s_Swerve));
+        AutoTrap.onTrue(new AutoTrapCoCommand(s_Wrist, s_Arm, s_Climber, s_Swerve, s_Sensor, s_Infeed));
         ManualOutfeed.onTrue(new InfeedCommand(s_Infeed, InfeedConstants.OUTFEED));
 
         DefenceShot.onTrue(new PathPlannerAuto("DefenceShot"));
