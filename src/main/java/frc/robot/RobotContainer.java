@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
 import frc.robot.Constants.InfeedConstants;
 import frc.robot.commands.TeleopCommands.InfeedCommand;
 import frc.robot.commands.TeleopCommands.TeleopSwerve;
@@ -41,6 +42,10 @@ import frc.robot.commands.AutoCommands.AutoInfeedCoCommand;
 import frc.robot.commands.AutoCommands.AmpCommands.AutoAmpCoCommand;
 import frc.robot.commands.AutoCommands.AmpCommands.AutoInverseAmpCoCommand;
 import frc.robot.commands.AutoCommands.OptimizedCommands.OpAutoInfeedCoCommand;
+import frc.robot.commands.AutoCommands.OptimizedCommands.ShootCommands.OpAutoCloseMidShootCoCommands;
+import frc.robot.commands.AutoCommands.OptimizedCommands.ShootCommands.OpAutoLeftShootCoCommands;
+import frc.robot.commands.AutoCommands.OptimizedCommands.ShootCommands.OpAutoMidShootCoCommands;
+import frc.robot.commands.AutoCommands.OptimizedCommands.ShootCommands.OpAutoRightShootCoCommands;
 import frc.robot.commands.AutoCommands.ShootCommand.AutoStartShotCoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.AutoStartShotCoCommand2;
 import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.CloseMidNoteShootCoCommand;
@@ -167,7 +172,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("InfeedCommand", new AutoInfeedCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter)
             .until(() -> s_Sensor.infeedDelay()));
         NamedCommands.registerCommand("OpInfeedCommand", new OpAutoInfeedCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter)
-            .until(() -> s_Sensor.infeedDelay()));
+            .until(() -> s_Sensor.isTriggered()));
 
         NamedCommands.registerCommand("CompCommand", new CompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter));
 
@@ -183,6 +188,11 @@ public class RobotContainer {
         NamedCommands.registerCommand("CloseMidNoteShot", new CloseMidNoteShootCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("LeftNoteShot", new LeftNoteShootCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("RightNoteShot", new RightNoteShootCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+
+        NamedCommands.registerCommand("OpMidNoteShot", new OpAutoMidShootCoCommands(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        NamedCommands.registerCommand("OpCloseMidNoteShot", new OpAutoCloseMidShootCoCommands(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        NamedCommands.registerCommand("OpLeftNoteShot", new OpAutoLeftShootCoCommands(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        NamedCommands.registerCommand("OpRightNoteShot", new OpAutoRightShootCoCommands(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
         NamedCommands.registerCommand("FarShot", new AutoFarShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("FarShot2", new AutoFarShotCoCommand2(s_Infeed, s_Shooter, s_Arm, s_Wrist));

@@ -41,6 +41,10 @@ public class SensorSS extends SubsystemBase{
 
     }
     
+    public boolean isSensed(){
+        return sensor.get();
+    }
+    
     /* returns weather or not sensor sees something with a small debounce
      * should be used for conditions on conditional commands
      */
@@ -64,9 +68,6 @@ public class SensorSS extends SubsystemBase{
         return !RLimitSwitch.get();
     }
 
-    public boolean isSensed(){
-        return sensor.get();
-    }
 
     
 
