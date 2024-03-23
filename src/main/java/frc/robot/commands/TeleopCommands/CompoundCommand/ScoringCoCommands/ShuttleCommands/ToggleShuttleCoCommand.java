@@ -1,8 +1,6 @@
 package frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ShuttleCommands;
 
 import edu.wpi.first.wpilibj2.command.*;
-import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.WristConstants;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.InfeedSS;
 import frc.robot.subsystems.LEDSS;
