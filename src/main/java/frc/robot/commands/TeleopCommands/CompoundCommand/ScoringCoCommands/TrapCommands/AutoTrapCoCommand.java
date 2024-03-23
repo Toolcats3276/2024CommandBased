@@ -44,9 +44,8 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.InfeedConstants;
-import frc.robot.commands.TeleopCommands.InfeedCommand;
-import frc.robot.commands.TeleopCommands.z_ClimberCommands.BothManualCommands.ClimberStopCommand;
-import frc.robot.commands.TeleopCommands.z_ClimberCommands.BothManualCommands.ClimberUpCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.InfeedCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.ClimberCommands.BothManualCommands.ClimberUpCommand;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.ClimberSS;
 import frc.robot.subsystems.InfeedSS;

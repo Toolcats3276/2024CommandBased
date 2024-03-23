@@ -3,11 +3,11 @@ package frc.robot.commands.TeleopCommands.CompoundCommand;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.*;
-import frc.robot.commands.TeleopCommands.InfeedCommand;
-import frc.robot.commands.TeleopCommands.ShooterCommand;
-import frc.robot.commands.TeleopCommands.z_ArmCommands.ArmManualCommand;
-import frc.robot.commands.TeleopCommands.z_ClimberCommands.BothManualCommands.ClimberStopCommand;
-import frc.robot.commands.TeleopCommands.z_WristCommands.WristManualCmd;
+import frc.robot.commands.TeleopCommands.BaseCommands.InfeedCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.ShooterCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.ArmCommands.ArmManualCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.ClimberCommands.BothManualCommands.ClimberStopCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.WristCommands.WristManualCmd;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.ClimberSS;
 import frc.robot.subsystems.WristSS;

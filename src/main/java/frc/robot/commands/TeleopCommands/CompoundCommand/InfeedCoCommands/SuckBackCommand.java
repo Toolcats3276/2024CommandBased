@@ -1,8 +1,8 @@
 package frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands;
 
 import edu.wpi.first.wpilibj2.command.*;
-import frc.robot.commands.TeleopCommands.InfeedCommand;
-import frc.robot.commands.TeleopCommands.ShooterCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.InfeedCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.ShooterCommand;
 import frc.robot.subsystems.InfeedSS;
 import frc.robot.subsystems.ShooterSS;
 

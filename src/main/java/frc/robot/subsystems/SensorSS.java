@@ -12,7 +12,6 @@ public class SensorSS extends SubsystemBase{
 
     /* CREATS DEBOUNCER OBJECTS FOR SENSOR INPUT
      */
-
     private final DigitalInput sensor;
 
     private final DigitalInput LLimitSwitch;
@@ -20,6 +19,9 @@ public class SensorSS extends SubsystemBase{
     
     private final Debouncer m_debouncer1;
     private final Debouncer m_debouncer2;
+
+    private boolean ShuttleState = false;
+    private boolean InfeedState = false;
 
    public SensorSS() {
 
@@ -59,7 +61,6 @@ public class SensorSS extends SubsystemBase{
         return m_debouncer2.calculate(sensor.get());
     }
 
-
     public boolean returnLeftLimit(){
         return !LLimitSwitch.get();
     }
@@ -67,6 +68,23 @@ public class SensorSS extends SubsystemBase{
     public boolean returnRightLimit(){
         return !RLimitSwitch.get();
     }
+    
+    public void setShuttleState(boolean ShuttleState){
+        this.ShuttleState = ShuttleState;
+    }
+
+    public boolean getShuttleState(){
+        return ShuttleState;
+    }
+
+    public void setInfeedState(boolean InfeedState){
+        this.InfeedState = InfeedState;
+    }
+
+    public boolean getInfeedState(){
+        return InfeedState;
+    }
+
 
 
     

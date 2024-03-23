@@ -2,8 +2,8 @@ package frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.ArmConstants;
-import frc.robot.commands.TeleopCommands.AutoAimCommand;
-import frc.robot.commands.TeleopCommands.z_ArmCommands.ArmPIDCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.AutoAimCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.ArmCommands.ArmPIDCommand;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.WristSS;
 

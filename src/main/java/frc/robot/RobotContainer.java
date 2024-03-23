@@ -14,30 +14,30 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.Constants.InfeedConstants;
-import frc.robot.commands.TeleopCommands.InfeedCommand;
-import frc.robot.commands.TeleopCommands.TeleopSwerve;
+import frc.robot.commands.TeleopCommands.BaseCommands.InfeedCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.TeleopSwerve;
+import frc.robot.commands.TeleopCommands.BaseCommands.ClimberCommands.BothManualCommands.ClimberDownCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.ClimberCommands.BothManualCommands.ClimberStopCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.ClimberCommands.BothManualCommands.ClimberUpCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.ClimberCommands.LeftManualCommands.LeftClimberDownCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.ClimberCommands.LeftManualCommands.LeftClimberStopCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.ClimberCommands.LeftManualCommands.LeftClimberUpCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.ClimberCommands.RightManualCommands.RightClimberDownCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.ClimberCommands.RightManualCommands.RightClimberStopCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.ClimberCommands.RightManualCommands.RightClimberUpCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.*;
 import frc.robot.commands.TeleopCommands.CompoundCommand.CompCoCommands.CompCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.CompCoCommands.ToggleCompCoCommand;
-import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedSensorCoCommand;
-import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedSensorCoCommand2;
+import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedCompCoCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedDriveCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.InverseScoreCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.PassOffCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ScoringCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.SpeakerShotCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.AmpCommands.ToggleAmpCoCommand;
-import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ShuttleCommands.StageShuttleCoCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ShuttleCommands.ToggleShuttleCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TrapCommands.AutoTrapCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TrapCommands.TrapCoCommand;
-import frc.robot.commands.TeleopCommands.z_ClimberCommands.BothManualCommands.ClimberDownCommand;
-import frc.robot.commands.TeleopCommands.z_ClimberCommands.BothManualCommands.ClimberStopCommand;
-import frc.robot.commands.TeleopCommands.z_ClimberCommands.BothManualCommands.ClimberUpCommand;
-import frc.robot.commands.TeleopCommands.z_ClimberCommands.LeftManualCommands.LeftClimberDownCommand;
-import frc.robot.commands.TeleopCommands.z_ClimberCommands.LeftManualCommands.LeftClimberStopCommand;
-import frc.robot.commands.TeleopCommands.z_ClimberCommands.LeftManualCommands.LeftClimberUpCommand;
-import frc.robot.commands.TeleopCommands.z_ClimberCommands.RightManualCommands.RightClimberDownCommand;
-import frc.robot.commands.TeleopCommands.z_ClimberCommands.RightManualCommands.RightClimberStopCommand;
-import frc.robot.commands.TeleopCommands.z_ClimberCommands.RightManualCommands.RightClimberUpCommand;
 import frc.robot.commands.AutoCommands.AutoInfeedCoCommand;
 import frc.robot.commands.AutoCommands.AmpCommands.AutoAmpCoCommand;
 import frc.robot.commands.AutoCommands.AmpCommands.AutoInverseAmpCoCommand;
@@ -216,22 +216,20 @@ public class RobotContainer {
 
         Drive.onTrue(new ToggleCompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter));
 
-        Infeed.onTrue(new InfeedSensorCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
+        Infeed.onTrue(new InfeedCompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
             .until(() -> s_Sensor.infeedDelay()));
-        Infeed2.onTrue(new InfeedSensorCoCommand2(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
+        Infeed2.onTrue(new InfeedDriveCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
             .until(() -> s_Sensor.infeedDelay()));
 
-        // Infeed.onTrue(new InfeedCoCommand(s_Wrist, s_Arm, s_Infeed));
-        Amp.onTrue(new ToggleAmpCoCommand(s_Wrist, s_Arm, s_Infeed));
-        // AmpTwo.onTrue(new AmpTwoCoCommand(s_Wrist, s_Arm, s_Infeed));
+        Amp.onTrue(new ToggleAmpCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter));
         
-        Shoot.onTrue(new ScoringCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        Shoot.onTrue(new ScoringCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist, s_Sensor));
         // FarShot.onTrue(new FarShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
         InverseShot.onTrue(new InverseScoreCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
 
-        Shuttle.onTrue(new StageShuttleCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        Shuttle.onTrue(new ToggleShuttleCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor, s_LED));
         // Shuttle.onTrue(new ShuttleCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED));
         // HighShot.onTrue(new HighScoreCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         
