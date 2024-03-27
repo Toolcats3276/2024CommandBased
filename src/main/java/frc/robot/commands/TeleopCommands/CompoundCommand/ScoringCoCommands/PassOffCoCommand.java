@@ -2,8 +2,8 @@ package frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.InfeedConstants;
-import frc.robot.commands.TeleopCommands.InfeedCommand;
-import frc.robot.commands.TeleopCommands.ShooterCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.InfeedCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.ShooterCommand;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.WristSS;
 import frc.robot.subsystems.InfeedSS;

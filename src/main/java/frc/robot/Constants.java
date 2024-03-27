@@ -62,6 +62,7 @@ public final class Constants {
         public static final double SPEAKER_POS = INFEED_POS;//.090 speaker -- .17 amp
         // public static final double FARSHOT_POS;
         public static final double SHUTTLE_POS = 0.47;
+        public static final double STAGE_SHUTTLE_POS = SPEAKER_POS;
         public static final double INVERSE_POS = 0.50;
 
 
@@ -96,10 +97,12 @@ public final class Constants {
         public static final double SPEAKER_POS = 0.46;// .47 changed 3/4 test w/ harrier
         public static final double FARSHOT_POS = 0.52;//0.52
         public static final double INVERSE_POS = 0.17;//wrist variable
+
         public static final double AUTO_FARSHOT_POS = 0.55;//0.562 changed 3/5 -isaac
         public static final double AUTO_FARSHOT_POS_2 = 0.558;//0.585
+        
         public static final double SHUTTLE_POS = 0.51;
-        public static final double STAGE_SHUTTLE_POS = 0.5;
+        public static final double STAGE_SHUTTLE_POS = 0.48;
 
         public static final double MID_NOTE_POS = 0.542; //0.545
         public static final double CLOSE_MID_NOTE_POS = 0.512; //0.52
