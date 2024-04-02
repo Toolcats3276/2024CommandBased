@@ -62,13 +62,13 @@ public class AutoTrapCoCommand extends SequentialCommandGroup{
             new SequentialCommandGroup(
                 new InstantCommand(() -> s_Swerve.storeHeading()),
                 new PathPlannerAuto("AutoTrap"),
-                new WaitCommand(1.15),
+                new WaitCommand(0.0),
                 new ClimberUpCommand(s_Climber, s_Sensor),
-                new InfeedCommand(s_Infeed, InfeedConstants.OUTFEED),
-                new WaitCommand(0.75),
-                new InfeedCommand(s_Infeed, 0.0),
-                new InstantCommand(() -> s_Swerve.setTrapHeading())
-                ).handleInterrupt(() -> s_Swerve.setTrapHeading())
+                new InfeedCommand(s_Infeed, InfeedConstants.TRAP),
+                new WaitCommand(1.75),
+                new InfeedCommand(s_Infeed, 0.0)
+                // new InstantCommand(() -> s_Swerve.setTrapHeading())
+                )
             
         );
         addRequirements(s_Wrist, s_Arm);

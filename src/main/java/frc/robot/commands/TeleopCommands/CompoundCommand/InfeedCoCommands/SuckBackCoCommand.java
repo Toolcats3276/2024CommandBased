@@ -6,10 +6,10 @@ import frc.robot.commands.TeleopCommands.BaseCommands.ShooterCommand;
 import frc.robot.subsystems.InfeedSS;
 import frc.robot.subsystems.ShooterSS;
 
-public class SuckBackCommand extends SequentialCommandGroup{
+public class SuckBackCoCommand extends SequentialCommandGroup{
 
     
-    public SuckBackCommand(InfeedSS s_Infeed, ShooterSS s_Shooter) {
+    public SuckBackCoCommand(InfeedSS s_Infeed, ShooterSS s_Shooter) {
 
         addCommands(
                 new SequentialCommandGroup(
@@ -19,7 +19,8 @@ public class SuckBackCommand extends SequentialCommandGroup{
                     new WaitCommand(0.2), //delay
                     new ParallelCommandGroup(
                         new ShooterCommand(s_Shooter, 0.0), //stop motors
-                        new InfeedCommand(s_Infeed, 0.0))
+                        new InfeedCommand(s_Infeed, 0.0)),
+                    new PrintCommand("suck back end")
                 )
         );
         addRequirements(s_Infeed, s_Shooter);

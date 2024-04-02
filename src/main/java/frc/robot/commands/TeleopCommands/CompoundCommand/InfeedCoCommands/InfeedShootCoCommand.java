@@ -16,10 +16,10 @@ import frc.robot.subsystems.ShooterSS;
 import frc.robot.subsystems.WristSS;
 
 
-public class InfeedDriveCoCommand extends SequentialCommandGroup{
+public class InfeedShootCoCommand extends SequentialCommandGroup{
 
     
-    public InfeedDriveCoCommand(WristSS s_Wrist, ArmSS s_Arm, InfeedSS s_Infeed, SensorSS s_Sensor, ShooterSS s_Shooter, LEDSS s_LED) {
+    public InfeedShootCoCommand(WristSS s_Wrist, ArmSS s_Arm, InfeedSS s_Infeed, SensorSS s_Sensor, ShooterSS s_Shooter, LEDSS s_LED) {
 
         addCommands(
                     new RepeatCommand(
@@ -28,12 +28,11 @@ public class InfeedDriveCoCommand extends SequentialCommandGroup{
                                 new SequentialCommandGroup(
                                     new ParallelCommandGroup(
                                         new InstantCommand(() -> s_LED.Blink()),
-                                        new WristPIDCommand(s_Wrist, WristConstants.DRIVE_POS, WristConstants.MAX_PID_OUTPUT),
-                                        new ArmPIDCommand(s_Arm, ArmConstants.DRIVE_POS, ArmConstants.MAX_PID_OUTPUT)),
+                                        new WristPIDCommand(s_Wrist, WristConstants.SPEAKER_POS, WristConstants.MAX_PID_OUTPUT),
+                                        new ArmPIDCommand(s_Arm, ArmConstants.SPEAKER_POS, ArmConstants.MAX_PID_OUTPUT)),
+                                        new SuckBackCoCommand(s_Infeed, s_Shooter),
                                     new WaitCommand(0.25),
                                     new InstantCommand(() -> s_LED.Off()),
-                                    new InfeedCommand(s_Infeed, 0.0),
-                                    new SuckBackCommand(s_Infeed, s_Shooter),
                                     new ShooterCommand(s_Shooter, ShooterConstants.SPEAKER),
                                     new WaitCommand(5)
                                 ),

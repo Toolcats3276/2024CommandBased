@@ -18,7 +18,7 @@ public class PassOffCoCommand extends SequentialCommandGroup{
         addCommands(
             new WaitCommand(0),
             new InfeedCommand(s_Infeed, InfeedConstants.PASS_OFF),
-            new WaitCommand(0.25),
+            new WaitCommand(0.5),
             new ShooterCommand(s_Shooter, 0.0),
             new InfeedCommand(s_Infeed, 0.0)
         );

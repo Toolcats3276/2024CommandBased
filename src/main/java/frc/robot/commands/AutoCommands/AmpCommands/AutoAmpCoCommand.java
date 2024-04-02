@@ -29,8 +29,7 @@ public class AutoAmpCoCommand extends SequentialCommandGroup{
                     ),
                 new WaitCommand(0.75),
                 new ParallelCommandGroup(
-                    new InfeedCommand(s_Infeed, InfeedConstants.AMP),
-                    new ShooterCommand(s_Shooter, ShooterConstants.AMP_TWO)
+                    new InfeedCommand(s_Infeed, InfeedConstants.AMP)
                 )
             )
 

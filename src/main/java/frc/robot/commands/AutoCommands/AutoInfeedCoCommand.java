@@ -8,7 +8,7 @@ import frc.robot.commands.TeleopCommands.BaseCommands.ShooterCommand;
 import frc.robot.commands.TeleopCommands.BaseCommands.ArmCommands.ArmPIDCommand;
 import frc.robot.commands.TeleopCommands.BaseCommands.WristCommands.WristPIDCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedCoCommand;
-import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.SuckBackCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.SuckBackCoCommand;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.InfeedSS;
 import frc.robot.subsystems.SensorSS;
@@ -31,7 +31,7 @@ public class AutoInfeedCoCommand extends SequentialCommandGroup{
                                 new ArmPIDCommand(s_Arm, ArmConstants.DRIVE_POS, ArmConstants.MAX_PID_OUTPUT)),
                             new WaitCommand(0.25),
                             new InfeedCommand(s_Infeed, 0.0),
-                            new SuckBackCommand(s_Infeed, s_Shooter),
+                            new SuckBackCoCommand(s_Infeed, s_Shooter),
                             new WaitCommand(5)
                         ),
                         

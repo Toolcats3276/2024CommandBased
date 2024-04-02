@@ -32,7 +32,7 @@ public class InfeedCompCoCommand extends SequentialCommandGroup{
                             new WaitCommand(0.25),
                             new InstantCommand(() -> s_LED.Off()),
                             new InfeedCommand(s_Infeed, 0.0),
-                            new SuckBackCommand(s_Infeed, s_Shooter),
+                            new SuckBackCoCommand(s_Infeed, s_Shooter),
                             new WaitCommand(5)
                         ),
 

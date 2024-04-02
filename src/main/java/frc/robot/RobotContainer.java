@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.time.Instant;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -12,8 +14,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
+import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.InfeedConstants;
+import frc.robot.Constants.WristConstants;
 import frc.robot.commands.TeleopCommands.BaseCommands.InfeedCommand;
 import frc.robot.commands.TeleopCommands.BaseCommands.TeleopSwerve;
 import frc.robot.commands.TeleopCommands.BaseCommands.ClimberCommands.BothManualCommands.ClimberDownCommand;
@@ -29,13 +32,15 @@ import frc.robot.commands.TeleopCommands.CompoundCommand.*;
 import frc.robot.commands.TeleopCommands.CompoundCommand.CompCoCommands.CompCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.CompCoCommands.ToggleCompCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedCompCoCommand;
-import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedDriveCoCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedShootCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.InverseScoreCommand;
+// import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.InverseScoreCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.PassOffCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ScoringCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.SpeakerShotCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.AmpCommands.ToggleAmpCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ShuttleCommands.ToggleShuttleCoCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ShuttleCommands.ToggleShuttleStateCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TrapCommands.AutoTrapCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TrapCommands.TrapCoCommand;
 import frc.robot.commands.AutoCommands.AutoInfeedCoCommand;
@@ -81,26 +86,28 @@ public class RobotContainer {
 
     // CREATING m_DriveController BUTTONS
     private final JoystickButton zeroGyro = new JoystickButton(m_DriveController, 14);
-    private final JoystickButton robotCentric = new JoystickButton(m_DriveController, 11);
-
-    private final JoystickButton Drive = new JoystickButton(m_DriveController, 2);
+    private final JoystickButton robotCentric = new JoystickButton(m_DriveController, 0);
+    
+    private final JoystickButton Comp = new JoystickButton(m_DriveController, 2);
+    private final JoystickButton SlowComp = new JoystickButton(m_DriveController, 16);
     private final JoystickButton Amp = new JoystickButton(m_DriveController, 4);
+
     private final JoystickButton Infeed = new JoystickButton(m_DriveController, 7);
-    private final JoystickButton Infeed2 = new JoystickButton(m_DriveController, 6);
+    private final JoystickButton Infeed2 = new JoystickButton(m_DriveController, 8);
+
+    private final JoystickButton ManualOutfeed = new JoystickButton(m_DriveController, 6);
 
     private final JoystickButton Shoot = new JoystickButton(m_DriveController, 1);
     // private final JoystickButton HighShot = new JoystickButton(m_DriveController, 10);
-    private final JoystickButton InverseShot = new JoystickButton(m_DriveController, 10);
+    private final JoystickButton InverseShot = new JoystickButton(m_DriveController, 9);
 
     private final JoystickButton Shuttle = new JoystickButton(m_DriveController, 3);
 
-    private final JoystickButton Trap = new JoystickButton(m_DriveController, 16);
-    private final JoystickButton CoTrap = new JoystickButton(m_CoXboxController, XboxController.Button.kBack.value);
-    private final JoystickButton AutoTrap = new JoystickButton(m_DriveController, 9);
+    private final JoystickButton Trap = new JoystickButton(m_DriveController, 10);
+    // private final JoystickButton CoTrap = new JoystickButton(m_CoXboxController, XboxController.Button.kBack.value);
+    private final JoystickButton AutoTrap = new JoystickButton(m_DriveController, 15);
 
-    private final JoystickButton ManualOutfeed = new JoystickButton(m_DriveController, 8);
-
-    private final JoystickButton DefenceShot = new JoystickButton(m_DriveController, 15);
+    // private final JoystickButton DefenceShot = new JoystickButton(m_DriveController, 15);
 
     private final JoystickButton Cancel = new JoystickButton(m_DriveController, 5);
 
@@ -110,8 +117,9 @@ public class RobotContainer {
     private final JoystickButton CoManualOutfeed = new JoystickButton(m_CoXboxController, XboxController.Button.kRightBumper.value);
 
     // private final JoystickButton CoTest = new JoystickButton(m_CoXboxController, XboxController.Button.kA.value);
-    private final JoystickButton CoZeroGyro = new JoystickButton(m_CoXboxController, XboxController.Button.kY.value);
-    private final JoystickButton CoDefenceShot = new JoystickButton(m_CoXboxController, XboxController.Button.kA.value);
+    private final JoystickButton CoZeroGyro = new JoystickButton(m_CoXboxController, XboxController.Button.kA.value);
+    private final JoystickButton CoDefenceShot = new JoystickButton(m_CoXboxController, XboxController.Button.kX.value);
+    private final JoystickButton CoPodiumShot = new JoystickButton(m_CoXboxController, XboxController.Button.kY.value);
 
     private final JoystickButton CoCancel = new JoystickButton(m_CoXboxController, XboxController.Button.kB.value);
 
@@ -159,12 +167,12 @@ public class RobotContainer {
         NamedCommands.registerCommand("OpInfeedCommand", new OpAutoInfeedCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter)
             .until(() -> s_Sensor.isTriggered()));
 
-        NamedCommands.registerCommand("CompCommand", new CompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter));
+        NamedCommands.registerCommand("CompCommand", new CompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, ArmConstants.MAX_PID_OUTPUT, WristConstants.MAX_PID_OUTPUT));
 
         NamedCommands.registerCommand("StartShot", new AutoStartShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("StartShot2", new AutoStartShotCoCommand2(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
-        NamedCommands.registerCommand("SpeakerShot", new SpeakerShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        // NamedCommands.registerCommand("SpeakerShot", new SpeakerShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
         NamedCommands.registerCommand("Amp", new AutoAmpCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter));
         NamedCommands.registerCommand("InverseAmp", new AutoInverseAmpCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter));
@@ -209,16 +217,17 @@ public class RobotContainer {
         // m_DriveController Buttons
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
 
-        Cancel.onTrue(new CancelCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Climber, s_Sensor,
+        Cancel.onTrue(new CancelCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Climber, s_Sensor, s_LED,
             () -> -m_CoXboxController.getRawAxis(WristAxis), 
             () -> -m_CoXboxController.getRawAxis(ArmAxis)));
 
 
-        Drive.onTrue(new ToggleCompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter));
+        Comp.onTrue(new ToggleCompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, ArmConstants.MAX_PID_OUTPUT, WristConstants.MAX_PID_OUTPUT));
+        SlowComp.onTrue(new CompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, ArmConstants.SLOW_PID_OUTPUT, WristConstants.SLOW_PID_OUTPUT));
 
         Infeed.onTrue(new InfeedCompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
             .until(() -> s_Sensor.infeedDelay()));
-        Infeed2.onTrue(new InfeedDriveCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
+        Infeed2.onTrue(new InfeedShootCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
             .until(() -> s_Sensor.infeedDelay()));
 
         Amp.onTrue(new ToggleAmpCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter));
@@ -226,10 +235,12 @@ public class RobotContainer {
         Shoot.onTrue(new ScoringCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist, s_Sensor));
         // FarShot.onTrue(new FarShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
-        InverseShot.onTrue(new InverseScoreCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
-
+        InverseShot.onTrue(new InverseScoreCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
+            .until(() -> s_Sensor.inverseDelay()));
 
         Shuttle.onTrue(new ToggleShuttleCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor, s_LED));
+        Shuttle.onTrue(new ToggleShuttleStateCoCommand(s_Sensor));
+
         // Shuttle.onTrue(new ShuttleCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED));
         // HighShot.onTrue(new HighScoreCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         
@@ -237,7 +248,7 @@ public class RobotContainer {
         AutoTrap.onTrue(new AutoTrapCoCommand(s_Wrist, s_Arm, s_Climber, s_Swerve, s_Sensor, s_Infeed));
         ManualOutfeed.onTrue(new InfeedCommand(s_Infeed, InfeedConstants.OUTFEED));
 
-        DefenceShot.onTrue(new PathPlannerAuto("DefenceShot"));
+        // DefenceShot.onTrue(new PathPlannerAuto("DefenceShot"));
 
         //m_CoXboxBoxController buttons
 
@@ -245,30 +256,31 @@ public class RobotContainer {
         CoManualOutfeed.onTrue(new InfeedCommand(s_Infeed, InfeedConstants.OUTFEED));
 
         CoDefenceShot.onTrue(new PathPlannerAuto("DefenceShot"));
+        CoPodiumShot.onTrue(new PathPlannerAuto("DefenceShot2"));
 
         // CoHighShot.onTrue(new HighScoreCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
         CoZeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
 
-        CoCancel.onTrue(new CancelCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Climber, s_Sensor,
+        CoCancel.onTrue(new CancelCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Climber, s_Sensor, s_LED,
             () -> -m_CoXboxController.getRawAxis(WristAxis), 
             () -> -m_CoXboxController.getRawAxis(ArmAxis)));
 
-        CoTrap.onTrue(new TrapCoCommand(s_Wrist, s_Arm));
+        // CoTrap.onTrue(new TrapCoCommand(s_Wrist, s_Arm));
 
-        BothClimberUp.whileTrue(new ClimberUpCommand(s_Climber, s_Sensor))
+        BothClimberUp.onTrue(new ClimberUpCommand(s_Climber, s_Sensor).handleInterrupt(() -> new ClimberStopCommand(s_Climber)))
             .onFalse(new ClimberStopCommand(s_Climber));
-        BothClimberDown.whileTrue(new ClimberDownCommand(s_Climber))
+        BothClimberDown.onTrue(new ClimberDownCommand(s_Climber).handleInterrupt(() -> new ClimberStopCommand(s_Climber)))
             .onFalse(new ClimberStopCommand(s_Climber));
 
-        LeftClimberUp.whileTrue(new LeftClimberUpCommand(s_Climber, s_Sensor))
+        LeftClimberUp.onTrue(new LeftClimberUpCommand(s_Climber, s_Sensor).handleInterrupt(() -> new ClimberStopCommand(s_Climber)))
             .onFalse(new LeftClimberStopCommand(s_Climber));
-        LeftClimberDown.whileTrue(new LeftClimberDownCommand(s_Climber))
+        LeftClimberDown.onTrue(new LeftClimberDownCommand(s_Climber).handleInterrupt(() -> new ClimberStopCommand(s_Climber)))
             .onFalse(new LeftClimberStopCommand(s_Climber));
 
-        RightClimberUp.whileTrue(new RightClimberUpCommand(s_Climber, s_Sensor))
+        RightClimberUp.onTrue(new RightClimberUpCommand(s_Climber, s_Sensor).handleInterrupt(() -> new ClimberStopCommand(s_Climber)))
             .onFalse(new RightClimberStopCommand(s_Climber));
-        RightClimberDown.whileTrue(new RightClimberDownCommand(s_Climber))
+        RightClimberDown.onTrue(new RightClimberDownCommand(s_Climber).handleInterrupt(() -> new ClimberStopCommand(s_Climber)))
             .onFalse(new RightClimberStopCommand(s_Climber));
 
 

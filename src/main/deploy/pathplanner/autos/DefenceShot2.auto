@@ -2,24 +2,30 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.59,
-      "y": 7.78
+      "x": 3.45,
+      "y": 4.55
     },
-    "rotation": 90.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "DefenceShot2"
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": null
+            "name": "FarShot"
           }
         }
       ]
     }
   },
-  "folder": "AMP + Delays",
+  "folder": "Teleop Autos",
   "choreoAuto": false
 }

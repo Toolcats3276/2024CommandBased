@@ -94,12 +94,12 @@ public final class Constants {
         public static final double AMP_POS = 0.32; //0.74 werid amp
         public static final double AMP_TWO_POS = 0.41;
 
-        public static final double SPEAKER_POS = 0.46;// .47 changed 3/4 test w/ harrier
+        public static final double SPEAKER_POS = 0.46;//.47 changed 3/4 test w/ harrier
         public static final double FARSHOT_POS = 0.52;//0.52
         public static final double INVERSE_POS = 0.17;//wrist variable
 
         public static final double AUTO_FARSHOT_POS = 0.55;//0.562 changed 3/5 -isaac
-        public static final double AUTO_FARSHOT_POS_2 = 0.558;//0.585
+        public static final double AUTO_FARSHOT_POS_2 = 0.554;//0.585
         
         public static final double SHUTTLE_POS = 0.51;
         public static final double STAGE_SHUTTLE_POS = 0.48;
@@ -143,7 +143,8 @@ public final class Constants {
         public static final double PASS_OFF = -1;
         public static final double AMP = .6;//.6
         public static final double AMP_TWO = -0.5;
-        public static final double OUTFEED = .5;//.5 for trap
+        public static final double OUTFEED = .5;
+        public static final double TRAP = OUTFEED;//.5 for trap
 
     }
 
@@ -160,7 +161,7 @@ public final class Constants {
         public static final double SPEAKER = 1; //1 changed 3/4 test w harrier
         public static final double FAR_SHOT = 1; //1
         public static final double SHUTTLE = 1; //1
-        public static final double STAGE_SHUTTLE = 0.8; //1
+        public static final double STAGE_SHUTTLE = 0.75; //1
 
         public static final double START_SHOT = 0.7;
         public static final double MID_SHOT = 1;

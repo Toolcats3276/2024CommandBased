@@ -16,14 +16,14 @@ import static frc.robot.Constants.WristConstants;
 public class CompCoCommand extends SequentialCommandGroup{
 
     
-    public CompCoCommand(WristSS s_Wrist, ArmSS s_Arm, InfeedSS s_Infeed, ShooterSS s_Shooter) {
+    public CompCoCommand(WristSS s_Wrist, ArmSS s_Arm, InfeedSS s_Infeed, ShooterSS s_Shooter, double armPIDOutput, double wristPIDOutput) {
 
         addCommands(
             new ParallelCommandGroup(
                 new InfeedCommand(s_Infeed, 0.0),
                 new ShooterCommand(s_Shooter, 0.0),
-                new ArmPIDCommand(s_Arm, ArmConstants.COMP_POS, ArmConstants.MAX_PID_OUTPUT),
-                new WristPIDCommand(s_Wrist, WristConstants.COMP_POS, WristConstants.MAX_PID_OUTPUT)
+                new ArmPIDCommand(s_Arm, ArmConstants.COMP_POS, armPIDOutput),
+                new WristPIDCommand(s_Wrist, WristConstants.COMP_POS, wristPIDOutput)
                 )
         );
         addRequirements(s_Wrist, s_Arm);

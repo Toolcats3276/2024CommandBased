@@ -11,7 +11,7 @@ import frc.robot.subsystems.WristSS;
 public class ToggleCompCoCommand extends SequentialCommandGroup{
 
     
-    public ToggleCompCoCommand(WristSS s_Wrist, ArmSS s_Arm, InfeedSS s_Infeed, ShooterSS s_Shooter) {
+    public ToggleCompCoCommand(WristSS s_Wrist, ArmSS s_Arm, InfeedSS s_Infeed, ShooterSS s_Shooter, double armPIDOutput, double wristPIDOutput) {
 
         addCommands(
             new ConditionalCommand(
@@ -22,7 +22,7 @@ public class ToggleCompCoCommand extends SequentialCommandGroup{
                     
                 // while false 
                 new ParallelCommandGroup(
-                    new CompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter)
+                    new CompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, armPIDOutput, wristPIDOutput)
                 ),
 
                 // condition

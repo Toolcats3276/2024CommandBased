@@ -19,7 +19,7 @@ public class ToggleInfeedCoCommand extends SequentialCommandGroup{
             new ConditionalCommand(
 
                 new ParallelCommandGroup(
-                    new InfeedDriveCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED),
+                    new InfeedShootCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED),
                     new InstantCommand(() -> s_Sensor.setInfeedState(false))), 
 
                 new ParallelCommandGroup(

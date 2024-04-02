@@ -123,19 +123,25 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AutoInfeedCommand"
+                        "name": "InfeedCommand"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "CompCommand"
+                        "name": "FarShot2"
                       }
                     }
                   ]
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PassOff"
           }
         }
       ]

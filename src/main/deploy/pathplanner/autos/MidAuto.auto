@@ -12,6 +12,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "StartShot"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -28,6 +34,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "MidNoteShot"
           }
         }
       ]
