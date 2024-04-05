@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 3.45,
-      "y": 4.55
+      "x": 3.5806228382052976,
+      "y": 7.86
     },
     "rotation": 0
   },
@@ -18,7 +18,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "DefenceShot2"
+                  "pathName": "DefenceShot 3"
                 }
               },
               {

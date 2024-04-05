@@ -53,13 +53,13 @@ public final class Constants {
         
         public static final double START_POS = 0.34;
         public static final double START_POS_2 = 0.35;
-        public static final double INFEED_POS = 0.603;
+        public static final double INFEED_POS = 0.6; //0.598
 
         public static final double AMP_POSE = 0.38; //0.53 werid amp
         public static final double AMP_TWO_POS = 0.31;
 
 
-        public static final double SPEAKER_POS = INFEED_POS;//.090 speaker -- .17 amp
+        public static final double SPEAKER_POS = INFEED_POS;
         // public static final double FARSHOT_POS;
         public static final double SHUTTLE_POS = 0.47;
         public static final double STAGE_SHUTTLE_POS = SPEAKER_POS;
@@ -89,27 +89,27 @@ public final class Constants {
         public static final double START_POS = 0.21;
         public static final double START_POS_2 = 0.20;
         public static final double HIGH_SHOT = 0.28;
-        public static final double INFEED_POS = 0.44;
+        public static final double INFEED_POS = 0.427; //0.44 //0.435
 
         public static final double AMP_POS = 0.32; //0.74 werid amp
         public static final double AMP_TWO_POS = 0.41;
 
-        public static final double SPEAKER_POS = 0.46;//.47 changed 3/4 test w/ harrier
-        public static final double FARSHOT_POS = 0.52;//0.52
+        public static final double SPEAKER_POS = 0.46;//0.46
+        public static final double INFEED_SPEAKER_POS = 0.47;
+        public static final double FARSHOT_POS = 0.50;//0.52
         public static final double INVERSE_POS = 0.17;//wrist variable
 
-        public static final double AUTO_FARSHOT_POS = 0.55;//0.562 changed 3/5 -isaac
-        public static final double AUTO_FARSHOT_POS_2 = 0.554;//0.585
-        
         public static final double SHUTTLE_POS = 0.51;
         public static final double STAGE_SHUTTLE_POS = 0.48;
+        
+        public static final double MID_NOTE_POS = 0.52; //0.542
+        public static final double CLOSE_MID_NOTE_POS = 0.495; //0.502
+        public static final double LEFT_NOTE_POS = 0.524; //0.525
+        public static final double RIGHT_NOTE_POS = 0.518; //0.538
+        
+        public static final double AUTO_FARSHOT_POS = 0.535;//0.55
+        public static final double AUTO_FARSHOT_POS_2 = 0.525;//0.52
 
-        public static final double MID_NOTE_POS = 0.542; //0.545
-        public static final double CLOSE_MID_NOTE_POS = 0.512; //0.52
-        public static final double LEFT_NOTE_POS = 0.535; //0.548
-        public static final double RIGHT_NOTE_POS = 0.538; //0.55
-
-        // public static final double CLIMBER_INIT_POS = 0.93; // wrong too
         public static final double CLIMBING_POS = 0.61;
     
         public static final double COMP_POS = 0.75;//.75--.63 for test
@@ -177,7 +177,7 @@ public final class Constants {
         public static final int pigeonID = 10;
 
         public static final COTSTalonFXSwerveConstants chosenModule =
-        COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
+        COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L3);
 
         /* Drivetrain Constants */
         public static final double trackWidth = Units.inchesToMeters(21.73); 
@@ -242,7 +242,7 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 4.7;
+        public static final double maxSpeed = 5;
         /** Radians per Second */
         public static final double maxAngularVelocity = 10.0; //TODO: This must be tuned to specific robot
 
@@ -256,7 +256,7 @@ public final class Constants {
             public static final int driveMotorID = 3;
             public static final int angleMotorID = 4;
             public static final int canCoderID = 1;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-134.297 + 180);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-132.297 + 180);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -266,7 +266,7 @@ public final class Constants {
             public static final int driveMotorID = 6;
             public static final int angleMotorID = 5;
             public static final int canCoderID = 2;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-59.678 + 180);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-58.678 + 180);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -286,7 +286,7 @@ public final class Constants {
             public static final int driveMotorID = 7;
             public static final int angleMotorID = 8;
             public static final int canCoderID = 3;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(4.395 + 180);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(8.173 + 180);//4.395
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }

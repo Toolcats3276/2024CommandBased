@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.InfeedScoringCommands.InfeedShootCoCommand;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.InfeedSS;
 import frc.robot.subsystems.LEDSS;

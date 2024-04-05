@@ -1,4 +1,4 @@
-package frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands;
+package frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.InfeedScoringCommands;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.ArmConstants;
@@ -8,6 +8,8 @@ import frc.robot.commands.TeleopCommands.BaseCommands.InfeedCommand;
 import frc.robot.commands.TeleopCommands.BaseCommands.ShooterCommand;
 import frc.robot.commands.TeleopCommands.BaseCommands.ArmCommands.ArmPIDCommand;
 import frc.robot.commands.TeleopCommands.BaseCommands.WristCommands.WristPIDCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedCoCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.SuckBackCoCommand;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.InfeedSS;
 import frc.robot.subsystems.LEDSS;
@@ -28,10 +30,13 @@ public class InfeedShootCoCommand extends SequentialCommandGroup{
                                 new SequentialCommandGroup(
                                     new ParallelCommandGroup(
                                         new InstantCommand(() -> s_LED.Blink()),
-                                        new WristPIDCommand(s_Wrist, WristConstants.SPEAKER_POS, WristConstants.MAX_PID_OUTPUT),
-                                        new ArmPIDCommand(s_Arm, ArmConstants.SPEAKER_POS, ArmConstants.MAX_PID_OUTPUT)),
-                                        new SuckBackCoCommand(s_Infeed, s_Shooter),
-                                    new WaitCommand(0.25),
+                                        new WristPIDCommand(s_Wrist, WristConstants.INFEED_SPEAKER_POS, WristConstants.MAX_PID_OUTPUT),
+                                        new ArmPIDCommand(s_Arm, ArmConstants.SPEAKER_POS, ArmConstants.MAX_PID_OUTPUT),
+                                        new SequentialCommandGroup(
+                                            new WaitCommand(0.25),
+                                            new SuckBackCoCommand(s_Infeed, s_Shooter)
+                                        )
+                                    ),
                                     new InstantCommand(() -> s_LED.Off()),
                                     new ShooterCommand(s_Shooter, ShooterConstants.SPEAKER),
                                     new WaitCommand(5)

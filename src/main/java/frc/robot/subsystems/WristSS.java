@@ -35,8 +35,8 @@ public class WristSS extends SubsystemBase{
     private final PIDController WristPIDController2;
     private final SimpleMotorFeedforward WristFFController;
 
-    private final double kP1 = 1.5; //1.15
-    private final double kI1 = 0.1; //0.4
+    private final double kP1 = 3; //1.5
+    private final double kI1 = 0.35; //0.1
     private final double kD1 = 0.0;//0.00001
 
     private final double kP2 = 4; //1.15
@@ -67,9 +67,9 @@ public class WristSS extends SubsystemBase{
          * NORMALLY THERE SHOULD ONLY BE ONE PID CONTROLLER
         */
         WristPIDController1 = new PIDController(kP1, kI1, kD1);
-        WristPIDController1.setTolerance(0.05);
+        WristPIDController1.setTolerance(0.005);
         WristPIDController1.setIZone(0.5);
-        WristPIDController1.setIntegratorRange(0, 0.3);
+        WristPIDController1.setIntegratorRange(0, 0.4);
 
         WristPIDController2 = new PIDController(kP2, kI2, kD2);
         WristPIDController2.setTolerance(0.05);

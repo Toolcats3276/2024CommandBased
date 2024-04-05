@@ -23,6 +23,7 @@ public class SensorSS extends SubsystemBase{
     
     private final Debouncer m_triggerDebouncer;
     private final Debouncer m_infeedDebouncer;
+    private final Debouncer m_infeedShotDebouncer;
     private final Debouncer m_inverseDebouncer;
     private final Debouncer m_shuttleDebouncer;
 
@@ -38,7 +39,8 @@ public class SensorSS extends SubsystemBase{
     
     m_triggerDebouncer = new Debouncer(0.1, DebounceType.kBoth);
     m_infeedDebouncer = new Debouncer(0.7, DebounceType.kBoth); //0.67
-    m_inverseDebouncer = new Debouncer(2.25, DebounceType.kBoth);
+    m_infeedShotDebouncer = new Debouncer(0.85, DebounceType.kBoth);
+    m_inverseDebouncer = new Debouncer(2.5, DebounceType.kBoth);
     m_shuttleDebouncer = new Debouncer(2.5, DebounceType.kBoth);
 
    }
@@ -73,6 +75,10 @@ public class SensorSS extends SubsystemBase{
     */
     public boolean infeedDelay(){
         return m_infeedDebouncer.calculate(sensor.get());
+    }
+
+    public boolean infeedShotDelay(){
+        return m_infeedShotDebouncer.calculate(sensor.get());
     }
 
     public boolean inverseDelay(){

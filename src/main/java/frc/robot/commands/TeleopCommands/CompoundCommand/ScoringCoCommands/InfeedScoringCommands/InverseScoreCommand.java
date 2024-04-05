@@ -44,7 +44,7 @@
 // }
 
 
-package frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands;
+package frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.InfeedScoringCommands;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.ArmConstants;
@@ -75,10 +75,13 @@ public class InverseScoreCommand extends SequentialCommandGroup{
                             new SequentialCommandGroup(
                                 new ParallelCommandGroup(
                                     new ArmPIDCommand(s_Arm, ArmConstants.INVERSE_POS, ArmConstants.MAX_PID_OUTPUT),
-                                    new SuckBackCoCommand(s_Infeed, s_Shooter),
-                                    new InstantCommand(() -> s_LED.Blink())
+                                    new InstantCommand(() -> s_LED.Blink()),
+                                    new SequentialCommandGroup(
+                                        new WaitCommand(0.25),
+                                        new SuckBackCoCommand(s_Infeed, s_Shooter)
+                                    )
                                 ),
-                                new WaitCommand(0.75),
+                                new WaitCommand(0.25),
                                 new ParallelCommandGroup(
                                     new WristPIDCommand(s_Wrist, WristConstants.INVERSE_POS, WristConstants.MAX_PID_OUTPUT),
                                     new ShooterCommand(s_Shooter, ShooterConstants.SPEAKER),

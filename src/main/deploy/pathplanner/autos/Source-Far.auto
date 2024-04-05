@@ -113,35 +113,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Far-One"
+                  "pathName": "Three-4th"
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "InfeedCommand"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "FarShot2"
-                      }
-                    }
-                  ]
+                  "name": "CompCommand"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PassOff"
           }
         }
       ]

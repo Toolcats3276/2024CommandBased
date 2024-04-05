@@ -14,16 +14,18 @@ public class SuckBackCoCommand extends SequentialCommandGroup{
         addCommands(
                 new SequentialCommandGroup(
                     new ParallelCommandGroup(
-                        new ShooterCommand(s_Shooter, -0.1), //kickback on shooter wheels maybe need negative
-                        new InfeedCommand(s_Infeed, 0.1)), //Kickback infeed 
+                        // new ShooterCommand(s_Shooter, -0.1), //kickback on shooter wheels maybe need negative
+                        new InfeedCommand(s_Infeed, 0.1) //Kickback infeed
+                    ), 
                     new WaitCommand(0.2), //delay
                     new ParallelCommandGroup(
-                        new ShooterCommand(s_Shooter, 0.0), //stop motors
-                        new InfeedCommand(s_Infeed, 0.0)),
+                        // new ShooterCommand(s_Shooter, 0.0), //stop motors
+                        new InfeedCommand(s_Infeed, 0.0)
+                    ),
                     new PrintCommand("suck back end")
                 )
         );
-        addRequirements(s_Infeed, s_Shooter);
+        addRequirements(s_Infeed);
     }
     
    
