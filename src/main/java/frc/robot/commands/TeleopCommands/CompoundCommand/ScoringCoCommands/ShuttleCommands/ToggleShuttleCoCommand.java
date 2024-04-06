@@ -2,6 +2,7 @@ package frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.Shut
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.WristConstants;
+import frc.robot.commands.TeleopCommands.BaseCommands.ShooterCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedCoCommand;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.InfeedSS;
@@ -39,7 +40,10 @@ public class ToggleShuttleCoCommand extends SequentialCommandGroup{
                 ),
 
                 // ON FALSE
-                new InfeedCoCommand(s_Wrist, s_Arm, s_Infeed),
+                new ParallelCommandGroup(
+                    new InfeedCoCommand(s_Wrist, s_Arm, s_Infeed),
+                    new ShooterCommand(s_Shooter, 0.0)
+                ),
 
                 // CONDITION
                 () -> s_Sensor.isTriggered()

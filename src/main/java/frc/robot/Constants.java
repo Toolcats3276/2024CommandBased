@@ -94,7 +94,7 @@ public final class Constants {
         public static final double AMP_POS = 0.32; //0.74 werid amp
         public static final double AMP_TWO_POS = 0.41;
 
-        public static final double SPEAKER_POS = 0.46;//0.46
+        public static final double SPEAKER_POS = 0.45;//0.46
         public static final double INFEED_SPEAKER_POS = 0.47;
         public static final double FARSHOT_POS = 0.50;//0.52
         public static final double INVERSE_POS = 0.17;//wrist variable
@@ -104,7 +104,7 @@ public final class Constants {
         
         public static final double MID_NOTE_POS = 0.52; //0.542
         public static final double CLOSE_MID_NOTE_POS = 0.495; //0.502
-        public static final double LEFT_NOTE_POS = 0.524; //0.525
+        public static final double LEFT_NOTE_POS = 0.52; //0.524
         public static final double RIGHT_NOTE_POS = 0.518; //0.538
         
         public static final double AUTO_FARSHOT_POS = 0.535;//0.55

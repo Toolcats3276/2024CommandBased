@@ -3,14 +3,14 @@ package frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.InfeedConstants;
-import frc.robot.Constants.WristConstants;
 import frc.robot.commands.TeleopCommands.BaseCommands.InfeedCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.ShooterCommand;
 import frc.robot.commands.TeleopCommands.BaseCommands.ArmCommands.ArmPIDCommand;
 import frc.robot.commands.TeleopCommands.BaseCommands.WristCommands.WristPIDCommand;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.WristSS;
 import frc.robot.subsystems.InfeedSS;
-import frc.robot.subsystems.LEDSS;
+import frc.robot.subsystems.ShooterSS;
 
 import static frc.robot.Constants.WristConstants;
 
