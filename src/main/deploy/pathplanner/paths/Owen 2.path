@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.15,
-        "y": 7.45
+        "x": 2.53,
+        "y": 3.47
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.844270080369141,
-        "y": 7.156322531172378
+        "x": 3.210848711445256,
+        "y": 2.7375759205737884
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.99,
-        "y": 5.61
+        "x": 7.73,
+        "y": 0.9
       },
       "prevControl": {
-        "x": 3.6915360962217694,
-        "y": 5.9509502979877285
+        "x": 6.73,
+        "y": 0.9
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 2.0,
+    "rotation": -16.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "4Note",
+  "folder": "Owen test",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

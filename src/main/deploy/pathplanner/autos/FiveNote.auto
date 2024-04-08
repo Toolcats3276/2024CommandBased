@@ -12,6 +12,12 @@
     "data": {
       "commands": [
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "StartShot"
@@ -185,7 +191,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "OpMidNoteShot"
+                        "name": "FarShot3"
                       }
                     }
                   ]

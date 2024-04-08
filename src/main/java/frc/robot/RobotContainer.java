@@ -59,6 +59,7 @@ import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.MidNoteSho
 import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.RightNoteShootCoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoFarShotCoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoFarShotCoCommand2;
+import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoFarShotCoCommand3;
 import frc.robot.subsystems.*;
 
 /**
@@ -190,6 +191,7 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("FarShot", new AutoFarShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("FarShot2", new AutoFarShotCoCommand2(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        NamedCommands.registerCommand("FarShot3", new AutoFarShotCoCommand3(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
         NamedCommands.registerCommand("PassOff", new PassOffCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
