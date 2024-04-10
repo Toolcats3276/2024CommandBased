@@ -50,27 +50,30 @@ public final class Constants {
         public static final double MANUAL_SPEED = 1;
         public static final double MAX_PID_OUTPUT = 1;
         public static final double SLOW_PID_OUTPUT = 0.2;
-        
-        public static final double START_POS = 0.34;
-        public static final double START_POS_2 = 0.35;
+
         public static final double INFEED_POS = 0.6; //0.598
 
         public static final double AMP_POSE = 0.38; //0.53 werid amp
         public static final double AMP_TWO_POS = 0.31;
-
-
+        
         public static final double SPEAKER_POS = INFEED_POS;
         // public static final double FARSHOT_POS;
         public static final double SHUTTLE_POS = 0.47;
         public static final double STAGE_SHUTTLE_POS = SPEAKER_POS;
         public static final double INVERSE_POS = 0.50;
 
-
-
         public static final double CLIMBER_POS = 0.31;
 
         public static final double COMP_POS = 0.56;
         public static final double DRIVE_POS = INFEED_POS -0.03;
+
+
+        public static final double START_POS = 0.34;
+        public static final double START_POS_2 = 0.35;
+        public static final double START_POS_3 = 0.6;
+
+
+
 
     }
 
@@ -88,6 +91,8 @@ public final class Constants {
 
         public static final double START_POS = 0.21;
         public static final double START_POS_2 = 0.20;
+        public static final double START_POS_3 = 0.535;
+        
         public static final double HIGH_SHOT = 0.28;
         public static final double INFEED_POS = 0.427; //0.44 //0.435
 
@@ -295,7 +300,7 @@ public final class Constants {
 
         public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
             new PIDConstants(10, 0, 0), // Translation constants //3.5
-            new PIDConstants(1.5, 0, 0), // Rotation constants 
+            new PIDConstants(2.5, 0, 0), // Rotation constants P = 1.5
             Swerve.maxSpeed, 
             Swerve.mod0Offset.getNorm(), // Drive base radius (distance from center to furthest module) 
             new ReplanningConfig()

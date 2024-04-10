@@ -78,14 +78,16 @@ public class InverseScoreCommand extends SequentialCommandGroup{
                                     new InstantCommand(() -> s_LED.Blink()),
                                     new SequentialCommandGroup(
                                         new WaitCommand(0.25),
-                                        new SuckBackCoCommand(s_Infeed, s_Shooter)
-                                    )
-                                ),
-                                new WaitCommand(0.25),
-                                new ParallelCommandGroup(
-                                    new WristPIDCommand(s_Wrist, WristConstants.INVERSE_POS, WristConstants.MAX_PID_OUTPUT),
-                                    new ShooterCommand(s_Shooter, ShooterConstants.SPEAKER),
-                                    new InstantCommand(() -> s_LED.Off())
+                                        new SuckBackCoCommand(s_Infeed, s_Shooter),
+                                        new ShooterCommand(s_Shooter, ShooterConstants.SPEAKER)
+                                    ),
+                                    new SequentialCommandGroup( 
+                                        new WaitCommand(0.2),
+                                        new ParallelCommandGroup(
+                                            new WristPIDCommand(s_Wrist, WristConstants.INVERSE_POS, WristConstants.MAX_PID_OUTPUT),
+                                            new InstantCommand(() -> s_LED.Off())
+                                        )
+                                    ) 
                                 ),
                                 new WaitCommand(5)
                             ),
