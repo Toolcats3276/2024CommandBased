@@ -1,9 +1,10 @@
 package frc.robot.autos;
 
-import edu.wpi.first.wpilibj2.command.*;
-import frc.robot.subsystems.SensorSS;
-
 import com.pathplanner.lib.commands.PathPlannerAuto;
+
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.subsystems.SensorSS;
 
 public class sourceSmartAuto extends SequentialCommandGroup{
 
@@ -12,15 +13,46 @@ public class sourceSmartAuto extends SequentialCommandGroup{
 
         addCommands(
             new SequentialCommandGroup(
+                /* first path */
                 new PathPlannerAuto("source_0-1"),
 
                 new ConditionalCommand(
 
-                    new PathPlannerAuto("source_1-2"),
-
+                    /* if note is not picked up */
                     new SequentialCommandGroup(
-                        new WaitCommand(0.1),
-                        new PathPlannerAuto("source_1-X-2")
+
+                        new PathPlannerAuto("source_1-2"),
+
+                        new ConditionalCommand(
+                            /*if note is picked up */
+                            new SequentialCommandGroup(
+                                new PathPlannerAuto("source_2-X-3")
+                            ),
+                            /*if note is not picked up */
+                            new SequentialCommandGroup(
+                                new PathPlannerAuto("source_2-3")
+                            ),
+                            
+                            () -> s_Sensor.isSensed()
+                        )
+                    ),
+
+                    /* if note is picked up */
+                    new SequentialCommandGroup(
+
+                        new PathPlannerAuto("source_1-X-2"),
+
+                        new ConditionalCommand(
+                            /*if note is picked up */
+                            new SequentialCommandGroup(
+                                new PathPlannerAuto("source_2-X-3")
+                            ),
+                            /*if note is not picked up */
+                            new SequentialCommandGroup(
+                                new PathPlannerAuto("source_2-3")
+                            ),
+                            
+                            () -> s_Sensor.isSensed())
                     ),
 
                     () -> !s_Sensor.isSensed()

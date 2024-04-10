@@ -1,0 +1,38 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 7.73,
+      "y": 2.42
+    },
+    "rotation": -30.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "source-2-3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "InfeedCommand"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": "WIP",
+  "choreoAuto": false
+}

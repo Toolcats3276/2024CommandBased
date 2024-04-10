@@ -23,7 +23,7 @@ public class AutoStartShotCoCommand3 extends SequentialCommandGroup{
         addCommands(
             new ParallelCommandGroup(
                 new WristPIDCommand(s_Wrist, WristConstants.START_POS_3, WristConstants.MAX_PID_OUTPUT),
-                new ArmPIDCommand(s_Arm, ArmConstants.START_POS_3, ArmConstants.MAX_PID_OUTPUT),
+                new ArmPIDCommand(s_Arm, ArmConstants.SPEAKER_POS, ArmConstants.MAX_PID_OUTPUT),
                 new ShooterCommand(s_Shooter, ShooterConstants.SPEAKER)
             )  
         );

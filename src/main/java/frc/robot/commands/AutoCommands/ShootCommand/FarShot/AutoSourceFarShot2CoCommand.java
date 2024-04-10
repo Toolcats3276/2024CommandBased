@@ -13,15 +13,15 @@ import frc.robot.subsystems.WristSS;
 import frc.robot.subsystems.InfeedSS;
 import frc.robot.subsystems.ShooterSS;
 
-public class AutoSourceFarShotCoCommand extends SequentialCommandGroup{
+public class AutoSourceFarShot2CoCommand extends SequentialCommandGroup{
 
 
 
-    public AutoSourceFarShotCoCommand(InfeedSS s_Infeed, ShooterSS s_Shooter, ArmSS s_Arm, WristSS s_Wrist) {
+    public AutoSourceFarShot2CoCommand(InfeedSS s_Infeed, ShooterSS s_Shooter, ArmSS s_Arm, WristSS s_Wrist) {
 
         addCommands(
             new ParallelCommandGroup(
-                new WristPIDCommand(s_Wrist, WristConstants.START_POS_3, WristConstants.MAX_PID_OUTPUT),
+                new WristPIDCommand(s_Wrist, WristConstants.SOURCE_FARSHOT_POS_2, WristConstants.MAX_PID_OUTPUT),
                 new ArmPIDCommand(s_Arm, ArmConstants.SPEAKER_POS, ArmConstants.MAX_PID_OUTPUT),
                 new SequentialCommandGroup(
                     new SuckBackCoCommand(s_Infeed, s_Shooter),

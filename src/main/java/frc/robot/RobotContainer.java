@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.InfeedConstants;
@@ -64,6 +65,7 @@ import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.RightNoteS
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoFarShotCoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoFarShotCoCommand2;
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoFarShotCoCommand3;
+import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoSourceFarShot2CoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoSourceFarShotCoCommand;
 import frc.robot.subsystems.*;
 
@@ -76,6 +78,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
 
     private final SendableChooser<Command> autoChooser;
+    private final SendableChooser<Command> AutoChooser;
 
     // CREATING NEW CONTROLLER OBJECTS
     private final Joystick m_DriveController = new Joystick(0);
@@ -201,16 +204,24 @@ public class RobotContainer {
         NamedCommands.registerCommand("FarShot2", new AutoFarShotCoCommand2(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("FarShot3", new AutoFarShotCoCommand3(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("SourceFarShot", new AutoSourceFarShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
-
+        NamedCommands.registerCommand("SourceFarShot2", new AutoSourceFarShot2CoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        
         NamedCommands.registerCommand("PassOff", new PassOffCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
         NamedCommands.registerCommand("TrapCommand", new TrapCoCommand(s_Wrist, s_Arm));
 
         
 
-        // initializing autochooser and putting it on smartdachboard
+        // initializing autochooser and putting it on smartdashboard
         autoChooser = AutoBuilder.buildAutoChooser();
-        SmartDashboard.putData("Auto Chooser", autoChooser);
+        // SmartDashboard.putData("Auto Chooser", autoChooser);
+
+        AutoChooser = new SendableChooser<Command>();
+        AutoChooser.setDefaultOption("None", new PrintCommand(" No Auto Selected"));
+        AutoChooser.addOption("Five Note", new PathPlannerAuto("FiveNote"));
+        AutoChooser.addOption("Four Note", new PathPlannerAuto("FourNote"));
+        AutoChooser.addOption("Smart Source", new sourceSmartAuto(s_Sensor));
+        SmartDashboard.putData("Auto Chooser", AutoChooser);
 
         // Configure the button bindings
         configureButtonBindings();
@@ -316,8 +327,9 @@ public class RobotContainer {
 
      // have it return the autochooser selection
     public Command getAutonomousCommand() {
-        return new sourceSmartAuto(s_Sensor);
+        // return new sourceSmartAuto(s_Sensor);
         // return autoChooser.getSelected();
+        return AutoChooser.getSelected();
     }
 }
 

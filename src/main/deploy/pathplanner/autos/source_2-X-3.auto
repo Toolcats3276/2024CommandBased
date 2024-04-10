@@ -1,0 +1,44 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 7.88,
+      "y": 2.17
+    },
+    "rotation": -30.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "source_2-X"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "SourceFarShot2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PassOff"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "WIP",
+  "choreoAuto": false
+}
