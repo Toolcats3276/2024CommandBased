@@ -90,7 +90,7 @@ public final class Constants {
 
         public static final double START_POS = 0.21;
         public static final double START_POS_2 = 0.20;
-        public static final double START_POS_3 = 0.535;
+        public static final double START_POS_3 = 0.532;
         
         public static final double HIGH_SHOT = 0.28;
         public static final double INFEED_POS = 0.427; //0.44 //0.435
@@ -114,8 +114,8 @@ public final class Constants {
         public static final double AUTO_FARSHOT_POS = 0.535;//0.55
         public static final double AUTO_FARSHOT_POS_2 = 0.525;//0.52
 
-        public static final double SOURCE_FARSHOT_POS = START_POS_3;
-        public static final double SOURCE_FARSHOT_POS_2 = 0.535;
+        public static final double SOURCE_FARSHOT_POS = 0.53;
+        public static final double SOURCE_FARSHOT_POS_2 = 0.533;
 
         public static final double CLIMBING_POS = 0.61;
     

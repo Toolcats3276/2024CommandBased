@@ -18,7 +18,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.InfeedConstants;
 import frc.robot.Constants.WristConstants;
-import frc.robot.autos.sourceSmartAuto;
+import frc.robot.autos.AroundStageSmartAuto;
+import frc.robot.autos.UnderStageSmartAuto;
 import frc.robot.commands.TeleopCommands.BaseCommands.InfeedCommand;
 import frc.robot.commands.TeleopCommands.BaseCommands.TeleopSwerve;
 import frc.robot.commands.TeleopCommands.BaseCommands.ClimberCommands.BothManualCommands.ClimberDownCommand;
@@ -220,7 +221,8 @@ public class RobotContainer {
         AutoChooser.setDefaultOption("None", new PrintCommand(" No Auto Selected"));
         AutoChooser.addOption("Five Note", new PathPlannerAuto("FiveNote"));
         AutoChooser.addOption("Four Note", new PathPlannerAuto("FourNote"));
-        AutoChooser.addOption("Smart Source", new sourceSmartAuto(s_Sensor));
+        AutoChooser.addOption("Under Stage Source", new UnderStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
+        AutoChooser.addOption("Around Stage Source", new AroundStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
         SmartDashboard.putData("Auto Chooser", AutoChooser);
 
         // Configure the button bindings

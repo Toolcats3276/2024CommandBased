@@ -26,12 +26,36 @@
         {
           "type": "path",
           "data": {
-            "pathName": "source_1-2"
+            "pathName": "source_1-X"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "source_X1-2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "source_2-X"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "source_2X-3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "source_3-X"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "SmartSource",
   "choreoAuto": false
 }

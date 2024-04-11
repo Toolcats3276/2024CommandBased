@@ -1,12 +1,6 @@
 {
   "version": 1.0,
-  "startingPose": {
-    "position": {
-      "x": 7.88,
-      "y": 2.17
-    },
-    "rotation": -30.0
-  },
+  "startingPose": null,
   "command": {
     "type": "sequential",
     "data": {
@@ -35,10 +29,35 @@
           "data": {
             "name": "PassOff"
           }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "source_2X-3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "InfeedCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CompCommand"
+          }
         }
       ]
     }
   },
-  "folder": "WIP",
+  "folder": "SmartSource",
   "choreoAuto": false
 }

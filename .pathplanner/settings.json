@@ -4,18 +4,19 @@
   "holonomicMode": true,
   "pathFolders": [
     "4Note",
+    "AMP Paths",
     "Basic Paths",
     "Left-Far",
-    "Source Paths",
     "Owen test",
     "Right-Far",
+    "Source Paths",
     "Teleop Paths"
   ],
   "autoFolders": [
     "AMP + Delays",
     "Basic Autos",
-    "Teleop Autos",
-    "WIP"
+    "SmartSource",
+    "Teleop Autos"
   ],
   "defaultMaxVel": 5.0,
   "defaultMaxAccel": 5.0,

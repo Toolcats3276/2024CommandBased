@@ -1,18 +1,12 @@
 {
   "version": 1.0,
-  "startingPose": {
-    "position": {
-      "x": 7.73,
-      "y": 2.42
-    },
-    "rotation": -30.0
-  },
+  "startingPose": null,
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -24,7 +18,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "InfeedCommand"
+                  "name": "SourceInfeedCommand"
                 }
               }
             ]
@@ -33,6 +27,6 @@
       ]
     }
   },
-  "folder": "WIP",
+  "folder": "SmartSource",
   "choreoAuto": false
 }
