@@ -9,6 +9,7 @@ import frc.robot.commands.TeleopCommands.BaseCommands.InfeedCommand;
 import frc.robot.commands.TeleopCommands.BaseCommands.ShooterCommand;
 import frc.robot.commands.TeleopCommands.BaseCommands.ArmCommands.ArmPIDCommand;
 import frc.robot.commands.TeleopCommands.BaseCommands.WristCommands.WristPIDCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.SuckBackCoCommand;
 import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.WristSS;
 import frc.robot.subsystems.InfeedSS;
@@ -25,13 +26,16 @@ public class TestShotCoCommand extends SequentialCommandGroup{
 
                 new PassOffCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist), 
 
-                new ParallelCommandGroup(
-                    new WristPIDCommand(s_Wrist, WristConstants.START_POS_3, WristConstants.MAX_PID_OUTPUT),
-                    new ArmPIDCommand(s_Arm, ArmConstants.SPEAKER_POS, WristConstants.MAX_PID_OUTPUT),
-                    new ShooterCommand(s_Shooter, ShooterConstants.SPEAKER)
-                ), 
+                new SequentialCommandGroup(
+                    new SuckBackCoCommand(s_Infeed, s_Shooter),
+                    new ParallelCommandGroup(
+                        new WristPIDCommand(s_Wrist, 0.512, WristConstants.MAX_PID_OUTPUT),
+                        new ArmPIDCommand(s_Arm, 0.571, WristConstants.MAX_PID_OUTPUT),
+                        new ShooterCommand(s_Shooter, ShooterConstants.SPEAKER)
+                    )
+                ),
                 
-                () -> s_Arm.returnSetPoint() == ArmConstants.SPEAKER_POS)
+                () -> s_Arm.returnSetPoint() == 0.571)
         );
 
         addRequirements(s_Infeed, s_Shooter);

@@ -19,6 +19,7 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.InfeedConstants;
 import frc.robot.Constants.WristConstants;
 import frc.robot.autos.AroundStageSmartAuto;
+import frc.robot.autos.Smart5Note;
 import frc.robot.autos.UnderStageSmartAuto;
 import frc.robot.commands.TeleopCommands.BaseCommands.InfeedCommand;
 import frc.robot.commands.TeleopCommands.BaseCommands.TeleopSwerve;
@@ -43,6 +44,7 @@ import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TestS
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.AmpCommands.ToggleAmpCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.InfeedScoringCommands.InfeedShootCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.InfeedScoringCommands.InverseScoreCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ShuttleCommands.ShuttleCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ShuttleCommands.ToggleShuttleCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ShuttleCommands.ToggleShuttleStateCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TrapCommands.AutoTrapCoCommand;
@@ -68,6 +70,7 @@ import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoFarShotCoCommand
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoFarShotCoCommand3;
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoSourceFarShot2CoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoSourceFarShotCoCommand;
+import frc.robot.commands.AutoCommands.ShootCommand.FarShot.FiveFarShotCoCommand;
 import frc.robot.subsystems.*;
 
 /**
@@ -177,7 +180,7 @@ public class RobotContainer {
             .until(() -> s_Sensor.infeedDelay()));
         NamedCommands.registerCommand("OpInfeedCommand", new OpAutoInfeedCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter)
             .until(() -> s_Sensor.isTriggered()));
-        NamedCommands.registerCommand("SourceInfeedCommand", new AutoSourceInfeedCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter)
+        NamedCommands.registerCommand("SmartInfeedCommand", new AutoSourceInfeedCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter)
             .until(() -> s_Sensor.infeedDelay()));
 
         NamedCommands.registerCommand("CompCommand", new CompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, ArmConstants.MAX_PID_OUTPUT, WristConstants.MAX_PID_OUTPUT));
@@ -206,6 +209,9 @@ public class RobotContainer {
         NamedCommands.registerCommand("FarShot3", new AutoFarShotCoCommand3(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("SourceFarShot", new AutoSourceFarShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("SourceFarShot2", new AutoSourceFarShot2CoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        NamedCommands.registerCommand("FiveFarShot", new FiveFarShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+
+        NamedCommands.registerCommand("UnderStageShuttle", new ShuttleCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED));
         
         NamedCommands.registerCommand("PassOff", new PassOffCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
@@ -220,6 +226,7 @@ public class RobotContainer {
         AutoChooser = new SendableChooser<Command>();
         AutoChooser.setDefaultOption("None", new PrintCommand(" No Auto Selected"));
         AutoChooser.addOption("Five Note", new PathPlannerAuto("FiveNote"));
+        AutoChooser.addOption("Smart Five Note", new Smart5Note(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
         AutoChooser.addOption("Four Note", new PathPlannerAuto("FourNote"));
         AutoChooser.addOption("Under Stage Source", new UnderStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
         AutoChooser.addOption("Around Stage Source", new AroundStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
@@ -257,8 +264,8 @@ public class RobotContainer {
 
         Amp.onTrue(new ToggleAmpCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter));
         
-        Shoot.onTrue(new ScoringCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist, s_Sensor));
-        // Shoot.onTrue(new TestShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        // Shoot.onTrue(new ScoringCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist, s_Sensor));
+        Shoot.onTrue(new TestShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
         InverseShot.onTrue(new InverseScoreCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
             .until(() -> s_Sensor.inverseDelay()));

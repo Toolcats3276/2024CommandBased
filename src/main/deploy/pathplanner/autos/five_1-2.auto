@@ -10,16 +10,9 @@
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "source-2-3"
-                      }
-                    }
-                  ]
+                  "pathName": "five_1-2"
                 }
               },
               {
@@ -30,10 +23,16 @@
               }
             ]
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PassOff"
+          }
         }
       ]
     }
   },
-  "folder": "SmartSource",
+  "folder": "SmartFiveNote",
   "choreoAuto": false
 }

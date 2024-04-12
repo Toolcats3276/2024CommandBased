@@ -3,20 +3,21 @@
   "robotLength": 0.7112,
   "holonomicMode": true,
   "pathFolders": [
-    "4Note",
-    "AMP Paths",
-    "Basic Paths",
-    "Left-Far",
-    "Owen test",
-    "Right-Far",
+    "Teleop Paths",
     "Source Paths",
-    "Teleop Paths"
+    "Right-Far",
+    "Owen test",
+    "Left-Far",
+    "Basic Paths",
+    "AMP Paths",
+    "4-5 Note"
   ],
   "autoFolders": [
-    "AMP + Delays",
-    "Basic Autos",
+    "Teleop Autos",
     "SmartSource",
-    "Teleop Autos"
+    "SmartFiveNote",
+    "Basic Autos",
+    "AMP + Delays"
   ],
   "defaultMaxVel": 5.0,
   "defaultMaxAccel": 5.0,

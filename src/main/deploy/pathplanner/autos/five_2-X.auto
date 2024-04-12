@@ -10,30 +10,29 @@
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "source-2-3"
-                      }
-                    }
-                  ]
+                  "pathName": "five_2-X"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "SmartInfeedCommand"
+                  "name": "UnderStageShuttle"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PassOff"
           }
         }
       ]
     }
   },
-  "folder": "SmartSource",
+  "folder": "SmartFiveNote",
   "choreoAuto": false
 }

@@ -38,7 +38,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "around_stage_2-X"
+            "pathName": "around_stage_3-X"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "around_stage_X2-3"
           }
         }
       ]

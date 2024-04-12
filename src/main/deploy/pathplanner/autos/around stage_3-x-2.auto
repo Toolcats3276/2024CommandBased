@@ -12,13 +12,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "source_1-X"
+                  "pathName": "around_stage_3-X"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "SourceFarShot"
+                  "name": "UnderStageShuttle"
                 }
               }
             ]
@@ -31,32 +31,19 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "source_X1-2"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.1
-                      }
-                    }
-                  ]
+                  "pathName": "around_stage_x3-2"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "SmartInfeedCommand"
+                  "name": "CompCommand"
                 }
               }
             ]
