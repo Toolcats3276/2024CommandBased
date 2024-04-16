@@ -23,7 +23,7 @@ public class AmpCoCommand extends SequentialCommandGroup{
                 new InfeedCommand(s_Infeed, 0.0)
                 )
         );
-        addRequirements(s_Wrist, s_Arm);
+        addRequirements(s_Wrist, s_Arm, s_Infeed);
     }
     
    

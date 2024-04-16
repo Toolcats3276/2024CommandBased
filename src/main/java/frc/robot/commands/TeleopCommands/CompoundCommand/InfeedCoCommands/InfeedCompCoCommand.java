@@ -52,7 +52,7 @@ public class InfeedCompCoCommand extends SequentialCommandGroup{
         
                
             
-        addRequirements(s_Wrist, s_Arm, s_Infeed);
+        addRequirements(s_Wrist, s_Arm, s_Infeed, s_Shooter);
     }
     
     

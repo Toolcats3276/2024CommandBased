@@ -37,7 +37,7 @@ public class FarShotCoCommand extends SequentialCommandGroup{
                 () -> s_Arm.returnSetPoint() == ArmConstants.SPEAKER_POS)
         );
 
-        addRequirements(s_Infeed, s_Shooter);
+        addRequirements(s_Wrist, s_Arm, s_Infeed, s_Shooter);
     }
     
    

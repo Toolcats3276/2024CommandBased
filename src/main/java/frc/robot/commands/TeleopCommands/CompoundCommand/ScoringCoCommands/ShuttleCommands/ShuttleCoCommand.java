@@ -33,7 +33,7 @@ public class ShuttleCoCommand extends SequentialCommandGroup{
                 new WaitCommand(5)
             )
         );    
-        addRequirements(s_Wrist, s_Arm, s_Infeed);
+        addRequirements(s_Wrist, s_Arm, s_Infeed, s_Shooter);
     }
 } 
 

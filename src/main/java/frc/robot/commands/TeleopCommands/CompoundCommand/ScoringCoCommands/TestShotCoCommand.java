@@ -24,7 +24,7 @@ public class TestShotCoCommand extends SequentialCommandGroup{
         addCommands(
             new ConditionalCommand(
 
-                new PassOffCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist), 
+                new PassOffCoCommand(s_Infeed, s_Shooter), 
 
                 new SequentialCommandGroup(
                     new SuckBackCoCommand(s_Infeed, s_Shooter),

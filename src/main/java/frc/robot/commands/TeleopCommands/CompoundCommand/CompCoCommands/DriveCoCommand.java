@@ -26,7 +26,7 @@ public class DriveCoCommand extends SequentialCommandGroup{
                 new WristPIDCommand(s_Wrist, WristConstants.DRIVE_POS, WristConstants.MAX_PID_OUTPUT)
                 )
         );
-        addRequirements(s_Wrist, s_Arm);
+        addRequirements(s_Wrist, s_Arm, s_Infeed, s_Shooter);
     }
     
    

@@ -46,7 +46,7 @@ public class HighShotCommand extends SequentialCommandGroup{
                 // )  
         );
 
-        addRequirements(s_Infeed, s_Shooter);
+        addRequirements(s_Wrist, s_Arm, s_Infeed, s_Shooter);
     }
     
    

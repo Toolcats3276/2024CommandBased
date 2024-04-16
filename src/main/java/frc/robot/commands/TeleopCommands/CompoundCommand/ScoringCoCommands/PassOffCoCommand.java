@@ -13,7 +13,7 @@ public class PassOffCoCommand extends SequentialCommandGroup{
 
 
 
-    public PassOffCoCommand(InfeedSS s_Infeed, ShooterSS s_Shooter, ArmSS s_Arm, WristSS s_Wrist) {
+    public PassOffCoCommand(InfeedSS s_Infeed, ShooterSS s_Shooter) {
 
         addCommands(
             new WaitCommand(0),

@@ -213,7 +213,7 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("UnderStageShuttle", new ShuttleCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED));
         
-        NamedCommands.registerCommand("PassOff", new PassOffCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        NamedCommands.registerCommand("PassOff", new PassOffCoCommand(s_Infeed, s_Shooter));
 
         NamedCommands.registerCommand("TrapCommand", new TrapCoCommand(s_Wrist, s_Arm));
 

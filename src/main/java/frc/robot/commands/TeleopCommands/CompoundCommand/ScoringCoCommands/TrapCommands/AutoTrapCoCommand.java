@@ -71,7 +71,7 @@ public class AutoTrapCoCommand extends SequentialCommandGroup{
                 )
             
         );
-        addRequirements(s_Wrist, s_Arm);
+        addRequirements(s_Wrist, s_Arm, s_Infeed);
     }
     
    

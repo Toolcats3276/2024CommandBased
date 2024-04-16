@@ -29,5 +29,6 @@ public class ToggleInfeedCoCommand extends SequentialCommandGroup{
 
                 () -> s_Sensor.getInfeedState())
         );
+        addRequirements(s_Wrist, s_Arm, s_Shooter, s_Infeed);
     }
 }

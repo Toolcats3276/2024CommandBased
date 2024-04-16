@@ -26,7 +26,7 @@ public class CompCoCommand extends SequentialCommandGroup{
                 new WristPIDCommand(s_Wrist, WristConstants.COMP_POS, wristPIDOutput)
                 )
         );
-        addRequirements(s_Wrist, s_Arm);
+        addRequirements(s_Wrist, s_Arm, s_Infeed, s_Shooter);
     }
     
    

@@ -25,7 +25,7 @@ public class ScoringCoCommand extends SequentialCommandGroup{
                         new SpeakerShotCoCommand(s_Shooter, s_Arm, s_Wrist), 
 
                         new ParallelCommandGroup(
-                            new PassOffCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist),
+                            new PassOffCoCommand(s_Infeed, s_Shooter),
                             new InstantCommand(() -> s_Sensor.setShuttleState(false))
                         ),
 
@@ -55,7 +55,7 @@ public class ScoringCoCommand extends SequentialCommandGroup{
                     s_Arm.returnSetPoint() == ArmConstants.STAGE_SHUTTLE_POS ||
                     s_Arm.returnSetPoint() == ArmConstants.INVERSE_POS)
         );
-        addRequirements(s_Infeed, s_Shooter);
+        addRequirements(s_Wrist, s_Arm, s_Infeed, s_Shooter);
     }
 
 
