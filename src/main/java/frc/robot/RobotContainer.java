@@ -264,8 +264,8 @@ public class RobotContainer {
 
         Amp.onTrue(new ToggleAmpCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter));
         
-        // Shoot.onTrue(new ScoringCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist, s_Sensor));
-        Shoot.onTrue(new TestShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        Shoot.onTrue(new ScoringCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist, s_Sensor));
+        // Shoot.onTrue(new TestShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
         InverseShot.onTrue(new InverseScoreCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
             .until(() -> s_Sensor.inverseDelay()));

@@ -12,13 +12,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "around_stage_3-x"
+                  "pathName": "around stage_3-X"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "UnderStageShuttle"
+                  "name": "SourceFarShot"
                 }
               }
             ]
@@ -37,7 +37,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "around_stage_x3-2"
+                  "pathName": "around stage_X3-1"
                 }
               },
               {

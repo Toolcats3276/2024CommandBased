@@ -25,11 +25,7 @@ public class Smart5Note extends SequentialCommandGroup{
                 new ConditionalCommand(
                     new PathPlannerAuto("five_1-X-2"),
                     new SequentialCommandGroup(
-                        new PathPlannerAuto("five_1-2"), 
-                        new ConditionalCommand(
-                            new PathPlannerAuto("five_2-X"), 
-                            new CompCoCommand(s_Wrists, s_Arm, s_Infeed, s_Shooter, ArmConstants.MAX_PID_OUTPUT, WristConstants.MAX_PID_OUTPUT), 
-                            () -> s_Sensor.isSensed())
+                        new PathPlannerAuto("five_1-2")
                     ),
                     () -> s_Sensor.isSensed())
             

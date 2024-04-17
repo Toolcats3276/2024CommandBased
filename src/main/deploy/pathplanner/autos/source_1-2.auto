@@ -10,9 +10,22 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "sequential",
                 "data": {
-                  "pathName": "source_1-2"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "source_1-2"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    }
+                  ]
                 }
               },
               {

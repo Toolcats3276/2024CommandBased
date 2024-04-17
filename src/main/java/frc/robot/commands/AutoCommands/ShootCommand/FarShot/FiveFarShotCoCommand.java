@@ -20,8 +20,8 @@ public class FiveFarShotCoCommand extends SequentialCommandGroup{
     public FiveFarShotCoCommand(InfeedSS s_Infeed, ShooterSS s_Shooter, ArmSS s_Arm, WristSS s_Wrist) {
 
         addCommands(
+            new SuckBackCoCommand(s_Infeed, s_Shooter),
             new ParallelCommandGroup(
-                new SuckBackCoCommand(s_Infeed, s_Shooter),
                 new WristPIDCommand(s_Wrist, WristConstants.MID_NOTE_POS, WristConstants.MAX_PID_OUTPUT),
                 new ArmPIDCommand(s_Arm, ArmConstants.SPEAKER_POS, ArmConstants.MAX_PID_OUTPUT),
                 new ShooterCommand(s_Shooter, ShooterConstants.FAR_SHOT)

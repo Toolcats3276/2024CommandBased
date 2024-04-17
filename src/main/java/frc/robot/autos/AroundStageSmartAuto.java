@@ -56,8 +56,16 @@ public class AroundStageSmartAuto extends SequentialCommandGroup{
                     /* didn't pick up note */
                     new SequentialCommandGroup(
                         new PathPlannerAuto("source_1-2"),
+
                         new ConditionalCommand(
-                            new PathPlannerAuto("around stage_2-X-3"), 
+
+                            /* picked up note */
+                            new SequentialCommandGroup(
+                                new PathPlannerAuto("around stage_2-X-3"),
+                                new CompCoCommand(s_Wrists, s_Arm, s_Infeed, s_Shooter, ArmConstants.MAX_PID_OUTPUT, WristConstants.MAX_PID_OUTPUT)
+                            ),
+
+                            /* didn't pick up note */
                             new SequentialCommandGroup(
                                 new PathPlannerAuto("source_2-3"),
                                 new ConditionalCommand(
