@@ -16,10 +16,10 @@ import frc.robot.subsystems.ShooterSS;
 import frc.robot.subsystems.WristSS;
 
 
-public class AutoSourceInfeedCoCommand extends SequentialCommandGroup{
+public class SmartAutoInfeedCoCommand extends SequentialCommandGroup{
 
     
-    public AutoSourceInfeedCoCommand(WristSS s_Wrist, ArmSS s_Arm, InfeedSS s_Infeed, SensorSS s_Sensor, ShooterSS s_Shooter) {
+    public SmartAutoInfeedCoCommand(WristSS s_Wrist, ArmSS s_Arm, InfeedSS s_Infeed, SensorSS s_Sensor, ShooterSS s_Shooter) {
 
         addCommands(
             new RepeatCommand(
@@ -29,7 +29,7 @@ public class AutoSourceInfeedCoCommand extends SequentialCommandGroup{
                             new ParallelCommandGroup(
                                 new WristPIDCommand(s_Wrist, WristConstants.DRIVE_POS, WristConstants.MAX_PID_OUTPUT),
                                 new ArmPIDCommand(s_Arm, ArmConstants.DRIVE_POS, ArmConstants.MAX_PID_OUTPUT)),
-                            new WaitCommand(0.25),
+                            new WaitCommand(0.5),
                             new InfeedCommand(s_Infeed, 0.0),
                             new WaitCommand(5)
                         ),

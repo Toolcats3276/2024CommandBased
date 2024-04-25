@@ -1,8 +1,5 @@
 package frc.robot;
 
-import java.time.Instant;
-
-import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
@@ -36,11 +33,8 @@ import frc.robot.commands.TeleopCommands.CompoundCommand.*;
 import frc.robot.commands.TeleopCommands.CompoundCommand.CompCoCommands.CompCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.CompCoCommands.ToggleCompCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedCompCoCommand;
-// import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.InverseScoreCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.PassOffCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ScoringCoCommand;
-import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.SpeakerShotCoCommand;
-import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TestShotCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.AmpCommands.ToggleAmpCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.InfeedScoringCommands.InfeedShootCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.InfeedScoringCommands.InverseScoreCommand;
@@ -50,7 +44,7 @@ import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.Shutt
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TrapCommands.AutoTrapCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TrapCommands.TrapCoCommand;
 import frc.robot.commands.AutoCommands.AutoInfeedCoCommand;
-import frc.robot.commands.AutoCommands.AutoSourceInfeedCoCommand;
+import frc.robot.commands.AutoCommands.SmartAutoInfeedCoCommand;
 import frc.robot.commands.AutoCommands.AmpCommands.AutoAmpCoCommand;
 import frc.robot.commands.AutoCommands.AmpCommands.AutoInverseAmpCoCommand;
 import frc.robot.commands.AutoCommands.OptimizedCommands.OpAutoInfeedCoCommand;
@@ -81,7 +75,6 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
 
-    private final SendableChooser<Command> autoChooser;
     private final SendableChooser<Command> AutoChooser;
 
     // CREATING NEW CONTROLLER OBJECTS
@@ -180,7 +173,7 @@ public class RobotContainer {
             .until(() -> s_Sensor.infeedDelay()));
         NamedCommands.registerCommand("OpInfeedCommand", new OpAutoInfeedCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter)
             .until(() -> s_Sensor.isTriggered()));
-        NamedCommands.registerCommand("SmartInfeedCommand", new AutoSourceInfeedCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter)
+        NamedCommands.registerCommand("SmartInfeedCommand", new SmartAutoInfeedCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter)
             .until(() -> s_Sensor.infeedDelay()));
 
         NamedCommands.registerCommand("CompCommand", new CompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, ArmConstants.MAX_PID_OUTPUT, WristConstants.MAX_PID_OUTPUT));
@@ -220,16 +213,15 @@ public class RobotContainer {
         
 
         // initializing autochooser and putting it on smartdashboard
-        autoChooser = AutoBuilder.buildAutoChooser();
-        // SmartDashboard.putData("Auto Chooser", autoChooser);
 
         AutoChooser = new SendableChooser<Command>();
-        AutoChooser.setDefaultOption("None", new PrintCommand(" No Auto Selected"));
+        AutoChooser.setDefaultOption("None", new PrintCommand("Issac why didn't you choose an auto!"));
         AutoChooser.addOption("Five Note", new PathPlannerAuto("FiveNote"));
         AutoChooser.addOption("Smart Five Note", new Smart5Note(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
-        AutoChooser.addOption("Four Note", new PathPlannerAuto("FourNote"));
+        AutoChooser.addOption("Four Note", new PathPlannerAuto("Copy of FiveNote"));
         AutoChooser.addOption("Under Stage Source", new UnderStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
         AutoChooser.addOption("Around Stage Source", new AroundStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
+        AutoChooser.addOption("Delay Amp", new PathPlannerAuto("Delay Amp"));
         SmartDashboard.putData("Auto Chooser", AutoChooser);
 
         // Configure the button bindings
@@ -254,7 +246,8 @@ public class RobotContainer {
             () -> -m_CoXboxController.getRawAxis(ArmAxis)));
 
 
-        Comp.onTrue(new ToggleCompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, ArmConstants.MAX_PID_OUTPUT, WristConstants.MAX_PID_OUTPUT));
+        Comp.onTrue(new ToggleCompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, ArmConstants.MAX_PID_OUTPUT, WristConstants.MAX_PID_OUTPUT, s_Sensor)
+            .alongWith(new InstantCommand(() -> s_Sensor.setShuttleState(false))));
         SlowComp.onTrue(new CompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, ArmConstants.SLOW_PID_OUTPUT, WristConstants.SLOW_PID_OUTPUT));
 
         Infeed.onTrue(new InfeedCompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
@@ -270,8 +263,10 @@ public class RobotContainer {
         InverseShot.onTrue(new InverseScoreCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
             .until(() -> s_Sensor.inverseDelay()));
 
-        Shuttle.onTrue(new ToggleShuttleCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor, s_LED));
-        Shuttle.onTrue(new ToggleShuttleStateCoCommand(s_Sensor));
+        Shuttle.onTrue(new ToggleShuttleCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor, s_LED)
+            .handleInterrupt(() -> new InstantCommand(() -> s_Sensor.setShuttleState(false))));
+        Shuttle.onTrue(new ToggleShuttleStateCoCommand(s_Sensor)
+            .handleInterrupt(() -> new InstantCommand(() -> s_Sensor.setShuttleState(false))));
 
         // Shuttle.onTrue(new ShuttleCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED));
         // HighShot.onTrue(new HighScoreCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
@@ -336,8 +331,7 @@ public class RobotContainer {
 
      // have it return the autochooser selection
     public Command getAutonomousCommand() {
-        // return new sourceSmartAuto(s_Sensor);
-        // return autoChooser.getSelected();
+        // return new UnderStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor);
         return AutoChooser.getSelected();
     }
 }

@@ -24,6 +24,7 @@ public class CancelCoCommand extends SequentialCommandGroup{
 
         addCommands(
             new ParallelCommandGroup(
+                new InstantCommand(() -> s_Sensor.setShuttleState(false)),
                 new WristManualCmd(s_Wrist, WristAxis),
                 new ArmManualCommand(s_Arm, ArmAxis),
                 new InfeedCommand(s_Infeed, 0.0),

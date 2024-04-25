@@ -38,7 +38,7 @@ public class SensorSS extends SubsystemBase{
     RLimitSwitch = new DigitalInput(9);
     
     m_triggerDebouncer = new Debouncer(0.1, DebounceType.kBoth);
-    m_infeedDebouncer = new Debouncer(0.7, DebounceType.kBoth); //0.67
+    m_infeedDebouncer = new Debouncer(0.85, DebounceType.kBoth); //0.67
     m_infeedShotDebouncer = new Debouncer(0.85, DebounceType.kBoth);
     m_inverseDebouncer = new Debouncer(2.5, DebounceType.kBoth);
     m_shuttleDebouncer = new Debouncer(2.5, DebounceType.kBoth);

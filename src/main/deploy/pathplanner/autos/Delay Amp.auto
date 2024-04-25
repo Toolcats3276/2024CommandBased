@@ -2,42 +2,29 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.56935,
-      "y": 2.3417000000000003
+      "x": 0.83,
+      "y": 6.63
     },
-    "rotation": -90.0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "wait",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "source_0"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "StartShot3"
-                }
-              }
-            ]
+            "waitTime": 3.0
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "PassOff"
+            "name": "StartShot2"
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -47,13 +34,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "source_0-1"
+                        "pathName": "Amp_1"
                       }
                     },
                     {
-                      "type": "wait",
+                      "type": "path",
                       "data": {
-                        "waitTime": 0.2
+                        "pathName": "Amp_2"
                       }
                     }
                   ]
@@ -62,7 +49,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "SmartInfeedCommand"
+                  "name": "CompCommand"
                 }
               }
             ]
@@ -71,6 +58,6 @@
       ]
     }
   },
-  "folder": "SmartSource",
+  "folder": "AMP + Delays",
   "choreoAuto": false
 }

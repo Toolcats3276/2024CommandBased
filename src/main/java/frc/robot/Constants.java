@@ -99,7 +99,7 @@ public final class Constants {
         public static final double AMP_TWO_POS = 0.41;
 
         public static final double SPEAKER_POS = 0.45;//0.46
-        public static final double INFEED_SPEAKER_POS = 0.47;
+        public static final double INFEED_SPEAKER_POS = 0.46;
         public static final double FARSHOT_POS = 0.50;//0.52
         public static final double INVERSE_POS = 0.17;//wrist variable
 
@@ -111,11 +111,20 @@ public final class Constants {
         public static final double LEFT_NOTE_POS = 0.52; //0.524
         public static final double RIGHT_NOTE_POS = 0.518; //0.538
         
-        public static final double AUTO_FARSHOT_POS = 0.535;//0.55
+        public static final double AUTO_FARSHOT_POS = 0.526;//0.55 0.535
         public static final double AUTO_FARSHOT_POS_2 = 0.525;//0.52
 
-        public static final double SOURCE_FARSHOT_POS = 0.53;
-        public static final double SOURCE_FARSHOT_POS_2 = 0.533;
+
+
+        public static final double SOURCE_FARSHOT_POS = 0.49; // 0.5 //0.522
+
+        //0.51
+        public static final double SOURCE_FARSHOT_POS_2 = 0.53; //0.528 //0.54
+
+        //0.535
+
+
+
 
         public static final double CLIMBING_POS = 0.61;
     
@@ -151,7 +160,7 @@ public final class Constants {
         public static final double AMP = .6;//.6
         public static final double AMP_TWO = -0.5;
         public static final double OUTFEED = .5;
-        public static final double TRAP = OUTFEED;//.5 for trap
+        public static final double TRAP = 0.25;//.5 for trap
 
     }
 

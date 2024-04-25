@@ -22,7 +22,7 @@ public class ScoringCoCommand extends SequentialCommandGroup{
                     // ON TRUE     conditional command for speaker shot and shuttle shot
                     new ConditionalCommand(
 
-                        new SpeakerShotCoCommand(s_Shooter, s_Arm, s_Wrist), 
+                        new SpeakerShotCoCommand(s_Shooter, s_Arm, s_Wrist, s_Infeed), 
 
                         new ParallelCommandGroup(
                             new PassOffCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist),
