@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.5136740962318043,
-        "y": 7.439065519461206
+        "x": 1.2796798990272578,
+        "y": 5.557362183607978
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.8188351964063553,
-        "y": 7.382183540070246
+        "x": 2.279679899027257,
+        "y": 5.557362183607978
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.232557073190157,
-        "y": 7.751057782400601
+        "x": 2.4691504014837022,
+        "y": 5.557362183607978
       },
       "prevControl": {
-        "x": 7.071036279839781,
-        "y": 8.014301254255715
+        "x": 1.4691504014837022,
+        "y": 5.557362183607978
       },
       "nextControl": null,
       "isLocked": false,
@@ -43,9 +43,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Amp Paths",
+  "folder": "Owen test",
   "previewStartingState": {
-    "rotation": 0.6095065766751742,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

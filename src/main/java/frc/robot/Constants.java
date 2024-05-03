@@ -79,7 +79,6 @@ public final class Constants {
 
     public static final class WristConstants {
 
-
         public static final int WRIST_MOTOR_ID = 15;
         public static final int WRIST_ENCODER_ID = 6;
 
@@ -113,6 +112,9 @@ public final class Constants {
         
         public static final double AUTO_FARSHOT_POS = 0.526;//0.55 0.535
         public static final double AUTO_FARSHOT_POS_2 = 0.525;//0.52
+
+        public static final double WING_POS = 0.54;//0.54
+        public static final double AMP_FARSHOT_POS = 0.535;//0.54
 
 
 
@@ -155,7 +157,8 @@ public final class Constants {
         public static final int INFEED_LEAD_MOTOR_ID = 17;
         public static final int INFEED_FOLLOW_MOTOR_ID = 16;
 
-        public static final double INFEED_SPEED = -1; //-1
+        public static final double INFEED_SPEED = -1;
+        public static final double POOF_SPEED = -1;
         public static final double PASS_OFF = -1;
         public static final double AMP = .6;//.6
         public static final double AMP_TWO = -0.5;
@@ -179,6 +182,8 @@ public final class Constants {
         public static final double SHUTTLE = 1; //1
         public static final double STAGE_SHUTTLE = 0.75; //1
 
+        public static final double POOF_SPEED = 0.3; //0.3
+        
         public static final double START_SHOT = 0.7;
         public static final double MID_SHOT = 1;
         public static final double LEFT_SHOT = 0.8;

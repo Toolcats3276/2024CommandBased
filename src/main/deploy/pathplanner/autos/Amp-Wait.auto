@@ -2,32 +2,19 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.83,
-      "y": 6.63
+      "x": 1.51,
+      "y": 7.44
     },
-    "rotation": 60.0
+    "rotation": -1.4471784745396183
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 7.5
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Amp-Wait-Path"
-                }
-              }
-            ]
+            "pathName": "Amp_2"
           }
         }
       ]

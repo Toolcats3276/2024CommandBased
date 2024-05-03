@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.InfeedConstants;
 import frc.robot.Constants.WristConstants;
+import frc.robot.autos.AltUnderStageSmartAuto;
 import frc.robot.autos.AroundStageSmartAuto;
 import frc.robot.autos.Smart5Note;
 import frc.robot.autos.UnderStageSmartAuto;
@@ -44,6 +45,7 @@ import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.Shutt
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TrapCommands.AutoTrapCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TrapCommands.TrapCoCommand;
 import frc.robot.commands.AutoCommands.AutoInfeedCoCommand;
+import frc.robot.commands.AutoCommands.AutoPoofCoCommand;
 import frc.robot.commands.AutoCommands.SmartAutoInfeedCoCommand;
 import frc.robot.commands.AutoCommands.AmpCommands.AutoAmpCoCommand;
 import frc.robot.commands.AutoCommands.AmpCommands.AutoInverseAmpCoCommand;
@@ -59,11 +61,13 @@ import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.CloseMidNo
 import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.LeftNoteShootCoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.MidNoteShootCoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.RightNoteShootCoCommand;
+import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoAmpFarShot;
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoFarShotCoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoFarShotCoCommand2;
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoFarShotCoCommand3;
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoSourceFarShot2CoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoSourceFarShotCoCommand;
+import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoWingShot;
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.FiveFarShotCoCommand;
 import frc.robot.subsystems.*;
 
@@ -192,6 +196,9 @@ public class RobotContainer {
         NamedCommands.registerCommand("LeftNoteShot", new LeftNoteShootCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("RightNoteShot", new RightNoteShootCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
+        NamedCommands.registerCommand("InverseShot", new InverseScoreCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
+            .until(() -> s_Sensor.inverseDelay()));
+
         NamedCommands.registerCommand("OpMidNoteShot", new OpAutoMidShootCoCommands(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("OpCloseMidNoteShot", new OpAutoCloseMidShootCoCommands(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("OpLeftNoteShot", new OpAutoLeftShootCoCommands(s_Infeed, s_Shooter, s_Arm, s_Wrist));
@@ -200,12 +207,17 @@ public class RobotContainer {
         NamedCommands.registerCommand("FarShot", new AutoFarShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("FarShot2", new AutoFarShotCoCommand2(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("FarShot3", new AutoFarShotCoCommand3(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+
         NamedCommands.registerCommand("SourceFarShot", new AutoSourceFarShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("SourceFarShot2", new AutoSourceFarShot2CoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+
         NamedCommands.registerCommand("FiveFarShot", new FiveFarShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
+        NamedCommands.registerCommand("WingShot", new AutoWingShot(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        NamedCommands.registerCommand("AmpFarShot", new AutoAmpFarShot(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+
         NamedCommands.registerCommand("UnderStageShuttle", new ShuttleCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED));
-        
+        NamedCommands.registerCommand("PoofShot", new AutoPoofCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter));        
         NamedCommands.registerCommand("PassOff", new PassOffCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
         NamedCommands.registerCommand("TrapCommand", new TrapCoCommand(s_Wrist, s_Arm));
@@ -221,7 +233,9 @@ public class RobotContainer {
         AutoChooser.addOption("Four Note", new PathPlannerAuto("Copy of FiveNote"));
         AutoChooser.addOption("Under Stage Source", new UnderStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
         AutoChooser.addOption("Around Stage Source", new AroundStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
-        AutoChooser.addOption("Delay Amp", new PathPlannerAuto("Delay Amp"));
+        AutoChooser.addOption("Preload Amp", new PathPlannerAuto("Preload Amp"));
+        AutoChooser.addOption("Amp Far", new PathPlannerAuto("Amp Far"));
+        AutoChooser.addOption("Alt Around Stage Source", new AltUnderStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
         SmartDashboard.putData("Auto Chooser", AutoChooser);
 
         // Configure the button bindings
@@ -259,6 +273,7 @@ public class RobotContainer {
         
         Shoot.onTrue(new ScoringCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist, s_Sensor));
         // Shoot.onTrue(new TestShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        
 
         InverseShot.onTrue(new InverseScoreCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
             .until(() -> s_Sensor.inverseDelay()));

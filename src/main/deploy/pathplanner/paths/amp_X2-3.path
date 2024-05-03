@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.5136740962318043,
-        "y": 7.439065519461206
+        "x": 4.58,
+        "y": 5.87
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.8188351964063553,
-        "y": 7.382183540070246
+        "x": 3.873115584710981,
+        "y": 3.1491719040445205
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.232557073190157,
-        "y": 7.751057782400601
+        "x": 7.958264277573687,
+        "y": 4.007150627127858
       },
       "prevControl": {
-        "x": 7.071036279839781,
-        "y": 8.014301254255715
+        "x": 6.885790873719516,
+        "y": 3.8999032867424415
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,7 @@
   "reversed": false,
   "folder": "Amp Paths",
   "previewStartingState": {
-    "rotation": 0.6095065766751742,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

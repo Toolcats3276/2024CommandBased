@@ -64,18 +64,26 @@ public class InfeedSS extends SubsystemBase {
         SmartDashboard.putNumber("InfeedSpeed", speed);
     }
 
+
+
     public void Stop(){
         InfeedMode = Mode.Stop;
     }
+
+
     
     public void setSpeed(double speed){
         this.speed = speed;
         InfeedMode = Mode.SetSpeed;
     }
 
+
+
     public void timerReset(){
         infeedTimer.reset();
     }
+
+
 
     public void timerSpeed(double speed){
         this.speed = speed;

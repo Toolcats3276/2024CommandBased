@@ -43,8 +43,8 @@ public class ArmSS extends SubsystemBase{
     public ArmSS() {
         m_ArmLeadMotor = new TalonFX(ArmConstants.ARM_LEAD_ID);
         m_ArmLeadMotor.getConfigurator().apply(new TalonFXConfiguration());
-        m_ArmLeadMotor.setInverted(true);
         m_ArmLeadMotor.setNeutralMode(NeutralModeValue.Brake);
+        m_ArmLeadMotor.setInverted(true);
 
         m_ArmFollowMotor = new TalonFX(ArmConstants.ARM_FOLLOW_ID);
         m_ArmFollowMotor.getConfigurator().apply(new TalonFXConfiguration());
