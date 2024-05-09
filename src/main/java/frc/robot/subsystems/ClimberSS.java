@@ -49,7 +49,6 @@ public class ClimberSS extends SubsystemBase{
         switch(ClimberMode) {
 
             case ManualUp:{
-                System.out.println("speed");
                 m_ClimberLeadMotor.set(ClimberConstants.MANUAL_SPEED);
                 m_ClimberFollowMotor.set(ClimberConstants.MANUAL_SPEED);
                 break;
@@ -67,6 +66,7 @@ public class ClimberSS extends SubsystemBase{
                 break;
             }
 
+
             case RightUp:{
                 m_ClimberFollowMotor.set(ClimberConstants.MANUAL_SPEED);
                 break;
@@ -81,6 +81,7 @@ public class ClimberSS extends SubsystemBase{
                 m_ClimberFollowMotor.set(0.0);
                 break;
             }
+            
 
             case LeftUp:{
                 m_ClimberLeadMotor.set(ClimberConstants.MANUAL_SPEED);
@@ -136,7 +137,6 @@ public class ClimberSS extends SubsystemBase{
     }
     
     public void LeftDown(){
-        System.out.println("method");
         ClimberMode = Mode.LeftDown;
     }
     
