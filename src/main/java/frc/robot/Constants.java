@@ -67,12 +67,8 @@ public final class Constants {
         public static final double COMP_POS = 0.56;
         public static final double DRIVE_POS = INFEED_POS -0.03;
 
-
         public static final double START_POS = 0.34;
         public static final double START_POS_2 = 0.35;
-
-
-
 
     }
 
@@ -113,27 +109,16 @@ public final class Constants {
         public static final double AUTO_FARSHOT_POS = 0.526;//0.55 0.535
         public static final double AUTO_FARSHOT_POS_2 = 0.525;//0.52
 
-        public static final double WING_POS = 0.54;//0.54
+        public static final double WING_POS = 0.535;//0.54
         public static final double AMP_FARSHOT_POS = 0.535;//0.54
 
-
-
-        public static final double SOURCE_FARSHOT_POS = 0.49; // 0.5 //0.522
-
-        //0.51
-        public static final double SOURCE_FARSHOT_POS_2 = 0.53; //0.528 //0.54
-
-        //0.535
-
-
-
+        public static final double SOURCE_FARSHOT_POS = 0.49; // 0.5 //0.522 //0.51
+        public static final double SOURCE_FARSHOT_POS_2 = 0.53; //0.528 //0.54 //0.535
 
         public static final double CLIMBING_POS = 0.61;
     
         public static final double COMP_POS = 0.75;//.75--.63 for test
         public static final double DRIVE_POS = INFEED_POS;
-
-
 
     }
 
