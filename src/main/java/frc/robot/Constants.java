@@ -64,7 +64,7 @@ public final class Constants {
 
         public static final double CLIMBER_POS = 0.31;
 
-        public static final double COMP_POS = 0.56;
+        public static final double COMP_POS = 0.55;
         public static final double DRIVE_POS = INFEED_POS -0.03;
 
         public static final double START_POS = 0.34;
