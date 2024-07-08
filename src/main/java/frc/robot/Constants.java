@@ -109,7 +109,7 @@ public final class Constants {
         public static final double AUTO_FARSHOT_POS = 0.526;//0.55 0.535
         public static final double AUTO_FARSHOT_POS_2 = 0.525;//0.52
 
-        public static final double WING_POS = 0.535;//0.54
+        public static final double WING_POS = 0.542;//0.535
         public static final double AMP_FARSHOT_POS = 0.535;//0.54
 
         public static final double SOURCE_FARSHOT_POS = 0.49; // 0.5 //0.522 //0.51
@@ -168,6 +168,7 @@ public final class Constants {
         public static final double STAGE_SHUTTLE = 0.75; //1
 
         public static final double POOF_SPEED = 0.3; //0.3
+        public static final double POOF_SPEED_2 = 0.5;
         
         public static final double START_SHOT = 0.7;
         public static final double MID_SHOT = 1;

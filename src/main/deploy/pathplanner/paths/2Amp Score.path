@@ -16,12 +16,28 @@
     },
     {
       "anchor": {
-        "x": 8.1,
-        "y": 7.45
+        "x": 4.752178235354097,
+        "y": 7.630404524467006
       },
       "prevControl": {
-        "x": 7.1,
-        "y": 7.45
+        "x": 3.553900445373822,
+        "y": 7.906661300264752
+      },
+      "nextControl": {
+        "x": 6.0473116670698905,
+        "y": 7.331818179075788
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.09,
+        "y": 5.547612425391122
+      },
+      "prevControl": {
+        "x": 5.906054159424234,
+        "y": 5.898603721197941
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,11 +55,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "OG Amp Paths",
+  "folder": "New Amp Paths",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

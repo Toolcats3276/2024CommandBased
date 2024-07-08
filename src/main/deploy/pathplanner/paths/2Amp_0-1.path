@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 8.1,
-        "y": 7.45
+        "x": 8.046012101525392,
+        "y": 7.52681334341291
       },
       "prevControl": {
-        "x": 7.1,
-        "y": 7.45
+        "x": 7.117048381365173,
+        "y": 7.847370642247223
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -20.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "OG Amp Paths",
+  "folder": "New Amp Paths",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

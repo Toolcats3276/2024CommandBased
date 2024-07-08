@@ -227,16 +227,26 @@ public class RobotContainer {
         // initializing autochooser and putting it on smartdashboard
 
         AutoChooser = new SendableChooser<Command>();
+
         AutoChooser.setDefaultOption("None", new PrintCommand("Issac why didn't you choose an auto!"));
         AutoChooser.addOption("Five Note", new PathPlannerAuto("FiveNote"));
+        AutoChooser.addOption("Mid Auto", new PathPlannerAuto("Mid Auto"));
         AutoChooser.addOption("Smart Five Note", new Smart5Note(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
         AutoChooser.addOption("Four Note", new PathPlannerAuto("Copy of FiveNote"));
-        AutoChooser.addOption("Under Stage Source", new UnderStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
-        AutoChooser.addOption("Around Stage Source", new AroundStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
-        AutoChooser.addOption("Preload Amp", new PathPlannerAuto("Preload Amp"));
+
+        // AutoChooser.addOption("Under Stage Source", new UnderStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
+        // AutoChooser.addOption("Around Stage Source", new AroundStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
+        // AutoChooser.addOption("Alt Around Stage Source", new AltUnderStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
+
+        AutoChooser.addOption("Preload Amp One", new PathPlannerAuto("Amp Pre One"));
+        AutoChooser.addOption("Preload Amp Two", new PathPlannerAuto("Amp Pre Two"));
         AutoChooser.addOption("Amp Far", new PathPlannerAuto("Amp Far"));
-        AutoChooser.addOption("Alt Around Stage Source", new AltUnderStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
+        AutoChooser.addOption("Amp Wait", new PathPlannerAuto("Amp-Wait"));
+        // AutoChooser.addOption("Preload Amp One Poof", new PathPlannerAuto("Amp Pre One Poof"));
+        
         SmartDashboard.putData("Auto Chooser", AutoChooser);
+
+
 
         // Configure the button bindings
         configureButtonBindings();

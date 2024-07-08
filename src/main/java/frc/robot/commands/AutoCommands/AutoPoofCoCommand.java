@@ -22,7 +22,6 @@ public class AutoPoofCoCommand extends SequentialCommandGroup{
     public AutoPoofCoCommand(WristSS s_Wrist, ArmSS s_Arm, InfeedSS s_Infeed, SensorSS s_Sensor, ShooterSS s_Shooter) {
 
         addCommands(
-            // while true
                 new ParallelCommandGroup(
                     new WristPIDCommand(s_Wrist, WristConstants.INFEED_POS, WristConstants.MAX_PID_OUTPUT),
                     new ArmPIDCommand(s_Arm, ArmConstants.INFEED_POS, ArmConstants.MAX_PID_OUTPUT),

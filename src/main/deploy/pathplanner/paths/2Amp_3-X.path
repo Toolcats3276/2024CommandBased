@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.5136740962318043,
-        "y": 7.400066486593781
+        "x": 7.96,
+        "y": 4.01
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3229040282308606,
-        "y": 8.014301254255715
+        "x": 6.885358722141557,
+        "y": 3.9025471083554564
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.1,
-        "y": 7.45
+        "x": 3.9,
+        "y": 5.52811290895741
       },
       "prevControl": {
-        "x": 7.1,
-        "y": 7.45
+        "x": 4.734847934541474,
+        "y": 3.7536569134895994
       },
       "nextControl": null,
       "isLocked": false,
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "OG Amp Paths",
+  "folder": "New Amp Paths",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

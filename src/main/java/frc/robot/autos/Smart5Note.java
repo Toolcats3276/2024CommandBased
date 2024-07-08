@@ -25,7 +25,8 @@ public class Smart5Note extends SequentialCommandGroup{
                 new ConditionalCommand(
                     new PathPlannerAuto("five_1-X-2"),
                     new SequentialCommandGroup(
-                        new PathPlannerAuto("five_1-2")
+                        new PathPlannerAuto("five_1-2"),
+                        new PathPlannerAuto("five_2-X")
                     ),
                     () -> s_Sensor.isSensed())
             
