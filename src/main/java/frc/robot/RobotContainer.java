@@ -34,6 +34,7 @@ import frc.robot.commands.TeleopCommands.CompoundCommand.*;
 import frc.robot.commands.TeleopCommands.CompoundCommand.CompCoCommands.CompCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.CompCoCommands.ToggleCompCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedCompCoCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.AutoPassOffCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.PassOffCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ScoringCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.AmpCommands.ToggleAmpCoCommand;
@@ -67,7 +68,8 @@ import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoFarShotCoCommand
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoFarShotCoCommand3;
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoSourceFarShot2CoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoSourceFarShotCoCommand;
-import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoWingShot;
+import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoWingShot1;
+import frc.robot.commands.AutoCommands.ShootCommand.FarShot.AutoWingShot2;
 import frc.robot.commands.AutoCommands.ShootCommand.FarShot.FiveFarShotCoCommand;
 import frc.robot.subsystems.*;
 
@@ -97,9 +99,9 @@ public class RobotContainer {
     // CREATING m_DriveController BUTTONS
     private final JoystickButton zeroGyro = new JoystickButton(m_DriveController, 14);
     private final JoystickButton robotCentric = new JoystickButton(m_DriveController, 0);
-    
+
     private final JoystickButton Comp = new JoystickButton(m_DriveController, 2);
-    private final JoystickButton SlowComp = new JoystickButton(m_DriveController, 16);
+    // private final JoystickButton SlowComp = new JoystickButton(m_DriveController, 16);
     private final JoystickButton Amp = new JoystickButton(m_DriveController, 4);
 
     private final JoystickButton Infeed = new JoystickButton(m_DriveController, 7);
@@ -110,21 +112,24 @@ public class RobotContainer {
     private final JoystickButton Shoot = new JoystickButton(m_DriveController, 1);
     // private final JoystickButton HighShot = new JoystickButton(m_DriveController, 10);
     private final JoystickButton InverseShot = new JoystickButton(m_DriveController, 9);
-
+    
     private final JoystickButton Shuttle = new JoystickButton(m_DriveController, 3);
+    // private final POVButton ShuttleAutoRotate = new POVButton(m_DriveController, 45, 5)
 
     private final JoystickButton Trap = new JoystickButton(m_DriveController, 10);
     // private final JoystickButton CoTrap = new JoystickButton(m_CoXboxController, XboxController.Button.kBack.value);
-    private final JoystickButton AutoTrap = new JoystickButton(m_DriveController, 15);
+    // private final JoystickButton AutoTrap = new JoystickButton(m_DriveController, 15);
 
     // private final JoystickButton DefenceShot = new JoystickButton(m_DriveController, 15);
 
     private final JoystickButton Cancel = new JoystickButton(m_DriveController, 5);
 
+    private final JoystickButton autoAim = new JoystickButton(m_DriveController, 16);
+
     
     // CREATING m_CoXboxController BUTTONS
-    private final JoystickButton CoManualInfeed = new JoystickButton(m_CoXboxController, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton CoManualOutfeed = new JoystickButton(m_CoXboxController, XboxController.Button.kRightBumper.value);
+    private final JoystickButton CoRotate = new JoystickButton(m_CoXboxController, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton CoManualInfeed = new JoystickButton(m_CoXboxController, XboxController.Button.kRightBumper.value);
 
     // private final JoystickButton CoTest = new JoystickButton(m_CoXboxController, XboxController.Button.kA.value);
     // private final JoystickButton CoZeroGyro = new JoystickButton(m_CoXboxController, XboxController.Button.kA.value);
@@ -213,12 +218,13 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("FiveFarShot", new FiveFarShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
-        NamedCommands.registerCommand("WingShot", new AutoWingShot(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        NamedCommands.registerCommand("WingShot1", new AutoWingShot1(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        NamedCommands.registerCommand("WingShot2", new AutoWingShot2(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("AmpFarShot", new AutoAmpFarShot(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
         NamedCommands.registerCommand("UnderStageShuttle", new ShuttleCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED));
         NamedCommands.registerCommand("PoofShot", new AutoPoofCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter));        
-        NamedCommands.registerCommand("PassOff", new PassOffCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        NamedCommands.registerCommand("PassOff", new AutoPassOffCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
         NamedCommands.registerCommand("TrapCommand", new TrapCoCommand(s_Wrist, s_Arm));
 
@@ -239,14 +245,17 @@ public class RobotContainer {
         // AutoChooser.addOption("Alt Around Stage Source", new AltUnderStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
 
         AutoChooser.addOption("Preload Amp One", new PathPlannerAuto("Amp Pre One"));
+        AutoChooser.addOption("Red Preload Amp One", new PathPlannerAuto("Copy of Amp Pre One"));
+
         AutoChooser.addOption("Preload Amp Two", new PathPlannerAuto("Amp Pre Two"));
+
         AutoChooser.addOption("Amp Far", new PathPlannerAuto("Amp Far"));
+        AutoChooser.addOption("Red Amp Far", new PathPlannerAuto("Copy of Amp Far"));
+        
         AutoChooser.addOption("Amp Wait", new PathPlannerAuto("Amp-Wait"));
         // AutoChooser.addOption("Preload Amp One Poof", new PathPlannerAuto("Amp Pre One Poof"));
         
         SmartDashboard.putData("Auto Chooser", AutoChooser);
-
-
 
         // Configure the button bindings
         configureButtonBindings();
@@ -272,7 +281,7 @@ public class RobotContainer {
 
         Comp.onTrue(new ToggleCompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, ArmConstants.MAX_PID_OUTPUT, WristConstants.MAX_PID_OUTPUT, s_Sensor)
             .alongWith(new InstantCommand(() -> s_Sensor.setShuttleState(false))));
-        SlowComp.onTrue(new CompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, ArmConstants.SLOW_PID_OUTPUT, WristConstants.SLOW_PID_OUTPUT));
+        // SlowComp.onTrue(new CompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, ArmConstants.SLOW_PID_OUTPUT, WristConstants.SLOW_PID_OUTPUT));
 
         Infeed.onTrue(new InfeedCompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
             .until(() -> s_Sensor.infeedDelay()));
@@ -293,19 +302,27 @@ public class RobotContainer {
         Shuttle.onTrue(new ToggleShuttleStateCoCommand(s_Sensor)
             .handleInterrupt(() -> new InstantCommand(() -> s_Sensor.setShuttleState(false))));
 
-        // Shuttle.onTrue(new ShuttleCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED));
+        // Shoot.and(Shuttle.whileTrue(new InstantCommand(() -> s_Swerve.setAutoRotationState(true))));
+        // Shoot.and(Shuttle.whileTrue(new InstantCommand(() -> s_Swerve.setAutoRotationState(false))));
+
+        // Shuttle.onTrue(new InstantCommand(() -> s_Swerve.setAutoRotationState(true)));
+        // Shuttle.onFalse(new InstantCommand(() -> s_Swerve.setAutoRotationState(false)));
+
+
+
         // HighShot.onTrue(new HighScoreCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         
         Trap.onTrue(new TrapCoCommand(s_Wrist, s_Arm));
-        AutoTrap.onTrue(new AutoTrapCoCommand(s_Wrist, s_Arm, s_Climber, s_Swerve, s_Sensor, s_Infeed));
+        // AutoTrap.onTrue(new AutoTrapCoCommand(s_Wrist, s_Arm, s_Climber, s_Swerve, s_Sensor, s_Infeed));
         ManualOutfeed.onTrue(new InfeedCommand(s_Infeed, InfeedConstants.OUTFEED));
 
         // DefenceShot.onTrue(new PathPlannerAuto("DefenceShot"));
 
         //m_CoXboxBoxController buttons
 
+        CoRotate.onTrue(new InstantCommand(() -> s_Swerve.setAutoRotationState(true)));
+        CoRotate.onFalse(new InstantCommand(() -> s_Swerve.setAutoRotationState(false)));
         CoManualInfeed.onTrue(new InfeedCommand(s_Infeed, InfeedConstants.INFEED_SPEED));
-        CoManualOutfeed.onTrue(new InfeedCommand(s_Infeed, InfeedConstants.OUTFEED));
 
         CoDefenceShot.onTrue(new PathPlannerAuto("DefenceShot"));
         CoPodiumShot.onTrue(new PathPlannerAuto("DefenceShot2"));
@@ -346,6 +363,8 @@ public class RobotContainer {
         //########################################################################
         
     }
+
+
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

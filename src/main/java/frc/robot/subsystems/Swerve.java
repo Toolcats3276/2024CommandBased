@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.SwerveModule;
+import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -11,16 +12,14 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
-import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.Vector;
+
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.math.numbers.N5;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
@@ -36,14 +35,10 @@ public class Swerve extends SubsystemBase {
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
 
-    public double tl = LimelightHelpers.getLatency_Pipeline("");
-    public double cl = LimelightHelpers.getLatency_Capture("");
-    public double latency;
-
-    public Pose2d PoseA;
-    public Pose2d PoseB;
-
     public Rotation2d storedHeading = new Rotation2d();
+    private boolean AutoRotationState;
+
+    private final PIDController AutoRotationPID;
 
     public 
 
@@ -62,30 +57,10 @@ public class Swerve extends SubsystemBase {
             new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
 
-        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
+        AutoRotationPID = new PIDController(
+            0.05, 0, 0);
 
-        /*CREATES A swervePoseEstimator THAT INTEGRATES ODOMETRY WITH VISION MEASURMENTS
-         * 
-         * @param swerveKinematics
-         * @param gyroYaw
-         * @param modualePositions
-         * @param robot pose
-         * @param Standard Deviation OF SWERVE ODOMETRY
-         * @param Standard Deviation OF VISION MEASURMENTS
-         */
-        swervePoseEstimator = new SwerveDrivePoseEstimator(
-            Constants.Swerve.swerveKinematics,
-            getGyroYaw(),
-            getModulePositions(),
-            getPose(),
-            createStateStdDevs(
-                Constants.kPositionStdDevX,
-                Constants.kPositionStdDevY,
-                Constants.kPositionStdDevTheta),
-            createVisionMeasurementStdDevs(
-                Constants.kVisionStdDevX,
-                Constants.kVisionStdDevY,
-                Constants.kVisionStdDevTheta));
+        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
        
         // Configure AutoBuilder last
         /* CREATES AUTOBUILDER OBJECT WITH A HOLONOMIC DRIVETRAIN (SWERVE)
@@ -128,13 +103,13 @@ public class Swerve extends SubsystemBase {
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
                                     translation.getX(), 
                                     translation.getY(), 
-                                    rotation, 
+                                    MathUtil.clamp(rotation + this.shuttleHeading(), -Constants.Swerve.maxAngularVelocity, Constants.Swerve.maxAngularVelocity), 
                                     getHeading()
                                 )
                                 : new ChassisSpeeds(
                                     translation.getX(), 
                                     translation.getY(), 
-                                    rotation)
+                                    MathUtil.clamp(rotation + this.shuttleHeading(), -Constants.Swerve.maxAngularVelocity, Constants.Swerve.maxAngularVelocity))
                                 );
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
@@ -220,6 +195,33 @@ public class Swerve extends SubsystemBase {
         return Rotation2d.fromDegrees(gyro.getYaw().getValue());
     }
 
+    public double alternateShuttleSetPoint(){
+        var alliance = DriverStation.getAlliance();
+            if (alliance.get() == DriverStation.Alliance.Red){
+                return 27;
+            }
+            else{
+                return -27;
+            }
+    }
+
+    public double shuttleHeading(){
+        if(this.getAutoRotationState()){
+            return AutoRotationPID.calculate(this.getHeading().getDegrees(), alternateShuttleSetPoint());
+        }
+        else{
+            return 0;
+        }
+    }
+
+    public void setAutoRotationState(boolean AutoRotationState){
+        this.AutoRotationState = AutoRotationState;
+    }
+
+    public boolean getAutoRotationState(){
+        return AutoRotationState;
+    }
+
     public void resetModulesToAbsolute(){
         for(SwerveModule mod : mSwerveMods){
             mod.resetToAbsolute();
@@ -238,20 +240,49 @@ public class Swerve extends SubsystemBase {
       }
 
 
+    // simple proportional turning control with Limelight.
+    // "proportional control" is a control algorithm in which the output is proportional to the error.
+    // in this case, we are going to return an angular velocity that is proportional to the 
+    // "tx" value from the Limelight.
+    public static double LLAngularVelocity(){
+        if(LimelightHelpers.getTargetCount("limelight") == 1){
+            // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
+            // your limelight 3 feed, tx should return roughly 31 degrees.
+            double targetingAngularVelocity = LimelightHelpers.getTX("limelight") * LimelightConstants.AIM_KP;
+
+            // convert to radians per second for our drive method
+            targetingAngularVelocity *= Constants.Swerve.maxAngularVelocity;
+
+            //invert since tx is positive when the target is to the right of the crosshair
+            targetingAngularVelocity *= -1.0;
+
+            return targetingAngularVelocity;
+        }
+        else return 0;
+    }
+
+    // simple proportional ranging control with Limelight's "ty" value
+    // this works best if your Limelight's mount height and target mount height are different.
+    // if your limelight and target are mounted at the same or similar heights, use "ta" (area) for target ranging rather than "ty"
+    public static double LLRangeVelocity(){   
+        if(LimelightHelpers.getTargetCount("limelight") == 1){ 
+            double targetingForwardSpeed = LimelightHelpers.getTY("limelight") * LimelightConstants.RANGE_KP;
+            targetingForwardSpeed *= Constants.Swerve.maxSpeed;
+            targetingForwardSpeed *= -1.0;
+            return targetingForwardSpeed;
+        }
+        else return 0;
+    }
+
+
     @Override
     public void periodic(){
         swerveOdometry.update(getGyroYaw(), getModulePositions());
-        // latency = Timer.getFPGATimestamp() - (tl/1000.0) - (cl/1000.0);
-        // if(LimelightHelpers.getTV("")){
-        // swervePoseEstimator.addVisionMeasurement(LimelightHelpers.getBotPose2d(""), latency);
-        // }
-        // swervePoseEstimator.update(getGyroYaw(), getModulePositions());
 
-        // publisher.set(PoseA);
-        // arrayPublisher.set(new Pose2d[] {PoseA, PoseB});
             SmartDashboard.putNumber("Heading", getHeading().getDegrees());
             SmartDashboard.putNumber("Yaw", getGyroYaw().getDegrees());
             SmartDashboard.putNumber("StoredHeading", storedHeading.getDegrees());
+            SmartDashboard.putBoolean("Rotate State", AutoRotationState);
 
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
@@ -259,48 +290,10 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);   
              
         }
+
+            SmartDashboard.putNumber("Targets", LimelightHelpers.getTargetCount("limelight"));
     }
 
 
-      /**
-   * Creates a vector of standard deviations for the states. Standard deviations of model states.
-   * Increase these numbers to trust your model's state estimates less.
-   *
-   * @param x in meters
-   * @param y in meters
-   * @param theta in degrees
-   * @return the Vector of standard deviations need for the poseEstimator
-   */
-  public Vector<N3> createStateStdDevs(double x, double y, double theta) {
-    return VecBuilder.fill(x, y, Units.degreesToRadians(theta));
-  }
 
-
-  /**
-   * Creates a vector of standard deviations for the local measurements. Standard deviations of
-   * encoder and gyro rate measurements. Increase these numbers to trust sensor readings from
-   * encoders and gyros less.
-   *
-   * @param theta in degrees per second
-   * @param s std for all module positions in meters per sec
-   * @return the Vector of standard deviations need for the poseEstimator
-   */
-  public Vector<N5> createLocalMeasurementStdDevs(double theta, double s) {
-    return VecBuilder.fill(Units.degreesToRadians(theta), s, s, s, s);
-  }
-
-
-  /**
-   * Creates a vector of standard deviations for the vision measurements. Standard deviations of
-   * global measurements from vision. Increase these numbers to trust global measurements from
-   * vision less.
-   *
-   * @param x in meters
-   * @param y in meters
-   * @param theta in degrees
-   * @return the Vector of standard deviations need for the poseEstimator
-   */
-  public Vector<N3> createVisionMeasurementStdDevs(double x, double y, double theta) {
-    return VecBuilder.fill(x, y, Units.degreesToRadians(theta));
-  }
 }

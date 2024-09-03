@@ -22,7 +22,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "AMP Score"
+                        "pathName": "Copy of AMP Score"
                       }
                     },
                     {
@@ -41,7 +41,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "InfeedCommand"
+                        "name": "OpInfeedCommand"
                       }
                     },
                     {
@@ -69,7 +69,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMP Score3"
+                  "pathName": "Copy of AMP Score3"
                 }
               },
               {
@@ -105,7 +105,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of AMP Score4"
+                        "pathName": "Copy of Copy of AMP Score4"
                       }
                     },
                     {

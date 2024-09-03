@@ -145,23 +145,23 @@ public class WristSS extends SubsystemBase{
                 break;
             }
 
-            /*  TAKES THE DISTANCE FROM AN APRIL TAG AS WELL AS TWO KNOWN DISTANCE AND WRIST ANGLE VALUES TO INTERPOLATE WRIST ANGLE NEEDED TO SHOOT INTO SPEAKER
-             *  TAKES THE INTERPOLATED ANGLE AND PASSES THAT INTO A PID CONTROLLER AS THE SETPOINT AND CALCULATES MOTOR OUTPUT
-            */
-            case AutoAim:{
-                WristPIDController1.reset();
-                WristPIDController2.reset();
-                double X = LimelightHelpers.getTA("");
-                double Y = LimelightConstants.WRIST_Y1 + ((X - LimelightConstants.X1) * ((LimelightConstants.WIRST_Y2 - LimelightConstants.WRIST_Y1))/(LimelightConstants.X2 - LimelightConstants.X1)) + LimelightConstants.OFFSET;
+            // /*  TAKES THE DISTANCE FROM AN APRIL TAG AS WELL AS TWO KNOWN DISTANCE AND WRIST ANGLE VALUES TO INTERPOLATE WRIST ANGLE NEEDED TO SHOOT INTO SPEAKER
+            //  *  TAKES THE INTERPOLATED ANGLE AND PASSES THAT INTO A PID CONTROLLER AS THE SETPOINT AND CALCULATES MOTOR OUTPUT
+            // */
+            // case AutoAim:{
+            //     WristPIDController1.reset();
+            //     WristPIDController2.reset();
+            //     double X = LimelightHelpers.getTA("");
+            //     double Y = LimelightConstants.WRIST_Y1 + ((X - LimelightConstants.X1) * ((LimelightConstants.WIRST_Y2 - LimelightConstants.WRIST_Y1))/(LimelightConstants.X2 - LimelightConstants.X1)) + LimelightConstants.OFFSET;
 
-                output = MathUtil.clamp((WristPIDController2.calculate(m_WristCANcoder.getAbsolutePosition().getValueAsDouble(), Y)
-                    + (WristFFController.calculate(1, 0.5))),
-                        -WristConstants.MAX_PID_OUTPUT, WristConstants.MAX_PID_OUTPUT);
+            //     output = MathUtil.clamp((WristPIDController2.calculate(m_WristCANcoder.getAbsolutePosition().getValueAsDouble(), Y)
+            //         + (WristFFController.calculate(1, 0.5))),
+            //             -WristConstants.MAX_PID_OUTPUT, WristConstants.MAX_PID_OUTPUT);
                 
-                m_WristMotor.set(output);
-                SmartDashboard.putNumber("AutoAim Setpoint", Y);
+            //     m_WristMotor.set(output);
+            //     SmartDashboard.putNumber("AutoAim Setpoint", Y);
 
-            }
+            // }
 
         }
 

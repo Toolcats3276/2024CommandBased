@@ -30,7 +30,7 @@ public class SensorSS extends SubsystemBase{
     private boolean ShuttleState;
     private boolean InfeedState = false;
 
-   public SensorSS() {
+    public SensorSS() {
 
     sensor = new DigitalInput(0);
 
@@ -114,6 +114,8 @@ public class SensorSS extends SubsystemBase{
     public boolean getInfeedState(){
         return InfeedState;
     }
+
+
 
 
 

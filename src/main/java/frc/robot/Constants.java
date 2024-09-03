@@ -33,12 +33,8 @@ public final class Constants {
       
 
     public static final class LimelightConstants {
-        public static final double X1 = 0.818;
-        public static final double X2 = 0.301; //0.132 for farther shot  0.301 for auto shot
-        public static final double WRIST_Y1 = 0.78;
-        public static final double WIRST_Y2 = 0.743; //0.707 for farther shot  0.743 for auto shot
-
-        public static final double OFFSET = 0.0;
+        public static final double AIM_KP = 0.01;
+        public static final double RANGE_KP = 0;
     }
 
     public static final class ArmConstants {
@@ -101,15 +97,16 @@ public final class Constants {
         public static final double SHUTTLE_POS = 0.51;
         public static final double STAGE_SHUTTLE_POS = 0.48;
         
-        public static final double MID_NOTE_POS = 0.52; //0.542
+        public static final double MID_NOTE_POS = 0.519; //0.52
         public static final double CLOSE_MID_NOTE_POS = 0.495; //0.502
-        public static final double LEFT_NOTE_POS = 0.52; //0.524
+        public static final double LEFT_NOTE_POS = 0.515; //0.52
         public static final double RIGHT_NOTE_POS = 0.518; //0.538
         
         public static final double AUTO_FARSHOT_POS = 0.526;//0.55 0.535
         public static final double AUTO_FARSHOT_POS_2 = 0.525;//0.52
 
-        public static final double WING_POS = 0.542;//0.535
+        public static final double WING_POS1 = 0.542;//0.542
+        public static final double WING_POS2 = 0.54;//0.542
         public static final double AMP_FARSHOT_POS = 0.535;//0.54
 
         public static final double SOURCE_FARSHOT_POS = 0.49; // 0.5 //0.522 //0.51
@@ -165,7 +162,7 @@ public final class Constants {
         public static final double SPEAKER = 1; //1 changed 3/4 test w harrier
         public static final double FAR_SHOT = 1; //1
         public static final double SHUTTLE = 1; //1
-        public static final double STAGE_SHUTTLE = 0.75; //1
+        public static final double STAGE_SHUTTLE = 0.7; //.75
 
         public static final double POOF_SPEED = 0.3; //0.3
         public static final double POOF_SPEED_2 = 0.5;

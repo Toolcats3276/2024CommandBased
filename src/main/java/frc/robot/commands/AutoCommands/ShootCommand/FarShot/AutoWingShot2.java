@@ -13,16 +13,16 @@ import frc.robot.subsystems.WristSS;
 import frc.robot.subsystems.InfeedSS;
 import frc.robot.subsystems.ShooterSS;
 
-public class AutoWingShot extends SequentialCommandGroup{
+public class AutoWingShot2 extends SequentialCommandGroup{
 
 
 
-    public AutoWingShot(InfeedSS s_Infeed, ShooterSS s_Shooter, ArmSS s_Arm, WristSS s_Wrist) {
+    public AutoWingShot2(InfeedSS s_Infeed, ShooterSS s_Shooter, ArmSS s_Arm, WristSS s_Wrist) {
 
         addCommands(
             // new SuckBackCoCommand(s_Infeed, s_Shooter),
             new ParallelCommandGroup(
-                new WristPIDCommand(s_Wrist, WristConstants.WING_POS, WristConstants.MAX_PID_OUTPUT),
+                new WristPIDCommand(s_Wrist, WristConstants.WING_POS2, WristConstants.MAX_PID_OUTPUT),
                 new ArmPIDCommand(s_Arm, ArmConstants.SPEAKER_POS, ArmConstants.MAX_PID_OUTPUT),
                 new ShooterCommand(s_Shooter, ShooterConstants.FAR_SHOT)
             )
