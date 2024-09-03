@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.Orchestra;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.StrictFollower;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -21,8 +20,6 @@ public class InfeedSS extends SubsystemBase {
     private double speed;
     private Timer infeedTimer;
 
-    private Orchestra orchestra;
-
   
     public InfeedSS(){
             m_infeedLeadMotor = new TalonFX(InfeedConstants.INFEED_LEAD_MOTOR_ID);
@@ -37,13 +34,6 @@ public class InfeedSS extends SubsystemBase {
             m_infeedFollowMotor.setControl(new StrictFollower(m_infeedLeadMotor.getDeviceID()));
 
             infeedTimer = new Timer();
-
-            // orchestra = new Orchestra();
-            // orchestra.addInstrument(m_infeedFollowMotor);
-            // var status = orchestra.loadMusic("NeverGivingUp.chrp");
-            // if (!status.isOK()) {
-            //     System.out.println("music not okay I guess?");
-            // }
 
     }
 
