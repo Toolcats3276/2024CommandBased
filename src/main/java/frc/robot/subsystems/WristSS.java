@@ -52,6 +52,9 @@ public class WristSS extends SubsystemBase{
 
     private double wristVal;
 
+    public double y;
+
+
     // CONFIGURING ALL MOTORS, ENCODERS, AND PID CONTOLLERS
     public WristSS() {
         m_WristMotor = new TalonFX(WristConstants.WRIST_MOTOR_ID);
@@ -101,11 +104,23 @@ public class WristSS extends SubsystemBase{
     @Override
     public void periodic() {
 
+        /*  I GRAPHED VALUES OF TY AND THEIR CORRESPONDING WRIST SETPOINTS
+         *  THIS GAVE ME A LINEAR EQUATION THAT I CAN INTERPOLATE A NEW WRIST SETPOINT BASED ON THE TY VALUE
+         *  STORES THE INTERPOLATED VALUE IN THE Y VARIABLE IF A VALID TAG IS SEEN
+         *  IF THE TAG IS NOT 7 OR 4 Y IS SET TO THE SPEAKER_POS
+        */
+        if(LimelightHelpers.getFiducialID("limelight") == 7 || LimelightHelpers.getFiducialID("limelight") == 4){
+            double x = LimelightHelpers.getTY("limelight");
+            y = LimelightConstants.a * x + LimelightConstants.b;
+        }
+        else{
+            y = WristConstants.SPEAKER_POS;
+        }
 
         // SWITCHES THE MODE.  ONLY THE SELECTED MODE WILL RUN PERIODICLY.
         switch(WristMode) {
 
-            // SETS THE WRIST MOTOR SPEED TO WRISTCONSTANTS.MANUAL_SPEED
+            // SETS THE WRIST MOTOR SPEED TO WRISTCONSTANTS.MANUAL_SPEED 
             case ManualUp:{
                 m_WristMotor.set(WristConstants.MANUAL_SPEED);
                 break;
@@ -121,6 +136,9 @@ public class WristSS extends SubsystemBase{
                 break;
             }
 
+            /* TAKES THE VALUE OF A JOYSTICK STORED IN wristVal AND SETS THE MOTOR OUTPUT EQUAL TO IT
+             * CLAMPS THE VALUE TO BE BETWEEN +- Constants.MAX_PID_OUTPUT
+             */
             case Manual:{
                 output = MathUtil.clamp(wristVal, -Constants.MAX_PID_OUTPUT, Constants.MAX_PID_OUTPUT);
                 m_WristMotor.set(output);
@@ -133,8 +151,8 @@ public class WristSS extends SubsystemBase{
                 m_WristMotor.set(output);
             }
 
-            /*   TAKES THE CURRENT ENCODER POSTION AND THE DESIRED SETPOINT AND SETS THE MOTOR OUTPUT TO SMOOTHLY AND QUICKLY REACH THE SETPOINT
-             *   CLAMPS THE PID CONTROLLER BETWEEN -+ maxSpeed. 
+            /* TAKES THE CURRENT ENCODER POSTION AND THE DESIRED SETPOINT AND SETS THE MOTOR OUTPUT TO SMOOTHLY AND QUICKLY REACH THE SETPOINT
+             * CLAMPS THE PID CONTROLLER BETWEEN -+ MAX_PID_OUTPUT. 
             */
             case PID:{
                 WristPIDController1.reset();
@@ -145,23 +163,17 @@ public class WristSS extends SubsystemBase{
                 break;
             }
 
-            // /*  TAKES THE DISTANCE FROM AN APRIL TAG AS WELL AS TWO KNOWN DISTANCE AND WRIST ANGLE VALUES TO INTERPOLATE WRIST ANGLE NEEDED TO SHOOT INTO SPEAKER
-            //  *  TAKES THE INTERPOLATED ANGLE AND PASSES THAT INTO A PID CONTROLLER AS THE SETPOINT AND CALCULATES MOTOR OUTPUT
-            // */
-            // case AutoAim:{
-            //     WristPIDController1.reset();
-            //     WristPIDController2.reset();
-            //     double X = LimelightHelpers.getTA("");
-            //     double Y = LimelightConstants.WRIST_Y1 + ((X - LimelightConstants.X1) * ((LimelightConstants.WIRST_Y2 - LimelightConstants.WRIST_Y1))/(LimelightConstants.X2 - LimelightConstants.X1)) + LimelightConstants.OFFSET;
+            /* SETS THE SETPOINT EQUAL TO THE INTERPOLATED WRIST VALUE
+             * CALCULATES THE PID AND SETS THE MOTOR TO THE OUTPUT
+             */
+            case AutoAim:{
+                setPoint = y;
+                output = MathUtil.clamp((WristPIDController1.calculate(m_WristCANcoder.getAbsolutePosition().getValueAsDouble(), setPoint) + 
+                                                (WristFFController.calculate(1, 0.5))),
+                                                -MAX_PID_OUTPUT, MAX_PID_OUTPUT);
+                m_WristMotor.set(output);
 
-            //     output = MathUtil.clamp((WristPIDController2.calculate(m_WristCANcoder.getAbsolutePosition().getValueAsDouble(), Y)
-            //         + (WristFFController.calculate(1, 0.5))),
-            //             -WristConstants.MAX_PID_OUTPUT, WristConstants.MAX_PID_OUTPUT);
-                
-            //     m_WristMotor.set(output);
-            //     SmartDashboard.putNumber("AutoAim Setpoint", Y);
-
-            // }
+            }
 
         }
 
@@ -170,21 +182,26 @@ public class WristSS extends SubsystemBase{
         SmartDashboard.putNumber("Wrist setPoint", setPoint);
         SmartDashboard.putNumber("Wrist Pose", m_WristCANcoder.getPosition().getValueAsDouble());
         SmartDashboard.putNumber("Wrist AbsPose", m_WristCANcoder.getAbsolutePosition().getValueAsDouble());
+
+        SmartDashboard.putNumber("Wrist Angle", y);
+        SmartDashboard.putNumber("FiducialID", LimelightHelpers.getFiducialID("limelight"));
     }
 
-    /*  METHODS THAT CAN BE CALLED TO RUN*/
+    /* METHODS THAT CAN BE CALLED TO RUN */
+
+    /* CHANGES THE MODE TO MANUAL UP */
     public void ManualUp(){
         WristMode = Mode.ManualUp;
     }
-    
+    /* CHANGES THE MODE TO MANUAL DOWN */
     public void ManualDown(){
         WristMode = Mode.ManualDown;
     }
-    
+    /* CHANGES THE MODE TO MANUAL STOP */
     public void ManualStop(){
         WristMode = Mode.ManualStop;
     }
-
+    /* CHANGES THE MODE TO MANUAL */
     public void Manual(double WristVal){
         this.wristVal = WristVal;
         WristMode = Mode.Manual;
@@ -212,7 +229,7 @@ public class WristSS extends SubsystemBase{
     }
 
     /* METHOD THAT HAS NO PARAMETERS
-     * @returns setPoint DESIRED ENCODER LOCATION
+     * @returns setPoint/DESIRED ENCODER LOCATION
      */
     public double returnSetPoint(){
         return setPoint;
@@ -224,14 +241,10 @@ public class WristSS extends SubsystemBase{
 
     public void AutoAim(){
         WristPIDController1.reset();
-        WristPIDController2.reset();
         WristMode = Mode.AutoAim;
     }
 
-    public boolean returnTarget(){
-        return LimelightHelpers.getTV("");
-
-    }
+ 
 
 
 

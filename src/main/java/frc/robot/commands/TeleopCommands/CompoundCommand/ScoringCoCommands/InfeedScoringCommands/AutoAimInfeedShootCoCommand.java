@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.WristConstants;
-import frc.robot.commands.TeleopCommands.BaseCommands.InfeedCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.AutoAimCommand;
 import frc.robot.commands.TeleopCommands.BaseCommands.ShooterCommand;
 import frc.robot.commands.TeleopCommands.BaseCommands.ArmCommands.ArmPIDCommand;
 import frc.robot.commands.TeleopCommands.BaseCommands.WristCommands.WristPIDCommand;
@@ -19,10 +19,10 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.WristSS;
 
 
-public class InfeedShootCoCommand extends SequentialCommandGroup{
+public class AutoAimInfeedShootCoCommand extends SequentialCommandGroup{
 
     
-    public InfeedShootCoCommand(WristSS s_Wrist, ArmSS s_Arm, InfeedSS s_Infeed, SensorSS s_Sensor, ShooterSS s_Shooter, LEDSS s_LED, Swerve s_Swerve) {
+    public AutoAimInfeedShootCoCommand(WristSS s_Wrist, ArmSS s_Arm, InfeedSS s_Infeed, SensorSS s_Sensor, ShooterSS s_Shooter, LEDSS s_LED, Swerve s_Swerve) {
 
         addCommands(
                     new RepeatCommand(
@@ -31,10 +31,8 @@ public class InfeedShootCoCommand extends SequentialCommandGroup{
                                 new SequentialCommandGroup(
                                     new ParallelCommandGroup(
                                         new InstantCommand(() -> s_LED.Blink()),
-                                        new WristPIDCommand(s_Wrist, WristConstants.INFEED_SPEAKER_POS, WristConstants.MAX_PID_OUTPUT),
+                                        new AutoAimCommand(s_Wrist, s_Swerve),
                                         new ArmPIDCommand(s_Arm, ArmConstants.SPEAKER_POS, ArmConstants.MAX_PID_OUTPUT),
-                                        // remove to stop auto rotation while shooting
-                                        new InstantCommand(() -> s_Swerve.setAutoAimState(true)),
                                         new SequentialCommandGroup(
                                             new WaitCommand(0.25),
                                             new SuckBackCoCommand(s_Infeed, s_Shooter)

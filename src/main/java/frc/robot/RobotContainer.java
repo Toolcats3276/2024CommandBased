@@ -15,10 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.InfeedConstants;
 import frc.robot.Constants.WristConstants;
-import frc.robot.autos.AltUnderStageSmartAuto;
-import frc.robot.autos.AroundStageSmartAuto;
 import frc.robot.autos.Smart5Note;
-import frc.robot.autos.UnderStageSmartAuto;
 import frc.robot.commands.TeleopCommands.BaseCommands.InfeedCommand;
 import frc.robot.commands.TeleopCommands.BaseCommands.TeleopSwerve;
 import frc.robot.commands.TeleopCommands.BaseCommands.ClimberCommands.BothManualCommands.ClimberDownCommand;
@@ -34,16 +31,17 @@ import frc.robot.commands.TeleopCommands.CompoundCommand.*;
 import frc.robot.commands.TeleopCommands.CompoundCommand.CompCoCommands.CompCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.CompCoCommands.ToggleCompCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.InfeedCoCommands.InfeedCompCoCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.AutoAimScoringCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.AutoAimSpeakerShotCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.AutoPassOffCoCommand;
-import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.PassOffCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ScoringCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.AmpCommands.ToggleAmpCoCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.InfeedScoringCommands.AutoAimInfeedShootCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.InfeedScoringCommands.InfeedShootCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.InfeedScoringCommands.InverseScoreCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ShuttleCommands.ShuttleCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ShuttleCommands.ToggleShuttleCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.ShuttleCommands.ToggleShuttleStateCoCommand;
-import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TrapCommands.AutoTrapCoCommand;
 import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.TrapCommands.TrapCoCommand;
 import frc.robot.commands.AutoCommands.AutoInfeedCoCommand;
 import frc.robot.commands.AutoCommands.AutoPoofCoCommand;
@@ -105,7 +103,7 @@ public class RobotContainer {
     private final JoystickButton Amp = new JoystickButton(m_DriveController, 4);
 
     private final JoystickButton Infeed = new JoystickButton(m_DriveController, 7);
-    private final JoystickButton Infeed2 = new JoystickButton(m_DriveController, 8);
+    private final JoystickButton CloseShot = new JoystickButton(m_DriveController, 8);
 
     private final JoystickButton ManualOutfeed = new JoystickButton(m_DriveController, 6);
 
@@ -116,7 +114,7 @@ public class RobotContainer {
     private final JoystickButton Shuttle = new JoystickButton(m_DriveController, 3);
     // private final POVButton ShuttleAutoRotate = new POVButton(m_DriveController, 45, 5)
 
-    private final JoystickButton Trap = new JoystickButton(m_DriveController, 10);
+    private final JoystickButton Trap = new JoystickButton(m_DriveController, 10); //10
     // private final JoystickButton CoTrap = new JoystickButton(m_CoXboxController, XboxController.Button.kBack.value);
     // private final JoystickButton AutoTrap = new JoystickButton(m_DriveController, 15);
 
@@ -124,11 +122,12 @@ public class RobotContainer {
 
     private final JoystickButton Cancel = new JoystickButton(m_DriveController, 5);
 
-    private final JoystickButton autoAim = new JoystickButton(m_DriveController, 16);
+    private final JoystickButton AutoAim = new JoystickButton(m_DriveController, 16); //16
 
     
     // CREATING m_CoXboxController BUTTONS
     private final JoystickButton CoRotate = new JoystickButton(m_CoXboxController, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton CoAutoAim = new JoystickButton(m_CoXboxController, XboxController.Button.kRightBumper.value);
     private final JoystickButton CoManualInfeed = new JoystickButton(m_CoXboxController, XboxController.Button.kRightBumper.value);
 
     // private final JoystickButton CoTest = new JoystickButton(m_CoXboxController, XboxController.Button.kA.value);
@@ -143,11 +142,11 @@ public class RobotContainer {
     private final JoystickButton BothClimberUp = new JoystickButton(m_CoFlightStick, 1);
     private final JoystickButton BothClimberDown = new JoystickButton(m_CoFlightStick, 2);
 
-    private final JoystickButton LeftClimberUp = new JoystickButton(m_CoFlightStick, 5);
-    private final JoystickButton LeftClimberDown = new JoystickButton(m_CoFlightStick, 6);
+    private final JoystickButton LeftClimberUp = new JoystickButton(m_CoFlightStick, 3);
+    private final JoystickButton LeftClimberDown = new JoystickButton(m_CoFlightStick, 4);
 
-    private final JoystickButton RightClimberUp = new JoystickButton(m_CoFlightStick, 3);
-    private final JoystickButton RightClimberDown = new JoystickButton(m_CoFlightStick, 4);
+    private final JoystickButton RightClimberUp = new JoystickButton(m_CoFlightStick, 5);
+    private final JoystickButton RightClimberDown = new JoystickButton(m_CoFlightStick, 6);
 
     // CREATING NEW SUBSYSTEM OBJECTS
     private final Swerve s_Swerve = new Swerve();
@@ -285,14 +284,17 @@ public class RobotContainer {
 
         Infeed.onTrue(new InfeedCompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
             .until(() -> s_Sensor.infeedDelay()));
-        Infeed2.onTrue(new InfeedShootCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
-            .until(() -> s_Sensor.infeedShotDelay()));
-
+            
         Amp.onTrue(new ToggleAmpCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter));
-        
-        Shoot.onTrue(new ScoringCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist, s_Sensor));
-        // Shoot.onTrue(new TestShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
-        
+            
+        /* CHANGE THE COMMENTED LINE TO GO FROM NORMAL SCORING COMMAND TO TEST SHOT COMMAND */
+        // Shoot.onTrue(new ScoringCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist, s_Sensor));
+        Shoot.onTrue(new AutoAimScoringCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist, s_Sensor, s_Swerve));
+            
+        // CloseShot.onTrue(new InfeedShootCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED, s_Swerve)
+        //     .until(() -> s_Sensor.infeedShotDelay()));
+        CloseShot.onTrue(new AutoAimInfeedShootCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED, s_Swerve)
+            .until(() -> s_Sensor.infeedShotDelay()));
 
         InverseShot.onTrue(new InverseScoreCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
             .until(() -> s_Sensor.inverseDelay()));
@@ -302,31 +304,23 @@ public class RobotContainer {
         Shuttle.onTrue(new ToggleShuttleStateCoCommand(s_Sensor)
             .handleInterrupt(() -> new InstantCommand(() -> s_Sensor.setShuttleState(false))));
 
-        // Shoot.and(Shuttle.whileTrue(new InstantCommand(() -> s_Swerve.setAutoRotationState(true))));
-        // Shoot.and(Shuttle.whileTrue(new InstantCommand(() -> s_Swerve.setAutoRotationState(false))));
-
-        // Shuttle.onTrue(new InstantCommand(() -> s_Swerve.setAutoRotationState(true)));
-        // Shuttle.onFalse(new InstantCommand(() -> s_Swerve.setAutoRotationState(false)));
-
-
-
-        // HighShot.onTrue(new HighScoreCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         
         Trap.onTrue(new TrapCoCommand(s_Wrist, s_Arm));
         // AutoTrap.onTrue(new AutoTrapCoCommand(s_Wrist, s_Arm, s_Climber, s_Swerve, s_Sensor, s_Infeed));
         ManualOutfeed.onTrue(new InfeedCommand(s_Infeed, InfeedConstants.OUTFEED));
 
-        // DefenceShot.onTrue(new PathPlannerAuto("DefenceShot"));
 
         //m_CoXboxBoxController buttons
+        CoAutoAim.onTrue(new InstantCommand(() -> s_Swerve.setAutoAimState(true)));
+        CoAutoAim.onFalse(new InstantCommand(() -> s_Swerve.setAutoAimState(false)));
 
         CoRotate.onTrue(new InstantCommand(() -> s_Swerve.setAutoRotationState(true)));
         CoRotate.onFalse(new InstantCommand(() -> s_Swerve.setAutoRotationState(false)));
-        CoManualInfeed.onTrue(new InfeedCommand(s_Infeed, InfeedConstants.INFEED_SPEED));
+        // CoManualInfeed.onTrue(new InfeedCommand(s_Infeed, InfeedConstants.INFEED_SPEED));
 
-        CoDefenceShot.onTrue(new PathPlannerAuto("DefenceShot"));
-        CoPodiumShot.onTrue(new PathPlannerAuto("DefenceShot2"));
-        CoAmpShot.onTrue(new PathPlannerAuto("DefenceShot3"));
+        // CoDefenceShot.onTrue(new PathPlannerAuto("DefenceShot"));
+        // CoPodiumShot.onTrue(new PathPlannerAuto("DefenceShot2"));
+        // CoAmpShot.onTrue(new PathPlannerAuto("DefenceShot3"));
 
         // CoHighShot.onTrue(new HighScoreCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 

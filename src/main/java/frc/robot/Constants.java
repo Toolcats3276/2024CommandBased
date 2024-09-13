@@ -21,20 +21,26 @@ public final class Constants {
 
     public static final double MAX_PID_OUTPUT = 1;
 
-    // Increase these numbers to trust your model's state estimates less.
-    public static final double kPositionStdDevX = 0.1;
-    public static final double kPositionStdDevY = 0.1;
-    public static final double kPositionStdDevTheta = 10;
-
-    // Increase these numbers to trust global measurements from vision less.
-    public static final double kVisionStdDevX = 5;
-    public static final double kVisionStdDevY = 5;
-    public static final double kVisionStdDevTheta = 500;
-      
-
+    
+    
     public static final class LimelightConstants {
-        public static final double AIM_KP = 0.01;
-        public static final double RANGE_KP = 0;
+        public static final double AIM_KP = 0.0007;
+        public static final double RANGE_KP = 0.004;
+
+        public static final double SPEAKER_TY = 0; //17
+
+        public static final double a = -0.00253365;
+        public static final double b = 0.495573;
+
+        // // Increase these numbers to trust your model's state estimates less.
+        // public static final double kPositionStdDevX = 0.1;
+        // public static final double kPositionStdDevY = 0.1;
+        // public static final double kPositionStdDevTheta = 10;
+    
+        // // Increase these numbers to trust global measurements from vision less.
+        // public static final double kVisionStdDevX = 5;
+        // public static final double kVisionStdDevY = 5;
+        // public static final double kVisionStdDevTheta = 500;
     }
 
     public static final class ArmConstants {
@@ -47,7 +53,7 @@ public final class Constants {
         public static final double MAX_PID_OUTPUT = 1;
         public static final double SLOW_PID_OUTPUT = 0.2;
 
-        public static final double INFEED_POS = 0.6; //0.598
+        public static final double INFEED_POS = 0.598; //**0.6**
 
         public static final double AMP_POSE = 0.38; //0.53 werid amp
         public static final double AMP_TWO_POS = 0.31;
@@ -116,6 +122,8 @@ public final class Constants {
     
         public static final double COMP_POS = 0.75;//.75--.63 for test
         public static final double DRIVE_POS = INFEED_POS;
+
+        public static final double TEST_SHOT = 0.495;
 
     }
 

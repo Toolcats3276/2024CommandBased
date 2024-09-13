@@ -20,9 +20,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.StructArrayPublisher;
-import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -37,19 +34,22 @@ public class Swerve extends SubsystemBase {
 
     public Rotation2d storedHeading = new Rotation2d();
     private boolean AutoRotationState;
+    private static boolean AutoAimState;
 
-    private final PIDController AutoRotationPID;
+    private PIDController AutoRotationPID;
+    private static PIDController LLRotationPID;
+    private static PIDController LLTranslationPID;
 
-    public 
-
-    StructPublisher<Pose2d> publisher;
-    StructArrayPublisher<Pose2d> arrayPublisher;
-
+    int[] validTagID = {16};
+    boolean doRejectUpdate = false;
+    
+    
+    
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.setYaw(0);
-
+        
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
             new SwerveModule(1, Constants.Swerve.Mod1.constants),
@@ -59,6 +59,12 @@ public class Swerve extends SubsystemBase {
 
         AutoRotationPID = new PIDController(
             0.05, 0, 0);
+        LLRotationPID = new PIDController(
+            0.0007, 0, 0);
+        LLTranslationPID = new PIDController(
+            0.004, 0, 0);
+                
+        LimelightHelpers.SetFiducialIDFiltersOverride("limelight", validTagID);
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
        
@@ -90,10 +96,6 @@ public class Swerve extends SubsystemBase {
             }, 
             this);
 
-        publisher = NetworkTableInstance.getDefault()
-            .getStructTopic("MyPose", Pose2d.struct).publish();
-        arrayPublisher = NetworkTableInstance.getDefault()
-            .getStructArrayTopic("MyPoseArray", Pose2d.struct).publish();
         
     }
 
@@ -147,16 +149,8 @@ public class Swerve extends SubsystemBase {
         return swerveOdometry.getPoseMeters();
     }
 
-    public Pose2d getLLPose(){
-        return swervePoseEstimator.getEstimatedPosition();
-    }
-
     public void setPose(Pose2d pose){
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);
-    }
-
-    public void setLLPose(Pose2d pose){
-        swervePoseEstimator.resetPosition(getGyroYaw(), getModulePositions(), pose);
     }
 
     public Rotation2d getHeading(){
@@ -165,26 +159,6 @@ public class Swerve extends SubsystemBase {
 
     public void setHeading(Rotation2d heading){
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
-    }
- 
-    public void storeHeading(){
-        storedHeading = getPose().getRotation();
-    }
-
-    public Rotation2d getStoredHeading(){
-        return storedHeading;
-    }
-
-    public void setTrapHeading(){
-        if(115.0 < storedHeading.getDegrees() || storedHeading.getDegrees() < 125.0){
-            setHeading(new Rotation2d(240));
-        }
-        // else if(-5.0 < storedHeading.getDegrees() || storedHeading.getDegrees() < 5.0){
-        //     setHeading(new Rotation2d(120));
-        // }
-        else if(-115.0 < storedHeading.getDegrees() || storedHeading.getDegrees() < -125.0){
-            setHeading(new Rotation2d(0));
-        }
     }
 
     public void zeroHeading(){
@@ -240,38 +214,44 @@ public class Swerve extends SubsystemBase {
       }
 
 
-    // simple proportional turning control with Limelight.
+    // simple PID turning control with Limelight.
     // "proportional control" is a control algorithm in which the output is proportional to the error.
     // in this case, we are going to return an angular velocity that is proportional to the 
     // "tx" value from the Limelight.
     public static double LLAngularVelocity(){
-        if(LimelightHelpers.getTargetCount("limelight") == 1){
-            // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
-            // your limelight 3 feed, tx should return roughly 31 degrees.
-            double targetingAngularVelocity = LimelightHelpers.getTX("limelight") * LimelightConstants.AIM_KP;
-
-            // convert to radians per second for our drive method
+        double targetingAngularVelocity;
+        if(LimelightHelpers.getFiducialID("limelight") == 7 || LimelightHelpers.getFiducialID("limelight") == 4){
+            targetingAngularVelocity = LLRotationPID.calculate(LimelightHelpers.getTX("limelight"), 0);
+            // targetingAngularVelocity = LLRotationPID.calculate(LimelightHelpers.getTX("limelight"), 0);
             targetingAngularVelocity *= Constants.Swerve.maxAngularVelocity;
-
-            //invert since tx is positive when the target is to the right of the crosshair
-            targetingAngularVelocity *= -1.0;
-
-            return targetingAngularVelocity;
         }
-        else return 0;
+        else{
+            targetingAngularVelocity = 0;
+        }
+        return targetingAngularVelocity;
     }
 
-    // simple proportional ranging control with Limelight's "ty" value
+    // simple PID ranging control with Limelight's "ty" value
     // this works best if your Limelight's mount height and target mount height are different.
     // if your limelight and target are mounted at the same or similar heights, use "ta" (area) for target ranging rather than "ty"
-    public static double LLRangeVelocity(){   
-        if(LimelightHelpers.getTargetCount("limelight") == 1){ 
-            double targetingForwardSpeed = LimelightHelpers.getTY("limelight") * LimelightConstants.RANGE_KP;
+    public static double LLRangeVelocity(){  
+        double targetingForwardSpeed;
+        if(LimelightHelpers.getTV("limelight") & getAutoAimState()){
+            targetingForwardSpeed = LLTranslationPID.calculate(LimelightHelpers.getTY("limelight"), LimelightConstants.SPEAKER_TY);
             targetingForwardSpeed *= Constants.Swerve.maxSpeed;
-            targetingForwardSpeed *= -1.0;
-            return targetingForwardSpeed;
         }
-        else return 0;
+        else{
+            targetingForwardSpeed = 0;
+        }
+        return -targetingForwardSpeed;
+    }
+
+    public void setAutoAimState(boolean AutoAimState){
+        this.AutoAimState = AutoAimState;
+    }
+
+    public static boolean getAutoAimState(){
+        return AutoAimState;
     }
 
 
@@ -291,9 +271,28 @@ public class Swerve extends SubsystemBase {
              
         }
 
-            SmartDashboard.putNumber("Targets", LimelightHelpers.getTargetCount("limelight"));
+            SmartDashboard.putNumber("tX", LimelightHelpers.getTX("limelight"));
+            SmartDashboard.putNumber("tY", LimelightHelpers.getTY("limelight"));
+            SmartDashboard.putNumber("targetingAngularVelocity", this.LLAngularVelocity());
+
+
+        // LimelightHelpers.SetRobotOrientation("limelight", swervePoseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+        // LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+        // if(Math.abs(gyro.getRate()) > 720){ // if our angular velocity is greater than 720 degrees per second, ignore vision updates
+        //   doRejectUpdate = true;
+        // }
+
+        // if(mt2.tagCount == 0){
+        //   doRejectUpdate = true;
+        // }
+
+        // if(!doRejectUpdate){
+        //   swervePoseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
+        //   swervePoseEstimator.addVisionMeasurement(
+        //       mt2.pose,
+        //       mt2.timestampSeconds);
+        // }
+
     }
-
-
 
 }
