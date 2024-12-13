@@ -52,21 +52,21 @@ public class TeleopSwerve extends Command {
         /* AIMING WITH SWERVE
         *  while the LLAimSup is true, overwrite some of the driving values with the output of our limelight methods
         */
-        if(Swerve.getAutoAimState()){
-        /* Get Values, Deadband */
-            translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
-            strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
-            rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband) + Swerve.LLAngularVelocity();
-            robotCentricVal = robotCentricSup.getAsBoolean();
-        }
-        else{
+        // if(Swerve.getAutoAimState()){
+        // /* Get Values, Deadband */
+        //     translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
+        //     strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
+        //     rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband) + Swerve.LLAngularVelocity();
+        //     robotCentricVal = robotCentricSup.getAsBoolean();
+        // }
+        // else{
         /* NORMAL TELEOP DRIVING COMMAND */
         /* Get Values, Deadband */
             translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
             strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
             rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
             robotCentricVal = robotCentricSup.getAsBoolean();
-        }
+        // }
         
 
         SmartDashboard.putNumber("rotation", rotationVal);

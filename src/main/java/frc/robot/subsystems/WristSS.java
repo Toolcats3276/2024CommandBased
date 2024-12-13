@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.MAX_PID_OUTPUT;
 
+import java.sql.DriverManager;
+
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.hardware.CANcoder;
@@ -10,13 +12,15 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.LimelightHelpers;
 import frc.robot.Robot;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.WristConstants;
+import frc.robot.Vision.LimelightHelpers;
 
 //WRIST SUBSYSTEM CLASS THAT HAS THE SAME PROPERTIES OF THE SUBSYSTEM BASE (EXTENDS SUBSYSTEM BASE)
 
@@ -53,6 +57,12 @@ public class WristSS extends SubsystemBase{
     private double wristVal;
 
     public double y;
+
+    static boolean disableAutoAim = false;
+
+
+    /* change to true to use linear interpolation when auto aiming */
+    boolean linearInterpolation = false;
 
 
     // CONFIGURING ALL MOTORS, ENCODERS, AND PID CONTOLLERS
@@ -109,14 +119,36 @@ public class WristSS extends SubsystemBase{
          *  STORES THE INTERPOLATED VALUE IN THE Y VARIABLE IF A VALID TAG IS SEEN
          *  IF THE TAG IS NOT 7 OR 4 Y IS SET TO THE SPEAKER_POS
         */
-        if(LimelightHelpers.getFiducialID("limelight") == 7 || LimelightHelpers.getFiducialID("limelight") == 4){
-            double x = LimelightHelpers.getTY("limelight");
-            y = LimelightConstants.a * x + LimelightConstants.b;
+        if(!disableAutoAim){
+            if(LimelightHelpers.getFiducialID("limelight") == 7 || LimelightHelpers.getFiducialID("limelight") == 4){
+                if(linearInterpolation){
+                    double x = LimelightHelpers.getTY("limelight");
+                    y = LimelightConstants.lA * x + LimelightConstants.lB;
+                }
+                else{
+                    double x = LimelightHelpers.getTY("limelight");
+                    y = (LimelightConstants.qA * Math.pow(x, 2)) + (LimelightConstants.qB * x) + (LimelightConstants.qC);
+                }
+
+                if(LimelightHelpers.getTY("limelight") < -20){
+                    if(DriverStation.isAutonomousEnabled()){
+                        y += 0.003;
+                    }
+                    else{
+                        // y += 0.008;
+                        y += 0.003;
+                    }
+                }
+                    y += 0.004;
+
+            }
+            else{
+                y = WristConstants.SPEAKER_POS;
+            }   
         }
         else{
             y = WristConstants.SPEAKER_POS;
         }
-
         // SWITCHES THE MODE.  ONLY THE SELECTED MODE WILL RUN PERIODICLY.
         switch(WristMode) {
 
@@ -185,6 +217,9 @@ public class WristSS extends SubsystemBase{
 
         SmartDashboard.putNumber("Wrist Angle", y);
         SmartDashboard.putNumber("FiducialID", LimelightHelpers.getFiducialID("limelight"));
+        SmartDashboard.putBoolean("Auto", DriverStation.isAutonomousEnabled());
+        SmartDashboard.putBoolean("toggleAutoAim", !disableAutoAim);
+
     }
 
     /* METHODS THAT CAN BE CALLED TO RUN */
@@ -242,6 +277,19 @@ public class WristSS extends SubsystemBase{
     public void AutoAim(){
         WristPIDController1.reset();
         WristMode = Mode.AutoAim;
+    }
+
+    public void toggleAutoAimState(){
+        if(disableAutoAim == false){
+            disableAutoAim = true;
+        }
+        else{
+            disableAutoAim = false;
+        }
+    }
+
+    public static boolean getAutoAim(){
+        return disableAutoAim;
     }
 
  

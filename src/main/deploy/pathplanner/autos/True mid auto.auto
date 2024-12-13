@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.19,
-      "y": 5.55
+      "x": 7.94,
+      "y": 3.8
     },
     "rotation": 0
   },
@@ -12,51 +12,19 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "StartShot"
-          }
-        },
-        {
-          "type": "deadline",
+          "type": "sequential",
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "mid_0-1"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "mid_1-X"
-                      }
-                    }
-                  ]
+                  "pathName": "mid_1-X"
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "OpInfeedCommand"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "OpRightNoteShot"
-                      }
-                    }
-                  ]
+                  "name": "OpMidNoteShot"
                 }
               }
             ]
@@ -102,6 +70,12 @@
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.25
                 }
               }
             ]

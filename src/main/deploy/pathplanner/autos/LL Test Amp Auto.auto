@@ -6,19 +6,13 @@
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "five_2-X"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "CompCommand"
+                  "pathName": "LLAmpTest"
                 }
               }
             ]
@@ -27,6 +21,6 @@
       ]
     }
   },
-  "folder": "SmartFiveNote",
+  "folder": null,
   "choreoAuto": false
 }

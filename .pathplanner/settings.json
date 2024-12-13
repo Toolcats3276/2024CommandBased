@@ -5,15 +5,17 @@
   "pathFolders": [
     "4-5 Note",
     "Basic Paths",
+    "Fast 5 note",
+    "LL Amp Autos",
     "Left-Far",
     "Mid Auto",
     "New Amp Paths",
-    "red amp",
+    "LLTesting",
     "OG Amp Paths",
-    "Owen test",
     "Right-Far",
     "Source Paths",
-    "Teleop Paths"
+    "Teleop Paths",
+    "red amp"
   ],
   "autoFolders": [
     "Teleop Autos",

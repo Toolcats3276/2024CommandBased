@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.15,
-        "y": 7.45
+        "y": 7.5
       },
       "prevControl": null,
       "nextControl": {
         "x": 7.844270080369141,
-        "y": 7.156322531172378
+        "y": 7.206322531172378
       },
       "isLocked": false,
       "linkedName": null

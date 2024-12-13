@@ -8,19 +8,23 @@ import frc.robot.subsystems.ArmSS;
 import frc.robot.subsystems.WristSS;
 import frc.robot.subsystems.InfeedSS;
 import frc.robot.subsystems.ShooterSS;
+import frc.robot.subsystems.Swerve;
 
 public class AutoPassOffCoCommand extends SequentialCommandGroup{
 
 
 
-    public AutoPassOffCoCommand(InfeedSS s_Infeed, ShooterSS s_Shooter, ArmSS s_Arm, WristSS s_Wrist) {
+    public AutoPassOffCoCommand(InfeedSS s_Infeed, ShooterSS s_Shooter, ArmSS s_Arm, WristSS s_Wrist, Swerve s_Swerve) {
 
         addCommands(
             new WaitCommand(0),
             new InfeedCommand(s_Infeed, InfeedConstants.PASS_OFF),
             new WaitCommand(0.5),
-            new InfeedCommand(s_Infeed, 0.0),
-            new ShooterCommand(s_Shooter, 0.0)
+            new ParallelCommandGroup(
+                new InfeedCommand(s_Infeed, 0.0),
+                new ShooterCommand(s_Shooter, 0.0),
+                new InstantCommand(() -> s_Swerve.setAutoAimState(false))
+            )
           
         );
 

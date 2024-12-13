@@ -64,7 +64,6 @@ public class InfeedSS extends SubsystemBase {
             }
         }
 
-        SmartDashboard.putNumber("InfeedSpeed", speed);
     }
 
 

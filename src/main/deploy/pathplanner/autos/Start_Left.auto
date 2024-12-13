@@ -28,13 +28,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "mid_0-1"
+                        "pathName": "Start_Left"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "mid_1-X"
+                        "pathName": "Left_Start"
                       }
                     }
                   ]
@@ -53,7 +53,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "OpRightNoteShot"
+                        "name": "Speaker Close Shot"
                       }
                     }
                   ]
@@ -69,20 +69,13 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "mid_X1-2-2X"
-                      }
-                    }
-                  ]
+                  "pathName": "Start_right"
                 }
               },
               {
@@ -100,6 +93,12 @@
                       "data": {
                         "name": "OpCloseMidNoteShot"
                       }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.3
+                      }
                     }
                   ]
                 }
@@ -114,20 +113,13 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Mid_Back_Up"
-                      }
-                    }
-                  ]
+                  "pathName": "Mid_Back_Up"
                 }
               },
               {
@@ -137,7 +129,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "OpInfeedCommand"
+                        "name": "InfeedCommand"
                       }
                     },
                     {
@@ -169,16 +161,9 @@
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Mid_to_Left"
-                      }
-                    }
-                  ]
+                  "pathName": "Mid_to_Left"
                 }
               },
               {
@@ -194,7 +179,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "OpLeftNoteShot"
+                        "name": "AutoAim"
                       }
                     },
                     {
@@ -220,15 +205,15 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "CompCommand"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "mid_X5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CompCommand"
                 }
               }
             ]
@@ -237,6 +222,6 @@
       ]
     }
   },
-  "folder": "Mid Autos",
+  "folder": "SmartFiveNote",
   "choreoAuto": false
 }

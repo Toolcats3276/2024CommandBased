@@ -18,16 +18,10 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "SmartInfeedCommand"
+                  "name": "OpInfeedCommand"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PassOff"
           }
         }
       ]

@@ -4,9 +4,13 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.lib.util.COTSTalonFXSwerveConstants;
@@ -24,13 +28,33 @@ public final class Constants {
     
     
     public static final class LimelightConstants {
+        public static final int[] VALID_TAG_ID = {6, 7, 8, 15};
+
         public static final double AIM_KP = 0.0007;
         public static final double RANGE_KP = 0.004;
 
         public static final double SPEAKER_TY = 0; //17
 
-        public static final double a = -0.00253365;
-        public static final double b = 0.495573;
+        public static final Matrix<N3,N1> MEGA_TAG_1_DISABLED_STD_DEV = VecBuilder.fill(0.1, 0.1, 0.00001);
+        public static final Matrix<N3,N1> MEGA_TAG_2_DISABLED_STD_DEV = VecBuilder.fill(0.1, 0.1, 0.00001);
+        public static final Matrix<N3,N1> MEGA_TAG_1_STD_DEV = VecBuilder.fill(1, 1, 99999999);
+
+
+        /* linear constants */
+        public static final double lA = -0.00249975;
+        public static final double lB = 0.450592;
+
+        // public static final double lA = -0.00212533;
+        // public static final double lB = 0.455131;
+
+        /* quadratic constants */
+        public static final double qA = 0.0000189893;
+        public static final double qB = -0.00164208;
+        public static final double qC = 0.455605;
+
+        // public static final double qA = 0.0000125614;
+        // public static final double qB = -0.0017907;
+        // public static final double qC = 0.455563;
 
         // // Increase these numbers to trust your model's state estimates less.
         // public static final double kPositionStdDevX = 0.1;
@@ -103,10 +127,11 @@ public final class Constants {
         public static final double SHUTTLE_POS = 0.51;
         public static final double STAGE_SHUTTLE_POS = 0.48;
         
-        public static final double MID_NOTE_POS = 0.519; //0.52
-        public static final double CLOSE_MID_NOTE_POS = 0.495; //0.502
-        public static final double LEFT_NOTE_POS = 0.515; //0.52
-        public static final double RIGHT_NOTE_POS = 0.518; //0.538
+        public static final double MID_NOTE_POS = 0.516; //0.519
+        public static final double CLOSE_MID_NOTE_POS = 0.492; //0.495
+        public static final double LEFT_NOTE_POS = 0.51; //0.52
+        public static final double RIGHT_NOTE_POS = 0.485; //0.538
+        public static final double SPEAKER_MID_NOTE_POS = 0.49;//0.5
         
         public static final double AUTO_FARSHOT_POS = 0.526;//0.55 0.535
         public static final double AUTO_FARSHOT_POS_2 = 0.525;//0.52

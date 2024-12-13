@@ -16,7 +16,7 @@ public class SensorSS extends SubsystemBase{
 
     /* CREATS DEBOUNCER OBJECTS FOR SENSOR INPUT
      */
-    private final DigitalInput sensor;
+    private static DigitalInput sensor;
 
     private final DigitalInput LLimitSwitch;
     private final DigitalInput RLimitSwitch;
@@ -60,7 +60,7 @@ public class SensorSS extends SubsystemBase{
 
     }
     
-    public boolean isSensed(){
+    public static boolean isSensed(){
         return sensor.get();
     }
     

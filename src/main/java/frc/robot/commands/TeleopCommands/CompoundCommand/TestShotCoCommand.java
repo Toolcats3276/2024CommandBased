@@ -1,43 +1,43 @@
-// package frc.robot.commands.TeleopCommands.CompoundCommand;
+package frc.robot.commands.TeleopCommands.CompoundCommand;
 
-// import edu.wpi.first.wpilibj2.command.*;
-// import frc.robot.Constants.ArmConstants;
-// import frc.robot.Constants.ShooterConstants;
-// import frc.robot.Constants.WristConstants;
-// import frc.robot.commands.TeleopCommands.BaseCommands.AutoAimCommand;
-// import frc.robot.commands.TeleopCommands.BaseCommands.ShooterCommand;
-// import frc.robot.commands.TeleopCommands.BaseCommands.ArmCommands.ArmPIDCommand;
-// import frc.robot.commands.TeleopCommands.BaseCommands.WristCommands.WristPIDCommand;
-// import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.PassOffCoCommand;
-// import frc.robot.subsystems.ArmSS;
-// import frc.robot.subsystems.WristSS;
-// import frc.robot.subsystems.InfeedSS;
-// import frc.robot.subsystems.ShooterSS;
+import edu.wpi.first.wpilibj2.command.*;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.WristConstants;
+import frc.robot.commands.TeleopCommands.BaseCommands.AutoAimCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.ShooterCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.ArmCommands.ArmPIDCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.WristCommands.WristPIDCommand;
+import frc.robot.commands.TeleopCommands.CompoundCommand.ScoringCoCommands.PassOffCoCommand;
+import frc.robot.subsystems.ArmSS;
+import frc.robot.subsystems.WristSS;
+import frc.robot.subsystems.InfeedSS;
+import frc.robot.subsystems.ShooterSS;
 
-// public class TestShotCoCommand extends SequentialCommandGroup{
+public class TestShotCoCommand extends SequentialCommandGroup{
 
 
-//     public 
-//     TestShotCoCommand(InfeedSS s_Infeed, ShooterSS s_Shooter, ArmSS s_Arm, WristSS s_Wrist) {
+    public 
+    TestShotCoCommand(InfeedSS s_Infeed, ShooterSS s_Shooter, ArmSS s_Arm, WristSS s_Wrist) {
 
-//         addCommands(
-//             new ConditionalCommand(
+        addCommands(
+            new ConditionalCommand(
 
-//                 new PassOffCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist), 
+                new PassOffCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist), 
 
-//                 new SequentialCommandGroup(
-//                     new ParallelCommandGroup(
-//                         new AutoAimCommand(s_Wrist, null),
-//                         new ArmPIDCommand(s_Arm, ArmConstants.SPEAKER_POS, WristConstants.MAX_PID_OUTPUT),
-//                         new ShooterCommand(s_Shooter, ShooterConstants.SPEAKER)
-//                     )
-//                 ),
+                new SequentialCommandGroup(
+                    new ParallelCommandGroup(
+                        new WristPIDCommand(s_Wrist, 0.544, WristConstants.MAX_PID_OUTPUT),
+                        new ArmPIDCommand(s_Arm, ArmConstants.SPEAKER_POS, WristConstants.MAX_PID_OUTPUT),
+                        new ShooterCommand(s_Shooter, ShooterConstants.SPEAKER)
+                    )
+                ),
                 
-//                 () -> s_Arm.returnSetPoint() == ArmConstants.SPEAKER_POS)
-//         );
+                () -> s_Arm.returnSetPoint() == ArmConstants.SPEAKER_POS)
+        );
 
-//         addRequirements(s_Infeed, s_Shooter);
-//     }
+        addRequirements(s_Infeed, s_Shooter);
+    }
     
    
-// }
+}

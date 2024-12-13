@@ -4,7 +4,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.LimelightHelpers;
+import frc.robot.Vision.LimelightHelpers;
 
 /* SEE WristSS FOR EXPLANATIONS */
 
@@ -30,20 +30,36 @@ public class LEDSS extends SubsystemBase {
 
     public void periodic() {
 
+
         switch(LL_LEDMode) {
 
             case Off:{
-                LimelightHelpers.setLEDMode_ForceOff("");
+                if(LimelightHelpers.getFiducialID("limelight") == 7 || LimelightHelpers.getFiducialID("limelight") == 4){
+                    LimelightHelpers.setLEDMode_ForceOn("");
+                }
+                else{
+                    LimelightHelpers.setLEDMode_ForceOff("");
+                }
                 break;
             }
 
             case On:{
-                LimelightHelpers.setLEDMode_ForceOn("");
+                if(LimelightHelpers.getFiducialID("limelight") == 7 || LimelightHelpers.getFiducialID("limelight") == 4){
+                    LimelightHelpers.setLEDMode_ForceOn("");
+                }
+                else{
+                    LimelightHelpers.setLEDMode_ForceOn("");
+                }
                 break;
             }
 
             case Blink:{
-                LimelightHelpers.setLEDMode_ForceBlink("");
+                if(LimelightHelpers.getFiducialID("limelight") == 7 || LimelightHelpers.getFiducialID("limelight") == 4){
+                    LimelightHelpers.setLEDMode_ForceOn("");
+                }
+                else{
+                    LimelightHelpers.setLEDMode_ForceBlink("");
+                }
                 break;
             }
         }

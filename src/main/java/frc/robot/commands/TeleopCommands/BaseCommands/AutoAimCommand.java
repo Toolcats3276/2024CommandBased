@@ -21,6 +21,7 @@ public class AutoAimCommand extends Command {
     @Override
     public void initialize() {
     s_Swerve.setAutoAimState(true);
+    System.out.println("auto aim set");
 
 
     }

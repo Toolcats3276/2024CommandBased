@@ -56,8 +56,6 @@ public class ShooterSS extends SubsystemBase {
             }
         }
 
-        SmartDashboard.putNumber("ShooterSetSpeed M/S", speed);
-        SmartDashboard.putNumber("ShooterCurrentSpeed M/S", m_shooterLeadMotor.getVelocity().getValueAsDouble());
     }
 
     public void Stop(){

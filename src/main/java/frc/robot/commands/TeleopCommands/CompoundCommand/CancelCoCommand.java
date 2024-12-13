@@ -15,12 +15,13 @@ import frc.robot.subsystems.InfeedSS;
 import frc.robot.subsystems.LEDSS;
 import frc.robot.subsystems.SensorSS;
 import frc.robot.subsystems.ShooterSS;
+import frc.robot.subsystems.Swerve;
 
 public class CancelCoCommand extends SequentialCommandGroup{
 
 
 
-    public CancelCoCommand(WristSS s_Wrist, ArmSS s_Arm, InfeedSS s_Infeed, ShooterSS s_Shooter, ClimberSS s_Climber, SensorSS s_Sensor, LEDSS s_LED, DoubleSupplier WristAxis, DoubleSupplier ArmAxis) {
+    public CancelCoCommand(WristSS s_Wrist, ArmSS s_Arm, InfeedSS s_Infeed, ShooterSS s_Shooter, ClimberSS s_Climber, SensorSS s_Sensor, LEDSS s_LED, Swerve s_Swerve, DoubleSupplier WristAxis, DoubleSupplier ArmAxis) {
 
         addCommands(
             new ParallelCommandGroup(
@@ -30,7 +31,9 @@ public class CancelCoCommand extends SequentialCommandGroup{
                 new InfeedCommand(s_Infeed, 0.0),
                 new ShooterCommand(s_Shooter, 0.0),
                 new ClimberStopCommand(s_Climber),
-                new InstantCommand(() -> s_LED.Off())
+                new InstantCommand(() -> s_LED.Off()),
+                new InstantCommand(() -> s_Swerve.setAutoAimState(false)),
+                new InstantCommand(() -> s_Swerve.setAutoRotationState(false))
                 )
         );
         addRequirements(s_Wrist, s_Arm, s_Infeed, s_Shooter);

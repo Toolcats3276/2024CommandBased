@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.time.Instant;
+
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
@@ -16,6 +18,9 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.InfeedConstants;
 import frc.robot.Constants.WristConstants;
 import frc.robot.autos.Smart5Note;
+import frc.robot.autos.Smart_midauto;
+import frc.robot.commands.TeleopCommands.BaseCommands.AutoAimCommand;
+import frc.robot.commands.TeleopCommands.BaseCommands.AutoAimSwerve;
 import frc.robot.commands.TeleopCommands.BaseCommands.InfeedCommand;
 import frc.robot.commands.TeleopCommands.BaseCommands.TeleopSwerve;
 import frc.robot.commands.TeleopCommands.BaseCommands.ClimberCommands.BothManualCommands.ClimberDownCommand;
@@ -53,9 +58,11 @@ import frc.robot.commands.AutoCommands.OptimizedCommands.ShootCommands.OpAutoClo
 import frc.robot.commands.AutoCommands.OptimizedCommands.ShootCommands.OpAutoLeftShootCoCommands;
 import frc.robot.commands.AutoCommands.OptimizedCommands.ShootCommands.OpAutoMidShootCoCommands;
 import frc.robot.commands.AutoCommands.OptimizedCommands.ShootCommands.OpAutoRightShootCoCommands;
+import frc.robot.commands.AutoCommands.OptimizedCommands.ShootCommands.OpAutoSpeakerCloseShot;
 import frc.robot.commands.AutoCommands.ShootCommand.AutoStartShotCoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.AutoStartShotCoCommand2;
 import frc.robot.commands.AutoCommands.ShootCommand.AutoStartShotCoCommand3;
+import frc.robot.commands.AutoCommands.ShootCommand.AutoAimCommands.AutoAutoAimCoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.CloseMidNoteShootCoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.LeftNoteShootCoCommand;
 import frc.robot.commands.AutoCommands.ShootCommand.CloseNoteCommands.MidNoteShootCoCommand;
@@ -136,6 +143,7 @@ public class RobotContainer {
     private final JoystickButton CoPodiumShot = new JoystickButton(m_CoXboxController, XboxController.Button.kY.value);
     private final JoystickButton CoAmpShot = new JoystickButton(m_CoXboxController, XboxController.Button.kA.value);
 
+    private final JoystickButton DissableAutoAim = new JoystickButton(m_CoXboxController, XboxController.Button.kX.value);
     private final JoystickButton CoCancel = new JoystickButton(m_CoXboxController, XboxController.Button.kB.value);
 
     // CREATING m_CoFlightStick
@@ -149,7 +157,7 @@ public class RobotContainer {
     private final JoystickButton RightClimberDown = new JoystickButton(m_CoFlightStick, 6);
 
     // CREATING NEW SUBSYSTEM OBJECTS
-    private final Swerve s_Swerve = new Swerve();
+    public final Swerve s_Swerve = new Swerve();
     private final ArmSS s_Arm = new ArmSS();
     private final ClimberSS s_Climber = new ClimberSS();
     private final WristSS s_Wrist = new WristSS();
@@ -207,6 +215,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("OpCloseMidNoteShot", new OpAutoCloseMidShootCoCommands(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("OpLeftNoteShot", new OpAutoLeftShootCoCommands(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("OpRightNoteShot", new OpAutoRightShootCoCommands(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        NamedCommands.registerCommand("SpeakerCloseShot", new OpAutoSpeakerCloseShot(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
         NamedCommands.registerCommand("FarShot", new AutoFarShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         NamedCommands.registerCommand("FarShot2", new AutoFarShotCoCommand2(s_Infeed, s_Shooter, s_Arm, s_Wrist));
@@ -223,36 +232,47 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("UnderStageShuttle", new ShuttleCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED));
         NamedCommands.registerCommand("PoofShot", new AutoPoofCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter));        
-        NamedCommands.registerCommand("PassOff", new AutoPassOffCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
+        NamedCommands.registerCommand("PassOff", new AutoPassOffCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist, s_Swerve));
 
         NamedCommands.registerCommand("TrapCommand", new TrapCoCommand(s_Wrist, s_Arm));
+
+        NamedCommands.registerCommand("AutoRotate", new InstantCommand(() -> s_Swerve.setAutoAimState(true)).alongWith(new AutoAimSwerve(s_Swerve)));
+        NamedCommands.registerCommand("AutoAim", new AutoAutoAimCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist, s_Swerve));
 
         
 
         // initializing autochooser and putting it on smartdashboard
 
+        SmartDashboard.putBoolean("RoboCentric", robotCentric.getAsBoolean());
+
         AutoChooser = new SendableChooser<Command>();
 
         AutoChooser.setDefaultOption("None", new PrintCommand("Issac why didn't you choose an auto!"));
-        AutoChooser.addOption("Five Note", new PathPlannerAuto("FiveNote"));
+        // AutoChooser.addOption("Five Note", new PathPlannerAuto("FiveNote"));
         AutoChooser.addOption("Mid Auto", new PathPlannerAuto("Mid Auto"));
+        //AutoChooser.addOption("Red Mid Auto", new PathPlannerAuto("Red_Mid Auto"));
         AutoChooser.addOption("Smart Five Note", new Smart5Note(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
+        // AutoChooser.addOption("Smart Mid Auto", new Smart_midauto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
         AutoChooser.addOption("Four Note", new PathPlannerAuto("Copy of FiveNote"));
+        AutoChooser.addOption("Start Left", new PathPlannerAuto("Start_Left"));
 
         // AutoChooser.addOption("Under Stage Source", new UnderStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
-        // AutoChooser.addOption("Around Stage Source", new AroundStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
+        // AutoChooser.addOption("Around Stage Source", new - AroundStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
         // AutoChooser.addOption("Alt Around Stage Source", new AltUnderStageSmartAuto(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Sensor));
 
         AutoChooser.addOption("Preload Amp One", new PathPlannerAuto("Amp Pre One"));
         AutoChooser.addOption("Red Preload Amp One", new PathPlannerAuto("Copy of Amp Pre One"));
 
-        AutoChooser.addOption("Preload Amp Two", new PathPlannerAuto("Amp Pre Two"));
+        // AutoChooser.addOption("Preload Amp Two", new PathPlannerAuto("Amp Pre Two"));
 
         AutoChooser.addOption("Amp Far", new PathPlannerAuto("Amp Far"));
         AutoChooser.addOption("Red Amp Far", new PathPlannerAuto("Copy of Amp Far"));
         
-        AutoChooser.addOption("Amp Wait", new PathPlannerAuto("Amp-Wait"));
+        // AutoChooser.addOption("Amp Wait", new PathPlannerAuto("Amp-Wait"));
         // AutoChooser.addOption("Preload Amp One Poof", new PathPlannerAuto("Amp Pre One Poof"));
+
+        AutoChooser.addOption("LL Test Auto", new PathPlannerAuto("LL Test Amp Auto"));
+        // AutoChooser.addOption("LL Amp Far", new PathPlannerAuto("LLAmp Far"));
         
         SmartDashboard.putData("Auto Chooser", AutoChooser);
 
@@ -273,13 +293,14 @@ public class RobotContainer {
         // m_DriveController Buttons
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
 
-        Cancel.onTrue(new CancelCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Climber, s_Sensor, s_LED,
+        Cancel.onTrue(new CancelCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Climber, s_Sensor, s_LED, s_Swerve,
             () -> -m_CoXboxController.getRawAxis(WristAxis), 
             () -> -m_CoXboxController.getRawAxis(ArmAxis)));
 
 
         Comp.onTrue(new ToggleCompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, ArmConstants.MAX_PID_OUTPUT, WristConstants.MAX_PID_OUTPUT, s_Sensor)
-            .alongWith(new InstantCommand(() -> s_Sensor.setShuttleState(false))));
+            .alongWith(new InstantCommand(() -> s_Sensor.setShuttleState(false))
+            .alongWith(new InstantCommand(() -> s_Swerve.setAutoAimState(false)))));
         // SlowComp.onTrue(new CompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, ArmConstants.SLOW_PID_OUTPUT, WristConstants.SLOW_PID_OUTPUT));
 
         Infeed.onTrue(new InfeedCompCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED)
@@ -289,6 +310,7 @@ public class RobotContainer {
             
         /* CHANGE THE COMMENTED LINE TO GO FROM NORMAL SCORING COMMAND TO TEST SHOT COMMAND */
         // Shoot.onTrue(new ScoringCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist, s_Sensor));
+        //Shoot.onTrue(new TestShotCoCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
         Shoot.onTrue(new AutoAimScoringCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist, s_Sensor, s_Swerve));
             
         // CloseShot.onTrue(new InfeedShootCoCommand(s_Wrist, s_Arm, s_Infeed, s_Sensor, s_Shooter, s_LED, s_Swerve)
@@ -316,6 +338,8 @@ public class RobotContainer {
 
         CoRotate.onTrue(new InstantCommand(() -> s_Swerve.setAutoRotationState(true)));
         CoRotate.onFalse(new InstantCommand(() -> s_Swerve.setAutoRotationState(false)));
+
+        DissableAutoAim.onTrue(new InstantCommand(() -> s_Wrist.toggleAutoAimState()));
         // CoManualInfeed.onTrue(new InfeedCommand(s_Infeed, InfeedConstants.INFEED_SPEED));
 
         // CoDefenceShot.onTrue(new PathPlannerAuto("DefenceShot"));
@@ -324,7 +348,7 @@ public class RobotContainer {
 
         // CoHighShot.onTrue(new HighScoreCommand(s_Infeed, s_Shooter, s_Arm, s_Wrist));
 
-        CoCancel.onTrue(new CancelCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Climber, s_Sensor, s_LED,
+        CoCancel.onTrue(new CancelCoCommand(s_Wrist, s_Arm, s_Infeed, s_Shooter, s_Climber, s_Sensor, s_LED, s_Swerve,
             () -> -m_CoXboxController.getRawAxis(WristAxis), 
             () -> -m_CoXboxController.getRawAxis(ArmAxis)));
 
@@ -357,7 +381,6 @@ public class RobotContainer {
         //########################################################################
         
     }
-
 
 
     /**
